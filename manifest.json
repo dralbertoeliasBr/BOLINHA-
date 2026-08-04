@@ -1,1 +1,12 @@
+{
+  "name": "BOLINHA 33 — Projeto Borda",
+  "short_name": "Bolinha 33",
+  "scope": "./",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0b12",
+  "theme_color": "#7c3aed",
+  "lang": "pt-BR"
+}
 
