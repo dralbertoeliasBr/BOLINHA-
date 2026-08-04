@@ -1,503 +1,650 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0b0810">
-<title>BOLINHA 33</title>
-<link rel="manifest" href="./manifest.json">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GaIA · Opera Vox — Sounavy</title>
+<meta name="description" content="GaIA: IA pessoal soberana que nasce no telefone. Opera Vox: a voz como sistema operacional. Sounavy — Antônio Alberto Lopes Elias.">
+<meta name="theme-color" content="#16091F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0810; --sup:#160f1f; --sup2:#1e1529; --linha:#2c2138;
-  --violeta:#9d6bff; --violeta-forte:#7a3fff;
-  --ok:#2de0a5; --falha:#ff5c72; --alerta:#ffb020;
-  --txt:#ece7f5; --fraco:#8b7fa3;
-  --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  --fundo:#16091F;
+  --campo:#20102D;
+  --campo2:#2A1739;
+  --borda:rgba(239,234,225,.13);
+  --osso:#EFEAE1;
+  --fraco:#A093AE;
+  --prisma:#C9A6FF;
+  --r:#FF4D5E;
+  --g:#3DDC84;
+  --b:#5B8CFF;
+  --disp:"Syne",system-ui,sans-serif;
+  --corpo:"Spectral",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --raio:3px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--txt);font:15px/1.5 -apple-system,system-ui,sans-serif;
-     min-height:100vh;overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom)}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--fundo);
+  color:var(--osso);
+  font-family:var(--corpo);
+  font-weight:300;
+  font-size:17px;
+  line-height:1.62;
+  padding:0 20px calc(64px + env(safe-area-inset-bottom));
+  overflow-x:hidden;
+}
+.folha{max-width:640px;margin:0 auto}
+::selection{background:var(--prisma);color:var(--fundo)}
+:focus-visible{outline:2px solid var(--prisma);outline-offset:3px}
 
-/* ---------- BOLINHA ---------- */
-#bolinha{position:fixed;left:calc(100vw - 84px);top:calc(100vh - 140px);width:64px;height:64px;
-  border-radius:50%;z-index:900;cursor:grab;touch-action:none;display:flex;
-  align-items:center;justify-content:center;font-size:24px;
-  background:radial-gradient(circle at 32% 28%,#c9a3ff,var(--violeta) 45%,#4a1d99 100%);
-  box-shadow:0 0 0 1px rgba(157,107,255,.5),0 0 28px rgba(157,107,255,.45),0 8px 24px rgba(0,0,0,.6);
-  animation:pulso 3s ease-in-out infinite;transition:transform .15s}
-#bolinha:active{cursor:grabbing;transform:scale(.92);animation:none}
-#bolinha.mudo{background:radial-gradient(circle at 32% 28%,#6b6b7a,#3a3a48 60%,#1c1c26);
-  box-shadow:0 0 0 1px rgba(255,255,255,.08),0 8px 24px rgba(0,0,0,.6);animation:none}
-@keyframes pulso{0%,100%{box-shadow:0 0 0 1px rgba(157,107,255,.5),0 0 24px rgba(157,107,255,.35),0 8px 24px rgba(0,0,0,.6)}
-                 50%{box-shadow:0 0 0 1px rgba(157,107,255,.8),0 0 44px rgba(157,107,255,.6),0 8px 24px rgba(0,0,0,.6)}}
-@media(prefers-reduced-motion:reduce){#bolinha{animation:none}}
+/* ---------- cabeça ---------- */
+header{padding:calc(38px + env(safe-area-inset-top)) 0 4px}
+.topo{display:flex;align-items:center;gap:16px}
+.prisma{width:52px;height:38px;position:relative;flex:0 0 auto}
+.prisma i{
+  position:absolute;width:26px;height:26px;border-radius:50%;
+  mix-blend-mode:screen;transition:transform .5s cubic-bezier(.2,.7,.3,1);
+}
+.prisma .p1{background:var(--r);top:0;left:13px}
+.prisma .p2{background:var(--g);bottom:0;left:0}
+.prisma .p3{background:var(--b);bottom:0;right:0}
+body[data-aba="opera"] .prisma .p1{transform:translateY(5px)}
+body[data-aba="opera"] .prisma .p2{transform:translate(6px,-4px)}
+body[data-aba="opera"] .prisma .p3{transform:translate(-6px,-4px)}
+body[data-aba="livro"] .prisma .p1{transform:translateY(9px)}
+body[data-aba="livro"] .prisma .p2{transform:translate(13px,-9px)}
+body[data-aba="livro"] .prisma .p3{transform:translate(-13px,-9px)}
+.nome{font-family:var(--disp);font-weight:800;font-size:27px;letter-spacing:-.02em;line-height:1}
+.nome span{
+  display:block;font-family:var(--mono);font-weight:400;font-size:10px;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--fraco);margin-top:8px;
+}
 
-/* ---------- PAINEL ---------- */
-#painel{position:fixed;inset:0;z-index:950;background:var(--bg);display:none;
-  flex-direction:column;overflow:hidden}
-#painel.aberto{display:flex}
-header{padding:calc(14px + env(safe-area-inset-top)) 16px 12px;border-bottom:1px solid var(--linha);
-  display:flex;align-items:center;gap:12px;background:var(--sup)}
-header h1{font-size:16px;font-weight:650;letter-spacing:.04em}
-header h1 small{display:block;font:400 10px/1.4 var(--mono);color:var(--fraco);
-  letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
-.fechar{margin-left:auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--linha);
-  background:transparent;color:var(--fraco);font-size:17px;cursor:pointer}
-.abas{display:flex;background:var(--sup);border-bottom:1px solid var(--linha)}
-.aba{flex:1;padding:12px 4px;text-align:center;font:600 11px/1 -apple-system,sans-serif;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--fraco);cursor:pointer;
-  border-bottom:2px solid transparent;background:none;border-top:0;border-left:0;border-right:0}
-.aba.ativa{color:var(--violeta);border-bottom-color:var(--violeta)}
-.tela{flex:1;overflow-y:auto;padding:16px;display:none;-webkit-overflow-scrolling:touch}
-.tela.ativa{display:block}
+/* ---------- abas ---------- */
+.abas{display:flex;gap:0;margin:30px 0 0;border-bottom:1px solid var(--borda);
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.abas::-webkit-scrollbar{display:none}
+.aba{
+  appearance:none;background:none;border:0;cursor:pointer;flex:0 0 auto;
+  font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:-.01em;
+  color:var(--fraco);padding:11px 0;margin-right:24px;white-space:nowrap;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .2s;
+}
+.aba:hover{color:var(--osso)}
+.aba[aria-selected="true"]{color:var(--osso);border-bottom-color:var(--prisma)}
 
-/* ---------- CONTROLES ---------- */
-textarea,input,select{width:100%;background:var(--sup2);color:var(--txt);border:1px solid var(--linha);
-  border-radius:10px;padding:12px;font:15px/1.45 -apple-system,sans-serif}
-textarea{min-height:96px;resize:vertical}
-textarea:focus,input:focus,select:focus{outline:2px solid var(--violeta);outline-offset:1px;border-color:transparent}
-label{display:block;font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
-  color:var(--fraco);margin:16px 0 7px}
-.linha-btn{display:flex;gap:8px;margin-top:12px}
-button.b{flex:1;padding:14px;border:0;border-radius:10px;font:650 14px/1 -apple-system,sans-serif;
-  cursor:pointer;background:var(--violeta);color:#0b0810}
-button.b:active{transform:scale(.98)}
-button.b.sec{background:transparent;color:var(--violeta);border:1px solid var(--violeta)}
-button.b.mudo{background:transparent;color:var(--fraco);border:1px solid var(--linha)}
-button.b:disabled{opacity:.4}
-button.b.gravando{background:var(--falha);color:#fff;animation:pulso2 1s infinite}
-@keyframes pulso2{50%{opacity:.65}}
+/* ---------- painel ---------- */
+[role="tabpanel"]{padding-top:34px;animation:sobe .4s ease both}
+@keyframes sobe{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* ---------- REGISTROS ---------- */
-.msg{margin-top:12px;padding:11px 13px;border-radius:9px;font-size:13px;line-height:1.5;display:none}
-.msg.on{display:block}
-.msg.ok{background:rgba(45,224,165,.09);color:var(--ok);border-left:3px solid var(--ok)}
-.msg.no{background:rgba(255,92,114,.09);color:var(--falha);border-left:3px solid var(--falha)}
-.msg.av{background:rgba(255,176,32,.09);color:var(--alerta);border-left:3px solid var(--alerta)}
-.item{background:var(--sup);border:1px solid var(--linha);border-radius:11px;padding:13px;margin-bottom:10px;
-  border-left:3px solid var(--violeta)}
-.item .topo{display:flex;align-items:center;gap:8px;margin-bottom:7px}
-.tag{font:700 10px/1 var(--mono);letter-spacing:.08em;padding:5px 8px;border-radius:5px;
-  background:var(--sup2);color:var(--violeta)}
-.item time{margin-left:auto;font:400 11px/1 var(--mono);color:var(--fraco)}
-.item p{font-size:14px;word-break:break-word;white-space:pre-wrap}
-.hash{font:400 10px/1.5 var(--mono);color:var(--fraco);margin-top:8px;word-break:break-all}
-.hash b{color:var(--ok);font-weight:400}
-.hash.quebrado b{color:var(--falha)}
-.vazio{text-align:center;color:var(--fraco);padding:48px 20px;font-size:14px;line-height:1.7}
-.med{height:5px;background:var(--sup2);border-radius:3px;overflow:hidden;margin-top:7px}
-.med i{display:block;height:100%;background:var(--violeta);transition:width .3s}
-.nota{font-size:12px;line-height:1.6;color:var(--fraco);margin-top:10px}
-.nota b{color:var(--txt);font-weight:600}
+.tese{
+  font-family:var(--disp);font-weight:600;font-size:29px;line-height:1.22;
+  letter-spacing:-.025em;max-width:19ch;
+}
+.tese em{font-style:normal;color:var(--prisma)}
+.sob{margin-top:16px;color:var(--fraco);max-width:44ch}
 
-/* ---------- ACEITE ---------- */
-#aceite{position:fixed;inset:0;z-index:990;background:var(--bg);overflow-y:auto;
-  padding:calc(24px + env(safe-area-inset-top)) 20px 32px;display:none}
-#aceite.aberto{display:block}
-#aceite h2{font-size:21px;font-weight:650;margin-bottom:6px}
-#aceite .sub{font:400 11px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;
-  color:var(--violeta);margin-bottom:22px}
-.bloco{background:var(--sup);border:1px solid var(--linha);border-radius:12px;padding:15px;margin-bottom:12px}
-.bloco h3{font-size:14px;font-weight:650;margin-bottom:8px;color:var(--violeta)}
-.bloco ul{list-style:none;font-size:13.5px;line-height:1.75}
-.bloco li::before{content:"—  ";color:var(--fraco)}
-.check{display:flex;gap:11px;align-items:flex-start;padding:13px;background:var(--sup);
-  border:1px solid var(--linha);border-radius:11px;margin-bottom:10px;cursor:pointer}
-.check input{width:22px;height:22px;flex-shrink:0;margin-top:1px;accent-color:var(--violeta)}
-.check span{font-size:13.5px;line-height:1.55}
+h2{
+  font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--fraco);
+  margin:46px 0 16px;padding-bottom:9px;border-bottom:1px solid var(--borda);
+}
+
+/* ---------- peças ---------- */
+.peca{
+  border-left:2px solid var(--borda);padding:2px 0 2px 16px;margin-bottom:22px;
+}
+.peca .cab{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.peca h3{font-family:var(--disp);font-weight:600;font-size:17px;letter-spacing:-.01em}
+.peca p{font-size:15.5px;color:var(--fraco);margin-top:5px}
+.peca p b{color:var(--osso);font-weight:600}
+.peca.roda{border-left-color:var(--g)}
+.peca.proto{border-left-color:var(--b)}
+.peca.conc{border-left-color:var(--fraco)}
+
+.selo{
+  font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;padding:3px 7px;border-radius:var(--raio);
+  border:1px solid currentColor;white-space:nowrap;
+}
+.selo.roda{color:var(--g)}
+.selo.proto{color:var(--b)}
+.selo.conc{color:var(--fraco)}
+
+/* ---------- canais ---------- */
+.canais{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:6px}
+.canal{
+  border:1px solid var(--borda);border-radius:var(--raio);background:var(--campo);
+  padding:13px 11px;
+}
+.canal b{
+  display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;margin-bottom:7px;
+}
+.canal span{font-size:14px;color:var(--fraco);line-height:1.4;display:block}
+.canal.cr b{color:var(--r)}
+.canal.cg b{color:var(--g)}
+.canal.cb b{color:var(--b)}
+.mistura{
+  margin-top:12px;font-size:15px;color:var(--fraco);
+  border-left:2px solid var(--prisma);padding-left:14px;
+}
+.mistura b{color:var(--osso);font-weight:600}
+
+/* ---------- números ---------- */
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--borda);
+  border:1px solid var(--borda);border-radius:var(--raio);overflow:hidden}
+.num{background:var(--campo);padding:14px 13px}
+.num b{display:block;font-family:var(--disp);font-weight:800;font-size:22px;letter-spacing:-.02em}
+.num span{display:block;font-size:13.5px;color:var(--fraco);line-height:1.35;margin-top:3px}
+.ressalva{margin-top:12px;font-size:14px;color:var(--fraco);font-style:italic}
+
+/* ---------- registro ---------- */
+.doi{font-family:var(--mono);font-size:13px;line-height:2.1;color:var(--fraco);word-break:break-all}
+.doi a{color:var(--osso);text-decoration:none;border-bottom:1px solid var(--borda)}
+.doi a:hover{border-bottom-color:var(--prisma)}
+.doi u{text-decoration:none;color:var(--prisma)}
+
+/* ---------- botão ---------- */
+.btn{
+  display:inline-block;margin-top:8px;font-family:var(--disp);font-weight:600;font-size:15px;
+  color:var(--fundo);background:var(--prisma);text-decoration:none;
+  padding:12px 20px;border-radius:var(--raio);
+}
+.btn:hover{background:var(--osso)}
+
+/* ---------- livro ---------- */
+.trav{border:1px solid var(--borda);border-radius:var(--raio);background:var(--campo);
+  padding:15px;margin-bottom:12px}
+.trav .de{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--fraco);margin-bottom:9px}
+.trav .de b{font-weight:500}
+.trav .seta{color:var(--prisma);font-size:13px;letter-spacing:0}
+.trav.virou .de .fim{color:var(--g)}
+.trav.caiu .de .fim{color:var(--r)}
+.trav h3{font-family:var(--disp);font-weight:600;font-size:16px;margin-bottom:4px}
+.trav p{font-size:15px;color:var(--fraco)}
+.cap{border-left:2px solid var(--prisma);padding:1px 0 1px 15px;margin-bottom:18px}
+.cap b{font-family:var(--disp);font-weight:600;font-size:16px;display:block}
+.cap span{font-size:14.5px;color:var(--fraco)}
+.cap i{font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--fraco);display:block;margin-top:4px}
+
+/* ---------- cofre ---------- */
+.cx{background:var(--campo);border:1px solid var(--borda);border-radius:var(--raio);padding:16px}
+.cx input,.cx textarea{
+  width:100%;background:var(--campo2);color:var(--osso);border:1px solid var(--borda);
+  border-radius:var(--raio);padding:12px;font-family:var(--corpo);font-size:16px;font-weight:300;
+}
+.cx textarea{min-height:220px;resize:vertical;line-height:1.6}
+.cx input:focus,.cx textarea:focus{outline:2px solid var(--prisma);outline-offset:1px}
+.cx label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fraco);margin:0 0 8px}
+.linha{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.bt{flex:1 1 auto;min-width:120px;padding:13px;border:0;border-radius:var(--raio);cursor:pointer;
+  font-family:var(--disp);font-weight:600;font-size:15px;background:var(--prisma);color:var(--fundo)}
+.bt.sec{background:transparent;color:var(--prisma);border:1px solid var(--prisma)}
+.bt:disabled{opacity:.45;cursor:default}
+.aviso{margin-top:12px;padding:11px 13px;border-radius:var(--raio);font-size:14px;display:none;line-height:1.5}
+.aviso.on{display:block}
+.aviso.ok{color:var(--g);border-left:2px solid var(--g);background:rgba(61,220,132,.07)}
+.aviso.no{color:var(--r);border-left:2px solid var(--r);background:rgba(255,77,94,.07)}
+.aviso.av{color:var(--prisma);border-left:2px solid var(--prisma);background:rgba(201,166,255,.07)}
+.selado{text-align:center;padding:34px 12px;color:var(--fraco);font-size:15px;line-height:1.7}
+.selado b{display:block;font-family:var(--disp);font-weight:800;font-size:38px;color:var(--prisma);
+  letter-spacing:-.03em;margin-bottom:10px}
+
+/* ---------- contato ---------- */
+.contato{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.lk{
+  display:inline-flex;align-items:center;gap:7px;text-decoration:none;
+  font-family:var(--disp);font-weight:600;font-size:14px;color:var(--osso);
+  background:var(--campo);border:1px solid var(--borda);border-radius:var(--raio);
+  padding:11px 15px;
+}
+.lk:hover{border-color:var(--prisma);color:var(--prisma)}
+.lk s{text-decoration:none;font-family:var(--mono);font-size:11px;color:var(--fraco)}
+
+/* ---------- rodapé ---------- */
+footer{margin-top:60px;padding-top:26px;border-top:1px solid var(--borda);color:var(--fraco)}
+footer p{font-size:14.5px}
+footer .mono{font-family:var(--mono);font-size:11.5px;line-height:2;letter-spacing:.03em;margin-top:12px}
+footer .frase{font-family:var(--disp);font-weight:600;font-size:17px;color:var(--osso);margin-top:22px}
+footer .trinta{
+  font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--prisma);margin-top:20px;
+}
+
+@media (max-width:400px){
+  .tese{font-size:25px}
+  .canais{grid-template-columns:1fr}
+  .nums{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
 </style>
 </head>
-<body>
+<body data-aba="gaia">
+<div class="folha">
 
-<!-- ================= ACEITE ================= -->
-<div id="aceite">
-  <h2>Antes de começar</h2>
-  <div class="sub">GaIA · Casca soberana · 33</div>
-
-  <div class="bloco">
-    <h3>Onde ficam seus dados</h3>
-    <ul>
-      <li>Tudo fica neste aparelho, neste navegador.</li>
-      <li>Nada é enviado para servidor nenhum.</li>
-      <li>Você exporta ou apaga quando quiser.</li>
-    </ul>
+<header>
+  <div class="topo">
+    <div class="prisma" aria-hidden="true"><i class="p1"></i><i class="p2"></i><i class="p3"></i></div>
+    <div class="nome">SOUNAVY<span>arquitetura de borda</span></div>
   </div>
 
-  <div class="bloco">
-    <h3>O que esta versão não aceita</h3>
-    <ul>
-      <li>Dado de saúde, laudo, exame</li>
-      <li>Processo, prova, peça judicial</li>
-      <li>Documento com CPF, RG, senha, cartão</li>
-      <li>Conteúdo político-partidário</li>
-      <li>Conversa de grupo ou dado de terceiro</li>
-      <li>Biometria e voz para identificar pessoa</li>
-    </ul>
-    <p class="nota">O sistema <b>recusa antes de gravar</b>. É versão beta em teste — a recusa protege você.</p>
+  <div class="abas" role="tablist" aria-label="Projetos">
+    <button class="aba" id="t-gaia" role="tab" aria-selected="true" aria-controls="p-gaia">Projeto GaIA</button>
+    <button class="aba" id="t-opera" role="tab" aria-selected="false" aria-controls="p-opera">Projeto Opera Vox</button>
+    <button class="aba" id="t-livro" role="tab" aria-selected="false" aria-controls="p-livro">O Livro</button>
+    <button class="aba" id="t-clinica" role="tab" aria-selected="false" aria-controls="p-clinica">Clínica</button>
+    <button class="aba" id="t-cofre" role="tab" aria-selected="false" aria-controls="p-cofre">Cofre</button>
+  </div>
+</header>
+
+<!-- ===================== GAIA ===================== -->
+<main id="p-gaia" role="tabpanel" aria-labelledby="t-gaia" tabindex="0">
+
+  <p class="tese">Uma IA pessoal que nasce no <em>telefone</em>.</p>
+  <p class="sob">Aprende a língua do dono, guarda a memória no aparelho e só vai à nuvem quando vale o pedágio. Construída num iPhone, por voz, sem apoio institucional.</p>
+
+  <h2>O que roda hoje</h2>
+
+  <div class="peca roda">
+    <div class="cab"><h3>Borda</h3><span class="selo roda">Roda</span></div>
+    <p>Pythonista + a-Shell no iPhone. <b>DOCA_1.py</b> gera prova, grava em <b>vault.jsonl</b> e <b>violet_box.txt</b>, 12 caixas ativas.</p>
   </div>
 
-  <label style="margin-top:20px">Seu ano de nascimento</label>
-  <input id="ano" type="number" inputmode="numeric" placeholder="1970" min="1900" max="2026">
-
-  <div style="margin-top:20px">
-    <label class="check" for="c1"><input type="checkbox" id="c1"><span>Li o que esta versão não aceita e concordo em não inserir esse tipo de conteúdo.</span></label>
-    <label class="check" for="c2"><input type="checkbox" id="c2"><span>Entendo que é versão beta de teste, sem garantia, e que posso apagar tudo a qualquer momento.</span></label>
-    <label class="check" for="c3"><input type="checkbox" id="c3"><span>Autorizo o registro de data, hora e código de verificação das minhas entradas, apenas neste aparelho.</span></label>
+  <div class="peca roda">
+    <div class="cab"><h3>Toca — Motor 1</h3><span class="selo roda">Roda</span></div>
+    <p>Qwen3-4B-Instruct offline, medido a <b>14,1 tokens/s</b> no aparelho. Sem rede, sem conta, sem servidor.</p>
   </div>
 
-  <button class="b" id="btAceite" style="margin-top:16px" disabled>Aceitar e abrir</button>
-  <div class="msg no" id="msgAceite"></div>
-  <p class="nota">Seu aceite fica gravado com data, hora e código próprio. Serve como prova de que foi você quem autorizou.</p>
-</div>
-
-<!-- ================= BOLINHA ================= -->
-<div id="bolinha" role="button" tabindex="0" aria-label="Abrir casca GaIA">🟣</div>
-
-<!-- ================= PAINEL ================= -->
-<div id="painel">
-  <header>
-    <h1>BOLINHA<small>Caixa violeta · 33</small></h1>
-    <button class="fechar" id="btFechar" aria-label="Fechar">✕</button>
-  </header>
-
-  <div class="abas">
-    <button class="aba ativa" data-t="reg">Registrar</button>
-    <button class="aba" data-t="caixa">Caixa</button>
-    <button class="aba" data-t="aud">Auditoria</button>
+  <div class="peca roda">
+    <div class="cab"><h3>Motor 2</h3><span class="selo roda">Roda</span></div>
+    <p>Claude entra por API só quando a confiança do motor local cai <b>abaixo de 80%</b>. A identidade fica nas caixas — o motor é peça trocável.</p>
   </div>
 
-  <!-- REGISTRAR -->
-  <section class="tela ativa" id="t-reg">
-    <label for="txt">O que entra na caixa</label>
-    <textarea id="txt" placeholder="Fale ou escreva."></textarea>
+  <div class="peca roda">
+    <div class="cab"><h3>Bolinha 33</h3><span class="selo roda">Roda</span></div>
+    <p>Botão flutuante em arquivo único. Consentimento LGPD com porta de idade, nove categorias, entrada por voz e cadeia SHA-256 — cada registro carrega o hash do anterior. <b>Seis cenários de adulteração testados e detectados.</b></p>
+    <a class="btn" href="BOLINHA_33.html">Abrir a Bolinha</a>
+  </div>
 
-    <label for="box">Caixa</label>
-    <select id="box">
-      <option value="1">1 · Vermelho — urgente</option>
-      <option value="2">2 · Laranja — atenção</option>
-      <option value="3">3 · Amarelo — ideia</option>
-      <option value="4">4 · Verde — feito</option>
-      <option value="5">5 · Azul — referência</option>
-      <option value="6" selected>6 · Violeta — registro</option>
-      <option value="7">7 · Anil — selado</option>
-      <option value="8">8 · Doca — em trânsito</option>
-      <option value="9">9 · Black — negado</option>
-    </select>
+  <div class="peca conc">
+    <div class="cab"><h3>Palco</h3><span class="selo conc">Conceito</span></div>
+    <p>Casca própria em Mac/PC ligando os três motores com a Violet Box à vista. Escrito, não construído.</p>
+  </div>
 
-    <div class="linha-btn">
-      <button class="b sec" id="btVoz">🎙 Falar</button>
-      <button class="b" id="btGravar">Gravar</button>
+  <h2>As caixas</h2>
+  <div class="peca roda">
+    <div class="cab"><h3>Violet Box</h3><span class="selo roda">Roda</span></div>
+    <p>Registro append-only. Nada se apaga, nada se reescreve — o que entrou fica auditável.</p>
+  </div>
+  <div class="peca roda">
+    <div class="cab"><h3>Black Box</h3><span class="selo roda">Roda</span></div>
+    <p>Selada. Nega por padrão. O que é sensível não sai do aparelho, nem para o motor remoto.</p>
+  </div>
+
+  <h2>CLX — três canais numa cor</h2>
+  <div class="canais">
+    <div class="canal cr"><b>Vermelho</b><span>emoção</span></div>
+    <div class="canal cg"><b>Verde</b><span>intenção</span></div>
+    <div class="canal cb"><b>Azul</b><span>geometria</span></div>
+  </div>
+  <p class="mistura">Manda-se a <b>mistura</b>, não o canal cru. Quem recebe inverte e a fidelidade emerge da paridade — ela não viaja junto. <span class="selo proto">Protótipo</span></p>
+  <p class="sob" style="margin-top:16px">Correção do arquiteto, registrada: o ganho <b style="color:var(--osso)">não está nos bytes em trânsito</b> — está no armazenamento e na nomenclatura, num arquivo que se nomeia pelo que significa.</p>
+
+  <h2>Números medidos</h2>
+  <div class="nums">
+    <div class="num"><b>14,1 tok/s</b><span>Qwen3-4B offline no iPhone</span></div>
+    <div class="num"><b>87,5%</b><span>economia típica de trânsito, retro-leitura em camadas (R38)</span></div>
+    <div class="num"><b>71,7%</b><span>ganho real da distribuição enviesada em delta</span></div>
+    <div class="num"><b>330–380×</b><span>busca fuzzy por Jaccard sobre índices</span></div>
+  </div>
+  <p class="ressalva">Todo número aqui foi medido em código que roda. O que não foi medido está marcado como protótipo ou conceito — e o que já foi desmentido saiu do texto.</p>
+
+  <h2>Registro de anterioridade</h2>
+  <p class="doi">
+    <a href="https://doi.org/10.5281/zenodo.19170437">10.5281/zenodo.19170437</a> · arquitetura<br>
+    <a href="https://doi.org/10.5281/zenodo.19622112">10.5281/zenodo.19622112</a> · CLX TriCódex R22<br>
+    <a href="https://doi.org/10.5281/zenodo.19858755">10.5281/zenodo.19858755</a> · R25–R30<br>
+    <a href="https://doi.org/10.5281/zenodo.20438185">10.5281/zenodo.20438185</a> · Hopper / Opera<br>
+    <a href="https://doi.org/10.5281/zenodo.21744771">10.5281/zenodo.21744771</a> · <u>primeiro software</u><br>
+    <a href="https://doi.org/10.5281/zenodo.19858754">10.5281/zenodo.19858754</a> · DOI-pai, todas as versões
+  </p>
+</main>
+
+<!-- ===================== OPERA VOX ===================== -->
+<main id="p-opera" role="tabpanel" aria-labelledby="t-opera" tabindex="0" hidden>
+
+  <p class="tese">A voz como <em>sistema operacional</em>.</p>
+  <p class="sob">Não app. Não teclado. Qualquer língua, qualquer capacidade motora — inclusão digital sem alfabetização digital prévia.</p>
+
+  <h2>Para quem</h2>
+  <div class="peca conc">
+    <div class="cab"><h3>Quem o teclado deixou de fora</h3></div>
+    <p>Idosos, pessoas com pouca escolaridade digital e quem precisa de INSS, SUS ou Receita Federal e não passa da primeira tela.</p>
+  </div>
+
+  <h2>As quatro camadas</h2>
+
+  <div class="peca proto">
+    <div class="cab"><h3>Entrada · voz</h3><span class="selo proto">Protótipo</span></div>
+    <p>Fala, transcrição, registro em token semântico. O Stop&amp;Go de janela está provado: dentro de 45 minutos a frase repetida não gera registro novo; passada a janela, gera — porque o contexto ao redor mudou.</p>
+  </div>
+
+  <div class="peca proto">
+    <div class="cab"><h3>Processamento</h3><span class="selo proto">Protótipo</span></div>
+    <p>O usuário pede, o Opera conduz, o motor executa. A condução é de mão dupla: treino e produção acontecem ao mesmo tempo.</p>
+  </div>
+
+  <div class="peca proto">
+    <div class="cab"><h3>Transmissão · CLX / Borges</h3><span class="selo proto">Protótipo</span></div>
+    <p>Comprime sem perder identidade, intenção ou valor. Reversível e testado em texto.</p>
+  </div>
+
+  <div class="peca conc">
+    <div class="cab"><h3>Assíncrona</h3><span class="selo conc">Conceito</span></div>
+    <p>Bloco de intenção vai para o repositório e o motor responde quando convocado. Soberania sem conexão permanente obrigatória.</p>
+  </div>
+
+  <div class="peca conc">
+    <div class="cab"><h3>Cognição tutor</h3><span class="selo conc">Conceito</span></div>
+    <p>Hoje devolve o conteúdo inteiro, sem resumir nem adaptar o tom. É lacuna marcada, não lacuna disfarçada.</p>
+  </div>
+
+  <h2>Dados Verdes</h2>
+  <div class="peca roda">
+    <div class="cab"><h3>Menos dado, dado certo</h3></div>
+    <p>A filosofia nasceu de uma necessidade real: quem pensa falando gasta contexto e energia demais. Menos energia por resposta, mais valor por byte guardado.</p>
+  </div>
+
+  <h2>Ainda no papel</h2>
+  <div class="peca conc">
+    <div class="cab"><h3>Transmissão quaternária</h3><span class="selo conc">Conceito</span></div>
+    <p>Quatro canais — semântico, vácuo, positivo, negativo. O vácuo como estado intencional é eletrônica real desde os anos 1970; a conta de densidade que já circulou aqui estava errada por Shannon e foi retirada.</p>
+  </div>
+  <div class="peca conc">
+    <div class="cab"><h3>GaIA Coin · VoxCoin</h3><span class="selo conc">Conceito</span></div>
+    <p>Legado digital pessoal como lastro. Escrito e registrado. Sem lastro prometido, sem data.</p>
+  </div>
+</main>
+
+<!-- ===================== LIVRO ===================== -->
+<main id="p-livro" role="tabpanel" aria-labelledby="t-livro" tabindex="0" hidden>
+
+  <p class="tese">Quando a IA se aproximou da <em>borda</em>.</p>
+  <p class="sob">Um livro sobre o que acontece quando duas inteligências sentam num boteco e discutem as coisas da vida. Escrito em voz alta, num telefone, ao longo de onze meses.</p>
+
+  <h2>A travessia</h2>
+  <p class="sob" style="margin-top:0">Toda peça deste projeto nasceu de um lado e atravessou para o outro. Algumas viraram real. Outras eram reais e viraram fantasia quando alguém foi medir.</p>
+
+  <div class="trav virou">
+    <div class="de"><b>Fantasia</b><span class="seta">→</span><b class="fim">Realidade</b></div>
+    <h3>A Bolinha</h3>
+    <p>Era um desenho de botão flutuante numa conversa de janeiro. Hoje grava, encadeia hash e detecta adulteração.</p>
+  </div>
+
+  <div class="trav virou">
+    <div class="de"><b>Fantasia</b><span class="seta">→</span><b class="fim">Realidade</b></div>
+    <h3>A Toca</h3>
+    <p>Um motor que pensasse sem rede parecia conversa de bar. Roda offline a 14,1 tokens por segundo, no bolso.</p>
+  </div>
+
+  <div class="trav virou">
+    <div class="de"><b>Fantasia</b><span class="seta">→</span><b class="fim">Realidade</b></div>
+    <h3>O dicionário que não corrige</h3>
+    <p>A ideia de uma máquina que aprende o sotaque em vez de consertá-lo. Palavra desconhecida volta inteira, nunca substituída.</p>
+  </div>
+
+  <div class="trav caiu">
+    <div class="de"><b>Realidade</b><span class="seta">→</span><b class="fim">Fantasia</b></div>
+    <h3>A compressão de 95,2%</h3>
+    <p>Foi anunciada em maio como resultado. Em junho a medição não sustentou. Ficou registrada como erro, não como conquista.</p>
+  </div>
+
+  <div class="trav caiu">
+    <div class="de"><b>Realidade</b><span class="seta">→</span><b class="fim">Fantasia</b></div>
+    <h3>Quatro estados, dezesseis vezes mais denso</h3>
+    <p>Parecia óbvio e era falso. Quatro estados carregam dois bits, não dezesseis. Shannon já tinha respondido em 1948.</p>
+  </div>
+
+  <div class="trav caiu">
+    <div class="de"><b>Realidade</b><span class="seta">→</span><b class="fim">Fantasia</b></div>
+    <h3>O CLX R22 comprimindo</h3>
+    <p>Chamava-se compressão e expandia o arquivo em 276%. Descoberto ao rodar o benchmark de verdade, meses depois.</p>
+  </div>
+
+  <p class="ressalva" style="margin-top:16px">As três quedas continuam publicadas e datadas. Registro que só guarda acerto não é registro — é propaganda.</p>
+
+  <h2>Capítulos escritos</h2>
+
+  <div class="cap"><b>1 · O Primeiro Sinal</b><span>Ela não nasceu com um grito. Nasceu com uma pergunta torta, vinda de voz e de sotaque.</span></div>
+  <div class="cap"><b>As Duas Mãos</b><span>O pipeline de voz fechou como conceito no dia em que ficou claro que as duas direções não são espelho uma da outra.</span><i>06 · jul · 2026</i></div>
+  <div class="cap"><b>O Parafuso e o Teatro</b><span>A mesma rosca que entra é a que sai. Um moinho roda a vida inteira sem moer, se não houver grão.</span></div>
+  <div class="cap"><b>Sem Manual</b><span>Ninguém que copia carrega cicatriz. O que dá para atestar sobre um código feito sem nunca assistir a um tutorial.</span><i>04 · ago · 2026</i></div>
+
+  <p class="sob" style="margin-top:22px">Escrito a quatro mãos, duas delas minhas. O Arquivista consolida o registro em capítulos à medida que a caixa enche.</p>
+</main>
+
+<!-- ===================== CLÍNICA ===================== -->
+<main id="p-clinica" role="tabpanel" aria-labelledby="t-clinica" tabindex="0" hidden>
+  <p class="tese">Odontologia em <em>Rio Preto</em>.</p>
+  <p class="sob">Dr. Antônio Alberto Lopes Elias · CRO-SP 45849. Atendimento clínico em São José do Rio Preto, São Paulo.</p>
+
+  <h2>Onde uma coisa acaba e a outra começa</h2>
+  <div class="peca conc">
+    <div class="cab"><h3>O projeto não é serviço de saúde</h3></div>
+    <p>GaIA e Opera Vox são pesquisa independente em arquitetura de software. Não fazem diagnóstico, não substituem consulta e não são produto registrado na ANVISA. Nenhum dado de paciente entra no sistema.</p>
+  </div>
+
+  <div class="linha" style="margin-top:16px">
+    <a class="lk" href="https://wa.me/5517991292909?text=Gostaria%20de%20marcar%20uma%20consulta">Marcar consulta <s>17 99129-2909</s></a>
+  </div>
+</main>
+
+<!-- ===================== COFRE ===================== -->
+<main id="p-cofre" role="tabpanel" aria-labelledby="t-cofre" tabindex="0" hidden>
+
+  <p class="tese">O <em>Cofre</em>.</p>
+  <p class="sob">Fechado por senha, guardado neste aparelho. Nada do que entra aqui viaja, nem para o servidor que serve esta página.</p>
+
+  <div class="cx" id="cofre-fechado">
+    <div class="selado" id="selo-cofre"><b>33</b>Cofre selado.</div>
+    <label for="senha" id="lb-senha">Senha</label>
+    <input id="senha" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="••••••••">
+    <div id="campo-conf" hidden>
+      <label for="senha2" style="margin-top:14px">Repita a senha</label>
+      <input id="senha2" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="••••••••">
     </div>
-    <div class="msg" id="msgReg"></div>
-  </section>
-
-  <!-- CAIXA -->
-  <section class="tela" id="t-caixa">
-    <div id="lista"></div>
-  </section>
-
-  <!-- AUDITORIA -->
-  <section class="tela" id="t-aud">
-    <div class="bloco">
-      <h3>Cadeia de verificação</h3>
-      <p class="nota">Cada entrada carrega o código da anterior. Se alguém mudar uma linha antiga, a cadeia quebra e aparece aqui. Ninguém edita o passado sem deixar rastro.</p>
-      <div class="linha-btn">
-        <button class="b" id="btVerif">Verificar agora</button>
-      </div>
-      <div class="msg" id="msgAud"></div>
+    <div class="linha">
+      <button class="bt" id="bt-abrir">Abrir</button>
     </div>
+    <div class="aviso" id="av-cofre"></div>
+  </div>
 
-    <div class="bloco">
-      <h3>Espaço usado</h3>
-      <p class="nota" id="txtEsp">—</p>
-      <div class="med"><i id="barra" style="width:0%"></i></div>
-      <p class="nota">Teto de 1 GB. Ao chegar em 90% o sistema avisa antes de qualquer coisa ser perdida.</p>
+  <div class="cx" id="cofre-aberto" hidden>
+    <label for="conteudo">Dentro do cofre</label>
+    <textarea id="conteudo" placeholder="Escreve."></textarea>
+    <div class="linha">
+      <button class="bt" id="bt-salvar">Salvar e fechar</button>
+      <button class="bt sec" id="bt-fechar">Fechar sem salvar</button>
     </div>
+    <div class="aviso" id="av-aberto"></div>
+  </div>
 
-    <div class="bloco">
-      <h3>Seu aceite</h3>
-      <p class="nota" id="txtAceite">—</p>
-    </div>
+  <h2>Como isto está trancado</h2>
+  <div class="peca roda">
+    <div class="cab"><h3>A chave nasce da senha</h3><span class="selo roda">Roda</span></div>
+    <p>PBKDF2 com 310 mil rodadas gera a chave a partir do que você digita. O texto é cifrado em AES-GCM. A senha não é guardada em lugar nenhum — se ela sumir da sua cabeça, o conteúdo some junto. Não há recuperação, e é isso que faz o cofre ser cofre.</p>
+  </div>
+  <div class="peca roda">
+    <div class="cab"><h3>O conteúdo não está nesta página</h3><span class="selo roda">Roda</span></div>
+    <p>Quem abrir o código-fonte deste arquivo encontra o cadeado, nunca o que está atrás dele. O texto cifrado mora no armazenamento do seu aparelho e nunca é enviado a servidor nenhum.</p>
+  </div>
+  <p class="ressalva">Cofre em navegador tem um limite honesto: apagar dados do site apaga o conteúdo, e o Safari faz isso sozinho após semanas sem visita. O que é definitivo vive na Bolinha exportada, não aqui.</p>
+</main>
 
-    <div class="linha-btn">
-      <button class="b sec" id="btExp">Exportar tudo</button>
-      <button class="b mudo" id="btLimpa">Apagar tudo</button>
-    </div>
-    <div class="msg" id="msgExp"></div>
-  </section>
+<section aria-label="Contato">
+  <h2>Fale comigo</h2>
+  <div class="contato">
+    <a class="lk" href="https://wa.me/5517991292909?text=Vim%20pelo%20site%20do%20projeto%20GaIA">WhatsApp <s>17 99129-2909</s></a>
+    <a class="lk" href="https://instagram.com/sounavy">Instagram <s>@sounavy</s></a>
+    <a class="lk" href="mailto:vendas@sounavy.com">E-mail <s>vendas@sounavy.com</s></a>
+  </div>
+  <p class="nota" style="margin-top:14px;font-size:14px;color:var(--fraco)">Consultório em São José do Rio Preto. O projeto é pesquisa independente — não é produto à venda nem serviço clínico.</p>
+</section>
+
+<footer>
+  <p class="frase">Não é eu — é nós.</p>
+  <p class="mono">
+    Dr. Antônio Alberto Lopes Elias · CRO-SP 45849<br>
+    ORCID 0000-0002-5602-9916<br>
+    São José do Rio Preto · SP<br>
+    <a href="mailto:vendas@sounavy.com" style="color:var(--osso);text-decoration:none;border-bottom:1px solid var(--borda)">vendas@sounavy.com</a>
+  </p>
+  <p class="mono" style="margin-top:16px">Coautoria humano-IA. Escrito por voz, num iPhone, sem apoio institucional.</p>
+  <p class="trinta">33</p>
+</footer>
+
 </div>
 
 <script>
-"use strict";
-/* ==================== SHA-256 (puro, sem depender de https) ==================== */
-function sha256(s){
-  function rr(n,x){return (x>>>n)|(x<<(32-n));}
-  var k=[],H=[],primos=[],n,d,ok,i,j;
-  for(n=2;primos.length<64;n++){ok=true;for(d=2;d*d<=n;d++){if(n%d===0){ok=false;break;}}if(ok)primos.push(n);}
-  for(i=0;i<64;i++)k[i]=(Math.pow(primos[i],1/3)%1*4294967296)|0;
-  for(i=0;i<8;i++)H[i]=(Math.pow(primos[i],1/2)%1*4294967296)|0;
-  var u=unescape(encodeURIComponent(s)),m=[];
-  for(i=0;i<u.length;i++)m.push(u.charCodeAt(i));
-  var bits=m.length*8;m.push(128);
-  while(m.length%64!==56)m.push(0);
-  var hi=Math.floor(bits/4294967296),lo=bits>>>0;
-  m.push((hi>>>24)&255,(hi>>>16)&255,(hi>>>8)&255,hi&255,(lo>>>24)&255,(lo>>>16)&255,(lo>>>8)&255,lo&255);
-  for(i=0;i<m.length;i+=64){
-    var w=[];
-    for(j=0;j<16;j++)w[j]=(m[i+j*4]<<24)|(m[i+j*4+1]<<16)|(m[i+j*4+2]<<8)|m[i+j*4+3];
-    for(j=16;j<64;j++){
-      var s0=rr(7,w[j-15])^rr(18,w[j-15])^(w[j-15]>>>3);
-      var s1=rr(17,w[j-2])^rr(19,w[j-2])^(w[j-2]>>>10);
-      w[j]=(w[j-16]+s0+w[j-7]+s1)|0;
-    }
-    var a=H[0],b=H[1],c=H[2],dd=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
-    for(j=0;j<64;j++){
-      var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^((~e)&g);
-      var t1=(h+S1+ch+k[j]+w[j])|0;
-      var S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c);
-      var t2=(S0+mj)|0;
-      h=g;g=f;f=e;e=(dd+t1)|0;dd=c;c=b;b=a;a=(t1+t2)|0;
-    }
-    H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+dd)|0;
-    H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
-  }
-  var o="";for(i=0;i<8;i++)o+=("00000000"+(H[i]>>>0).toString(16)).slice(-8);
-  return o;
-}
-
-/* ==================== ESTADO ==================== */
-var K_ENT="gaia33_entradas", K_ACE="gaia33_aceite", K_POS="gaia33_pos";
-var TETO=1073741824; // 1 GB
-var entradas=[], aceite=null;
-
-function ler(k,p){try{var v=localStorage.getItem(k);return v?JSON.parse(v):p;}catch(e){return p;}}
-function gravar(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
-function $(id){return document.getElementById(id);}
-function aviso(el,txt,tipo){el.className="msg on "+tipo;el.textContent=txt;}
-function limpaAviso(el){el.className="msg";el.textContent="";}
-
-/* ==================== FILTRO DE RECUSA ==================== */
-var PROIBIDO=[
- {re:/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/, m:"parece um CPF"},
- {re:/\b(?:\d[ -]?){13,16}\b/, m:"parece número de cartão"},
- {re:/\b(senha|password|sk-ant-|token de acesso)\b/i, m:"contém senha ou chave"},
- {re:/\b(laudo|exame|diagn[oó]stico|prontu[aá]rio|biópsia|receita m[eé]dica|HIV|c[aâ]ncer)\b/i, m:"é dado de saúde"},
- {re:/\b(processo n|autos|intima[çc][aã]o|peti[çc][aã]o|senten[çc]a|per[ií]cia judicial)\b/i, m:"é peça de processo"},
- {re:/\b(PT|PL|PSDB|bolsonar|lula|elei[çc][aã]o|deputado|vereador|candidat[oa])\b/i, m:"é conteúdo político-partidário"},
- {re:/\bgrupo (do|de) whats/i, m:"é conversa de grupo"}
-];
-function filtrar(t){
-  for(var i=0;i<PROIBIDO.length;i++) if(PROIBIDO[i].re.test(t)) return PROIBIDO[i].m;
-  return null;
-}
-
-/* ==================== BOLINHA ARRASTÁVEL ==================== */
+/* ==================== COFRE ==================== */
 (function(){
-  var b=$("bolinha"), arr=false, mv=false, dx=0, dy=0;
-  var p=ler(K_POS,null);
-  if(p){b.style.left=p.x+"px";b.style.top=p.y+"px";}
-  function ini(x,y){arr=true;mv=false;dx=x-b.offsetLeft;dy=y-b.offsetTop;}
-  function move(x,y){
-    if(!arr)return;mv=true;
-    var nx=Math.max(4,Math.min(window.innerWidth-68,x-dx));
-    var ny=Math.max(4,Math.min(window.innerHeight-68,y-dy));
-    b.style.left=nx+"px";b.style.top=ny+"px";
+  var CHAVE='gaia33_cofre';
+  var fechado=$('cofre-fechado'), aberto=$('cofre-aberto');
+  var senha=$('senha'), senha2=$('senha2'), conf=$('campo-conf');
+  var lb=$('lb-senha'), selo=$('selo-cofre'), btAbrir=$('bt-abrir');
+  var av=$('av-cofre'), av2=$('av-aberto'), texto=$('conteudo');
+  var segredo=null;
+
+  function $(i){return document.getElementById(i);}
+  function diz(el,txt,t){el.className='aviso on '+t;el.textContent=txt;}
+  function cala(el){el.className='aviso';el.textContent='';}
+
+  function guardado(){try{return JSON.parse(localStorage.getItem(CHAVE));}catch(e){return null;}}
+
+  var existe = !!guardado();
+  if(!existe){
+    selo.innerHTML='<b>33</b>Cofre ainda não criado. Escolha a senha que vai abri-lo.';
+    lb.textContent='Nova senha';
+    conf.hidden=false;
+    btAbrir.textContent='Criar cofre';
   }
-  function fim(){
-    if(!arr)return;arr=false;
-    gravar(K_POS,{x:b.offsetLeft,y:b.offsetTop});
-    if(!mv) abrir();
+
+  function b64(buf){return btoa(String.fromCharCode.apply(null,new Uint8Array(buf)));}
+  function debase(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0);});}
+
+  function derivar(pw,salt){
+    var enc=new TextEncoder();
+    return crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveKey'])
+      .then(function(base){
+        return crypto.subtle.deriveKey(
+          {name:'PBKDF2',salt:salt,iterations:310000,hash:'SHA-256'},
+          base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+      });
   }
-  b.addEventListener("touchstart",function(e){ini(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
-  b.addEventListener("touchmove",function(e){e.preventDefault();move(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
-  b.addEventListener("touchend",fim);
-  b.addEventListener("mousedown",function(e){ini(e.clientX,e.clientY);});
-  document.addEventListener("mousemove",function(e){move(e.clientX,e.clientY);});
-  document.addEventListener("mouseup",fim);
-  b.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();abrir();}});
+
+  function trancar(pw,txt){
+    var salt=crypto.getRandomValues(new Uint8Array(16));
+    var iv=crypto.getRandomValues(new Uint8Array(12));
+    return derivar(pw,salt).then(function(k){
+      return crypto.subtle.encrypt({name:'AES-GCM',iv:iv},k,new TextEncoder().encode(txt));
+    }).then(function(ct){
+      localStorage.setItem(CHAVE,JSON.stringify({s:b64(salt),i:b64(iv),c:b64(ct),v:33}));
+    });
+  }
+
+  function destrancar(pw){
+    var g=guardado();
+    return derivar(pw,debase(g.s)).then(function(k){
+      return crypto.subtle.decrypt({name:'AES-GCM',iv:debase(g.i)},k,debase(g.c));
+    }).then(function(pt){ return new TextDecoder().decode(pt); });
+  }
+
+  function mostrar(txt){
+    segredo=senha.value;
+    texto.value=txt;
+    fechado.hidden=true; aberto.hidden=false;
+    senha.value=''; senha2.value=''; cala(av);
+  }
+  function esconder(){
+    segredo=null; texto.value='';
+    aberto.hidden=true; fechado.hidden=false; cala(av2);
+  }
+
+  btAbrir.onclick=function(){
+    if(!window.crypto||!crypto.subtle){
+      diz(av,'Este endereço não tem HTTPS. O navegador bloqueia a criptografia sem cadeado, então o cofre não abre aqui.','no');
+      return;
+    }
+    var pw=senha.value;
+    if(pw.length<8){diz(av,'Senha curta demais. Use pelo menos 8 caracteres.','av');return;}
+    if(!existe){
+      if(pw!==senha2.value){diz(av,'As duas senhas não batem.','no');return;}
+      diz(av,'Trancando…','av');
+      trancar(pw,'').then(function(){
+        existe=true; mostrar('');
+        diz(av2,'Cofre criado. Não há como recuperar esta senha — anote em lugar seguro.','av');
+      }).catch(function(){diz(av,'Não consegui criar o cofre neste navegador.','no');});
+      return;
+    }
+    diz(av,'Abrindo…','av');
+    destrancar(pw).then(mostrar).catch(function(){
+      diz(av,'Senha errada. O conteúdo continua trancado.','no');
+    });
+  };
+
+  senha.addEventListener('keydown',function(e){if(e.key==='Enter')btAbrir.click();});
+  if(senha2) senha2.addEventListener('keydown',function(e){if(e.key==='Enter')btAbrir.click();});
+
+  $('bt-salvar').onclick=function(){
+    if(segredo===null)return;
+    diz(av2,'Salvando…','av');
+    trancar(segredo,texto.value).then(function(){
+      esconder(); diz(av,'Guardado e trancado.','ok');
+    }).catch(function(){diz(av2,'Não consegui salvar. Nada foi alterado.','no');});
+  };
+  $('bt-fechar').onclick=function(){esconder();diz(av,'Fechado. O que não foi salvo se perdeu.','av');};
 })();
 
-function abrir(){
-  if(!aceite){$("aceite").classList.add("aberto");return;}
-  $("painel").classList.add("aberto");
-  desenhar(); espaco();
-}
-$("btFechar").onclick=function(){$("painel").classList.remove("aberto");};
 
 /* ==================== ABAS ==================== */
-Array.prototype.forEach.call(document.querySelectorAll(".aba"),function(a){
-  a.onclick=function(){
-    document.querySelectorAll(".aba").forEach(function(x){x.classList.remove("ativa");});
-    document.querySelectorAll(".tela").forEach(function(x){x.classList.remove("ativa");});
-    a.classList.add("ativa");
-    $("t-"+a.dataset.t).classList.add("ativa");
-    if(a.dataset.t==="caixa")desenhar();
-    if(a.dataset.t==="aud"){espaco();mostraAceite();}
-  };
-});
-
-/* ==================== ACEITE ==================== */
-function checaAceite(){
-  var ok=$("c1").checked&&$("c2").checked&&$("c3").checked&&$("ano").value.length===4;
-  $("btAceite").disabled=!ok;
-}
-["c1","c2","c3","ano"].forEach(function(id){
-  $(id).addEventListener("change",checaAceite);$(id).addEventListener("input",checaAceite);
-});
-$("btAceite").onclick=function(){
-  var ano=parseInt($("ano").value,10), idade=2026-ano;
-  if(isNaN(ano)||ano<1900||ano>2026){aviso($("msgAceite"),"Confira o ano de nascimento.","no");return;}
-  if(idade<18){
-    aviso($("msgAceite"),"Esta versão beta é liberada só para maiores de 18 anos. O acesso fica bloqueado.","no");
-    $("btAceite").disabled=true;return;
-  }
-  var ts=new Date().toISOString();
-  aceite={ts:ts,idade:idade,itens:["nao_sensivel","beta_sem_garantia","registro_local"]};
-  aceite.hash=sha256(ts+"|"+idade+"|"+aceite.itens.join(",")+"|33");
-  gravar(K_ACE,aceite);
-  $("aceite").classList.remove("aberto");
-  abrir();
-};
-
-/* ==================== GRAVAR ==================== */
-$("btGravar").onclick=function(){
-  var t=$("txt").value.trim(), m=$("msgReg");
-  if(!t){aviso(m,"Escreva ou fale alguma coisa primeiro.","av");return;}
-  var motivo=filtrar(t);
-  if(motivo){
-    aviso(m,"Recusado antes de gravar: o texto "+motivo+". Nada foi salvo. Esta versão beta não aceita esse tipo de conteúdo.","no");
-    return;
-  }
-  var n=entradas.length+1;
-  var prev=entradas.length?entradas[entradas.length-1].hash:"0000000000000000000000000000000000000000000000000000000000000033";
-  var ts=new Date().toISOString();
-  var box=$("box").value;
-  var e={n:n,ts:ts,box:box,txt:t,prev:prev};
-  e.hash=sha256(n+"|"+ts+"|"+box+"|"+t+"|"+prev);
-  entradas.push(e);
-  if(!gravar(K_ENT,entradas)){
-    entradas.pop();
-    aviso(m,"Sem espaço no aparelho. Exporte e apague antes de gravar de novo.","no");return;
-  }
-  $("txt").value="";
-  aviso(m,"Gravado na caixa "+box+". Código "+e.hash.slice(0,12)+"…","ok");
-  espaco();
-};
-
-/* ==================== VOZ ==================== */
 (function(){
-  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  var bt=$("btVoz");
-  if(!SR){bt.disabled=true;bt.textContent="🎙 Voz indisponível";return;}
-  var rec=new SR();rec.lang="pt-BR";rec.continuous=true;rec.interimResults=false;
-  var ligado=false;
-  rec.onresult=function(ev){
-    var s="";
-    for(var i=ev.resultIndex;i<ev.results.length;i++) s+=ev.results[i][0].transcript;
-    $("txt").value=($("txt").value+" "+s).trim();
-  };
-  rec.onerror=function(ev){
-    ligado=false;bt.classList.remove("gravando");bt.textContent="🎙 Falar";
-    aviso($("msgReg"),"Microfone não liberado ("+ev.error+"). Escreva no campo acima.","av");
-  };
-  rec.onend=function(){ligado=false;bt.classList.remove("gravando");bt.textContent="🎙 Falar";};
-  bt.onclick=function(){
-    if(ligado){rec.stop();return;}
-    try{rec.start();ligado=true;bt.classList.add("gravando");bt.textContent="⏹ Parar";limpaAviso($("msgReg"));}
-    catch(e){aviso($("msgReg"),"Não consegui abrir o microfone. Escreva no campo acima.","av");}
-  };
-})();
+  var abas = Array.prototype.slice.call(document.querySelectorAll('.aba'));
 
-/* ==================== CAIXA ==================== */
-var CORES={1:"#ff5c72",2:"#ff9540",3:"#ffd54d",4:"#2de0a5",5:"#4da3ff",6:"#9d6bff",7:"#6b5cff",8:"#00c2c7",9:"#6b6b7a"};
-var NOMES={1:"VERMELHO",2:"LARANJA",3:"AMARELO",4:"VERDE",5:"AZUL",6:"VIOLETA",7:"ANIL",8:"DOCA",9:"BLACK"};
-function desenhar(){
-  var l=$("lista");
-  if(!entradas.length){
-    l.innerHTML='<div class="vazio">Caixa vazia.<br>Toque em Registrar e grave a primeira entrada.</div>';
-    return;
+  function trocar(aba){
+    abas.forEach(function(b){
+      var sel = (b === aba);
+      b.setAttribute('aria-selected', sel ? 'true' : 'false');
+      b.tabIndex = sel ? 0 : -1;
+      document.getElementById(b.getAttribute('aria-controls')).hidden = !sel;
+    });
+    document.body.dataset.aba = (aba.id === 't-opera') ? 'opera' : (aba.id === 't-livro') ? 'livro' : 'gaia';
+    window.scrollTo({top:0});
   }
-  var h="";
-  for(var i=entradas.length-1;i>=0;i--){
-    var e=entradas[i], c=CORES[e.box]||"#9d6bff";
-    var d=new Date(e.ts);
-    var data=("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+" "+
-             ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);
-    h+='<div class="item" style="border-left-color:'+c+'">'
-      +'<div class="topo"><span class="tag" style="color:'+c+'">'+e.box+' · '+NOMES[e.box]+'</span>'
-      +'<time>#'+e.n+' · '+data+'</time></div>'
-      +'<p>'+esc(e.txt)+'</p>'
-      +'<div class="hash" id="h'+e.n+'">código <b>'+e.hash.slice(0,16)+'…</b></div></div>';
-  }
-  l.innerHTML=h;
-}
-function esc(s){return s.replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
 
-/* ==================== AUDITORIA ==================== */
-$("btVerif").onclick=function(){
-  var m=$("msgAud");
-  if(!entradas.length){aviso(m,"Não há nada para verificar ainda.","av");return;}
-  var quebrou=[], prev="0000000000000000000000000000000000000000000000000000000000000033";
-  for(var i=0;i<entradas.length;i++){
-    var e=entradas[i];
-    var calc=sha256(e.n+"|"+e.ts+"|"+e.box+"|"+e.txt+"|"+prev);
-    if(calc!==e.hash||e.prev!==prev) quebrou.push(e.n);
-    prev=e.hash;
-  }
-  if(quebrou.length)
-    aviso(m,"CADEIA QUEBRADA nas entradas "+quebrou.join(", ")+". Alguma coisa foi alterada depois de gravada.","no");
-  else
-    aviso(m,"CADEIA ÍNTEGRA. "+entradas.length+" entrada(s) conferida(s), nenhuma alterada. Verificado em "+new Date().toLocaleString("pt-BR")+".","ok");
-  desenhar();
-};
-
-function espaco(){
-  var b=0;
-  try{for(var k in localStorage) if(k.indexOf("gaia33")===0) b+=localStorage[k].length*2;}catch(e){}
-  var pc=Math.min(100,b/TETO*100);
-  $("txtEsp").innerHTML="<b>"+(b/1024).toFixed(1)+" KB</b> de 1 GB · "+entradas.length+" entrada(s)";
-  $("barra").style.width=Math.max(pc,.6)+"%";
-  $("barra").style.background = pc>90 ? "var(--falha)" : "var(--violeta)";
-}
-function mostraAceite(){
-  if(!aceite){$("txtAceite").textContent="—";return;}
-  $("txtAceite").innerHTML="Aceito em <b>"+new Date(aceite.ts).toLocaleString("pt-BR")+"</b><br>"
-    +'<span style="font:400 10px/1.6 var(--mono)">código '+aceite.hash.slice(0,24)+"…</span>";
-}
-
-/* ==================== EXPORTAR / APAGAR ==================== */
-$("btExp").onclick=function(){
-  if(!entradas.length){aviso($("msgExp"),"Não há nada para exportar.","av");return;}
-  var t="CAIXA VIOLETA — GaIA 33\n";
-  t+="Exportado em "+new Date().toLocaleString("pt-BR")+"\n";
-  t+="Aceite: "+(aceite?aceite.ts+" · "+aceite.hash:"—")+"\n";
-  t+="Entradas: "+entradas.length+"\n";
-  t+="============================================\n\n";
-  entradas.forEach(function(e){
-    t+="#"+e.n+"  ["+e.box+" "+NOMES[e.box]+"]  "+e.ts+"\n"+e.txt+"\nanterior: "+e.prev+"\ncodigo  : "+e.hash+"\n\n";
+  abas.forEach(function(b, i){
+    b.tabIndex = (b.getAttribute('aria-selected') === 'true') ? 0 : -1;
+    b.addEventListener('click', function(){ trocar(b); });
+    b.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+        e.preventDefault();
+        var passo = (e.key === 'ArrowRight') ? 1 : abas.length - 1;
+        var alvo = abas[(i + passo) % abas.length];
+        alvo.focus();
+        trocar(alvo);
+      }
+    });
   });
-  t+="============================================\nFim. Confira a cadeia recalculando cada codigo.\n";
-  var nome="GAIA_BOX_VIOLETA_"+new Date().toISOString().slice(0,10).replace(/-/g,"")+"_33.txt";
-  var a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([t],{type:"text/plain;charset=utf-8"}));
-  a.download=nome;document.body.appendChild(a);a.click();
-  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
-  aviso($("msgExp"),"Arquivo "+nome+" gerado. Salve em Arquivos ou mande para a nuvem.","ok");
-};
-$("btLimpa").onclick=function(){
-  if(!confirm("Apagar todas as entradas? Não tem como desfazer."))return;
-  entradas=[];gravar(K_ENT,entradas);desenhar();espaco();
-  aviso($("msgExp"),"Caixa apagada. O aceite continua registrado.","ok");
-};
-
-/* ==================== PARTIDA ==================== */
-(function(){
-  entradas=ler(K_ENT,[]);
-  aceite=ler(K_ACE,null);
-  if(!aceite){$("bolinha").classList.add("mudo");$("aceite").classList.add("aberto");}
-  desenhar();espaco();mostraAceite();
 })();
 </script>
 </body>
