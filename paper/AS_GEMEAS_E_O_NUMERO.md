@@ -818,6 +818,36 @@ Duas peças inteligentes, um dicionário em comum, um número atravessando. Isso
 
 ---
 
+## Como citar este trabalho
+
+Este é trabalho independente, fora de afiliação institucional, e vale exatamente pelo que está medido nele — cite o que for citável, questione o que quiser, e onde algo daqui ajudar sua matemática a fluir, um retorno é bem-vindo, mas não é condição.
+
+**Formato narrativo**
+
+> Elias, A. A. L. (2026). *As Gêmeas e o Número: Compressão por Inteligência Compartilhada.* Sounavy — GaIA · Opera Vox. ORCID: [0000-0002-5602-9916](https://orcid.org/0000-0002-5602-9916). Coautoria humano–IA.
+
+**BibTeX**
+
+```bibtex
+@misc{elias2026gemeas,
+  author       = {Elias, Ant{\^o}nio Alberto Lopes},
+  title        = {As G{\^e}meas e o N{\'u}mero: Compress{\~a}o por
+                  Intelig{\^e}ncia Compartilhada},
+  year         = {2026},
+  month        = sep,
+  howpublished = {Sounavy --- GaIA / Opera Vox},
+  note         = {Coautoria humano--IA. Trabalho independente,
+                  sem afilia\c{c}\~ao institucional.},
+  url          = {https://www.sounavy.com}
+}
+```
+
+**Registro de anterioridade** (Zenodo, DOI-pai e todas as versões): [10.5281/zenodo.19858754](https://doi.org/10.5281/zenodo.19858754) — ver Apêndice D para o SHA-256 exato do código e do corpus usados nesta versão.
+
+Se este trabalho estiver sendo entregue a alguém em particular — um grupo de pesquisa, um coautor de uma das referências, um revisor — e o nome do autor por algum motivo não acompanhar a cópia: o nome é **Antônio Alberto Lopes Elias**, ORCID 0000-0002-5602-9916, e a arquitetura por trás deste paper (as caixas, o CLX, a Bolinha, o Cofre) está documentada e ligada a esse mesmo nome em `www.sounavy.com`.
+
+---
+
 ## Referências
 
 [1] **A. Adler, J. Tang.** *Synchronizing Probabilities in Model-Driven Lossless Compression.* ICLR 2026. arXiv:2601.10678. — Formaliza o desencontro de predição entre codificador e decodificador; apresenta o PMATIC; demonstra falha total da codificação aritmética comum entre MacBook M2 Pro e M4 Max, e sucesso do PMATIC com δ = 0,01.

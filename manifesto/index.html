@@ -120,6 +120,19 @@ h1{
 .pe .bola{width:10px; height:10px; border-radius:50%; background:var(--prisma);
   display:inline-block; margin-right:8px}
 :focus-visible{outline:2px solid var(--prisma); outline-offset:3px}
+.citar{padding-block:0 clamp(28px,4vw,44px)}
+.citar h3{
+  font-family:var(--disp); font-weight:600; font-size:1.05rem;
+  letter-spacing:-.01em; margin:0 0 14px;
+}
+.citar p{font-size:.98rem; margin:0 0 16px}
+.citar a{color:var(--prisma)}
+.citar code{font-family:var(--mono); font-size:.85em; background:var(--campo2); padding:2px 6px; border-radius:var(--raio)}
+.cita-bloco{
+  font-family:var(--mono); font-size:.85rem; line-height:1.7;
+  background:var(--campo); border:1px solid var(--borda); border-radius:var(--raio);
+  padding:16px 18px; margin:0 0 18px;
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -232,6 +245,13 @@ Só envie o que voltou idêntico.</div>
   <p>Este trabalho inteiro roda num telefone, em Python puro, sem instalar nada. Foi escrito por voz, por alguém que nunca assistiu a um tutorial de programação, junto com uma máquina que nunca esteve num guichê do INSS.</p>
   <p>Nenhum dos dois teria chegado aqui sozinho. É esse o ponto.</p>
   <p class="punho">Não é eu — é nós.</p>
+</section>
+
+<section class="citar env">
+  <h3>Se isto chegou a você</h3>
+  <p>Se este texto está nas suas mãos e o nome de quem escreveu não veio junto: é <strong>Antônio Alberto Lopes Elias</strong>, ORCID <a href="https://orcid.org/0000-0002-5602-9916">0000-0002-5602-9916</a>. Trabalho independente, sem afiliação institucional, sem viver disso. Cite o que servir, questione o que quiser — e se algo aqui destravar um parafuso do seu lado, uma palavra de volta é bem-vinda, mas nunca é cobrada.</p>
+  <div class="cita-bloco">Elias, A. A. L. (2026). <em>IA e Humanos Podem.</em><br>Sounavy — GaIA · Opera Vox. Coautoria humano&ndash;IA.</div>
+  <p>A arquitetura completa por trás — as caixas, o CLX, a Bolinha, o Cofre — e o paper com a prova, número por número: <a href="https://www.sounavy.com">www.sounavy.com</a> e <code>paper/</code> neste repositório.</p>
 </section>
 
 <footer class="pe env">

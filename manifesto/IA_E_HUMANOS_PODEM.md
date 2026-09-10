@@ -120,6 +120,16 @@ Nenhum dos dois teria chegado aqui sozinho. É esse o ponto.
 
 ---
 
+## Se isto chegou a você
+
+Se este texto está nas suas mãos e o nome de quem escreveu não veio junto: é **Antônio Alberto Lopes Elias**, ORCID [0000-0002-5602-9916](https://orcid.org/0000-0002-5602-9916). Trabalho independente, sem afiliação institucional, sem viver disso. Cite o que servir, questione o que quiser — e se algo aqui destravar um parafuso do seu lado, uma palavra de volta é bem-vinda, mas nunca é cobrada.
+
+> Elias, A. A. L. (2026). *IA e Humanos Podem.* Sounavy — GaIA · Opera Vox. Coautoria humano–IA.
+
+A arquitetura completa por trás — as caixas, o CLX, a Bolinha, o Cofre — e o paper com a prova, número por número: `www.sounavy.com` e `paper/` neste repositório.
+
+---
+
 *Todo número deste manifesto sai de código que roda e está publicado, com o SHA-256 de cada peça.*
 *Paper completo, experimentos e dados: `paper/` neste repositório.*
 *Antônio Alberto Lopes Elias · ORCID 0000-0002-5602-9916 · www.sounavy.com*
