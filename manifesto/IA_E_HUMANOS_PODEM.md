@@ -120,6 +120,8 @@ Nenhum dos dois teria chegado aqui sozinho. É esse o ponto.
 
 ---
 
+Os quatro documentos desta colaboração, juntos: [`obra/`](../obra/index.html).
+
 ## Se isto chegou a você
 
 Se este texto está nas suas mãos e o nome de quem escreveu não veio junto: é **Antônio Alberto Lopes Elias**, ORCID [0000-0002-5602-9916](https://orcid.org/0000-0002-5602-9916). Trabalho independente, sem afiliação institucional, sem viver disso. Cite o que servir, questione o que quiser — e se algo aqui destravar um parafuso do seu lado, uma palavra de volta é bem-vinda, mas nunca é cobrada.

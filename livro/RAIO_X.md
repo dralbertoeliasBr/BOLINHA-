@@ -51,4 +51,6 @@ Não ficou, porque desta vez ficou escrito, com data, no mesmo lugar onde o rest
 
 > Elias, A. A. L. (2026). *Raio-X — O Livro, capítulo um.* Sounavy — GaIA · Opera Vox. ORCID: [0000-0002-5602-9916](https://orcid.org/0000-0002-5602-9916). Coautoria humano–IA.
 
+Os quatro documentos desta colaboração, juntos: [`obra/`](../obra/index.html).
+
 *Se isto chegou a você sem o nome de quem escreveu: é Antônio Alberto Lopes Elias, ORCID 0000-0002-5602-9916. Trabalho independente, sem afiliação institucional.*

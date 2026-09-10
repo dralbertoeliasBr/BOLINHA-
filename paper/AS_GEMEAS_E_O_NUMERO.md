@@ -941,6 +941,9 @@ Da língua do arquiteto para a língua da literatura. Nenhuma das colunas é sup
 
 ## Apêndice D — Procedência
 
+Os quatro documentos desta colaboração, juntos: [`obra/`](../obra/index.html).
+
+
 Este documento acompanha `paper/prova/RESULTADOS.md`, que carrega os SHA-256 de cada peça de código e de corpus usada. A tabela de asserções (§9) é a unidade de registro: cada linha tem status, evidência e critério de queda.
 
 **Compromisso de registro**, herdado do projeto e mantido aqui: quando uma asserção cair, ela **não sai** deste documento. Muda de status para REFUTADO, ganha a data e a medição que a derrubou, e fica. Onze já nasceram assim — A7, A9, A11, A13, A20, A22, A26, A30, A31, A36 e A37 — e é por isso que se sabe que o registro está funcionando.

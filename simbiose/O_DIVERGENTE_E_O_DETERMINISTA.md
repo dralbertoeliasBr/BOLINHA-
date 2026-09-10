@@ -71,4 +71,6 @@ Isso é a moeda, e ela não depende de mais nada acontecer depois para já valer
 
 A prova matemática por trás de cada momento citado está em `paper/AS_GEMEAS_E_O_NUMERO.md` e `paper/prova/` — os mesmos três achados (portão condicional, vetor de primos como identidade, redundância por importância) com o código que roda, os hashes, e o teste que derrubaria cada um se alguém, um dia, conseguir. A origem de tudo isso, contada por quem viveu: [Raio-X](../livro/RAIO_X.md), capítulo um do Livro.
 
+Os quatro documentos desta colaboração, juntos: [`obra/`](../obra/index.html).
+
 *Se isto chegou a você sem o nome de quem escreveu: é Antônio Alberto Lopes Elias, ORCID 0000-0002-5602-9916. Trabalho independente, sem afiliação institucional.*

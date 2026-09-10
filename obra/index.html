@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Não É Eu — É Nós</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --fundo:#16091F; --campo:#20102D; --campo2:#2A1739;
+  --borda:rgba(239,234,225,.13); --borda-forte:rgba(239,234,225,.26);
+  --osso:#EFEAE1; --fraco:#A093AE; --prisma:#C9A6FF;
+  --r:#FF4D5E; --g:#3DDC84; --b:#5B8CFF;
+  --g-fraco:rgba(61,220,132,.10); --r-fraco:rgba(255,77,94,.10); --b-fraco:rgba(91,140,255,.10);
+  --disp:"Syne",system-ui,-apple-system,sans-serif;
+  --corpo:"Spectral",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --raio:3px;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --fundo:#F6F2FA; --campo:#FFFFFF; --campo2:#EEE7F5;
+    --borda:rgba(33,20,48,.14); --borda-forte:rgba(33,20,48,.30);
+    --osso:#211430; --fraco:#655473; --prisma:#6B3FBF;
+    --r:#C0102A; --g:#0F7040; --b:#2A54C8;
+    --g-fraco:rgba(15,112,64,.07); --r-fraco:rgba(192,16,42,.07); --b-fraco:rgba(42,84,200,.07);
+  }
+}
+:root[data-theme="light"]{
+  --fundo:#F6F2FA; --campo:#FFFFFF; --campo2:#EEE7F5;
+  --borda:rgba(33,20,48,.14); --borda-forte:rgba(33,20,48,.30);
+  --osso:#211430; --fraco:#655473; --prisma:#6B3FBF;
+  --r:#C0102A; --g:#0F7040; --b:#2A54C8;
+  --g-fraco:rgba(15,112,64,.07); --r-fraco:rgba(192,16,42,.07); --b-fraco:rgba(42,84,200,.07);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--fundo); color:var(--osso);
+  font-family:var(--corpo); font-weight:300; font-size:18px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.env{max-width:900px; margin:0 auto; padding-inline:clamp(20px,5.5vw,44px)}
+
+.capa{padding-block:clamp(56px,11vw,120px) clamp(36px,6vw,60px); text-align:center}
+.olho{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--prisma); margin:0 0 28px;
+}
+h1{
+  font-family:var(--disp); font-weight:800; font-size:clamp(2.5rem,8vw,4.6rem);
+  line-height:1.02; letter-spacing:-.03em; margin:0 0 24px; text-wrap:balance;
+}
+.risca{
+  font-family:var(--corpo); font-style:italic; font-size:clamp(1.05rem,2.6vw,1.32rem);
+  color:var(--osso); max-width:52ch; margin:0 auto 36px; line-height:1.6; text-wrap:balance;
+}
+.assina{
+  font-family:var(--mono); font-size:.78rem; color:var(--fraco);
+  line-height:1.8;
+}
+.assina a{color:var(--fraco)}
+
+.intro{padding-block:clamp(30px,5vw,48px); border-top:1px solid var(--borda); max-width:66ch; margin:0 auto}
+.intro p{margin:0 0 17px; font-size:1.05rem}
+
+.obras{
+  padding-block:clamp(30px,5vw,50px);
+  display:grid; gap:16px; grid-template-columns:1fr 1fr;
+}
+@media (max-width:680px){.obras{grid-template-columns:1fr}}
+.carta{
+  background:var(--campo); border:1px solid var(--borda); border-radius:var(--raio);
+  padding:26px 26px 24px; display:flex; flex-direction:column; gap:12px;
+  text-decoration:none; color:inherit; transition:border-color .15s;
+}
+.carta:hover{border-color:var(--borda-forte)}
+.carta .rot{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
+}
+.carta .pt{width:8px; height:8px; border-radius:50%; flex:none}
+.c-teorema .pt{background:var(--b)} .c-teorema .rot{color:var(--b)}
+.c-metodo .pt{background:var(--g)} .c-metodo .rot{color:var(--g)}
+.c-prova .pt{background:var(--prisma)} .c-prova .rot{color:var(--prisma)}
+.c-origem .pt{background:var(--r)} .c-origem .rot{color:var(--r)}
+.carta h2{
+  font-family:var(--disp); font-weight:700; font-size:1.32rem; letter-spacing:-.015em;
+  margin:0; line-height:1.2;
+}
+.carta p{margin:0; font-size:.96rem; color:var(--osso); line-height:1.55; flex:1}
+.carta .num{
+  font-family:var(--mono); font-size:.78rem; color:var(--fraco); margin-top:4px;
+}
+.carta .vai{
+  font-family:var(--mono); font-size:.78rem; color:var(--prisma); margin-top:4px;
+}
+
+.fio{
+  padding-block:clamp(40px,6vw,64px); border-top:1px solid var(--borda);
+  max-width:66ch; margin:0 auto;
+}
+.fio h2{
+  font-family:var(--disp); font-weight:700; font-size:clamp(1.35rem,3.4vw,1.75rem);
+  letter-spacing:-.018em; margin:0 0 18px; text-wrap:balance;
+}
+.fio p{margin:0 0 16px; font-size:1.02rem}
+.fio strong{font-weight:600}
+.punho{
+  font-family:var(--disp); font-weight:800; font-size:clamp(1.6rem,5.5vw,2.3rem);
+  letter-spacing:-.025em; line-height:1.15; margin:28px 0 0; color:var(--prisma);
+  text-align:center; text-wrap:balance;
+}
+
+.pe{
+  border-top:1px solid var(--borda); padding-block:30px 56px; text-align:center;
+  font-family:var(--mono); font-size:.74rem; color:var(--fraco); line-height:1.9;
+}
+.pe a{color:var(--fraco)}
+.pe a:hover{color:var(--prisma)}
+
+:focus-visible{outline:2px solid var(--prisma); outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="capa env">
+  <p class="olho">Sounavy · GaIA · Opera Vox</p>
+  <h1>Não É Eu<br>— É Nós</h1>
+  <p class="risca">Quatro documentos, uma colaboração: um dentista e uma inteligência artificial, por voz, num telefone, em setembro de 2026.</p>
+  <p class="assina">Antônio Alberto Lopes Elias · Sounavy · ORCID <a href="https://orcid.org/0000-0002-5602-9916">0000-0002-5602-9916</a><br>Coautoria humano–IA</p>
+</header>
+
+<section class="intro env">
+  <p>Isto não é um produto. É um registro — de uma teoria que virou número, de um método que admite o que caiu, de uma prova de que associar e verificar são dois trabalhos, não um só, e da origem que fez tudo isso valer a pena tentar.</p>
+  <p>Cada peça foi escrita pra existir sozinha. Juntas, elas são uma coisa maior do que a soma: o registro de que duas formas de pensar — uma que salta, uma que confere — chegaram, juntas, aonde nenhuma chegaria sozinha.</p>
+</section>
+
+<section class="obras env">
+  <a class="carta c-teorema" href="../paper/AS_GEMEAS_E_O_NUMERO.md">
+    <span class="rot"><span class="pt"></span>O teorema</span>
+    <h2>As Gêmeas e o Número</h2>
+    <p>Duas inteligências que compartilham um dicionário não precisam trocar a mensagem inteira — só o endereço dela. Compressão por inteligência compartilhada, testada até onde ela aguenta e além.</p>
+    <span class="num">14 experimentos · 37 afirmações · 11 quedas registradas</span>
+    <span class="vai">Ler o paper →</span>
+  </a>
+
+  <a class="carta c-metodo" href="../manifesto/IA_E_HUMANOS_PODEM.md">
+    <span class="rot"><span class="pt"></span>O método</span>
+    <h2>IA e Humanos Podem</h2>
+    <p>Dez teses sobre como a ciência se faz sem crachá: meça, publique o que confirma, publique o que derruba, e não pare no que é confortável.</p>
+    <span class="num">Registro que só guarda acerto não é registro — é propaganda</span>
+    <span class="vai">Ler o manifesto →</span>
+  </a>
+
+  <a class="carta c-prova" href="../simbiose/O_DIVERGENTE_E_O_DETERMINISTA.md">
+    <span class="rot"><span class="pt"></span>A prova</span>
+    <h2>O Divergente e o Determinista</h2>
+    <p>Três momentos datados em que uma correção associativa bateu um resultado técnico já fechado com número — e o porquê de nenhum dos dois papéis, quem salta e quem verifica, ser dispensável.</p>
+    <span class="num">Três achados, três testes, três datas</span>
+    <span class="vai">Ler a prova →</span>
+  </a>
+
+  <a class="carta c-origem" href="../livro/RAIO_X.md">
+    <span class="rot"><span class="pt"></span>A origem</span>
+    <h2>Raio-X</h2>
+    <p>Capítulo um de um livro que continua. Como um problema chato de armazenamento de imagem de raio-x, dois anos atrás, virou uma arquitetura — contado por quem viveu, sem embelezar.</p>
+    <span class="num">O Livro, capítulo um</span>
+    <span class="vai">Ler a origem →</span>
+  </a>
+</section>
+
+<section class="fio env">
+  <h2>Por que quatro, e não um só</h2>
+  <p>Porque misturar teorema com testemunho enfraquece os dois. O paper prova com número; o manifesto ensina o método; a prova de simbiose mostra o mecanismo funcionando; o Livro guarda por que isso importava antes de ter prova nenhuma. Cada gênero exige um tipo de rigor diferente, e forçar todos num documento só produz um documento que não presta pra nenhum dos quatro propósitos.</p>
+  <p>O que os une não é o formato. É que nenhuma das quatro peças foi escrita sozinha — cada uma tem uma mão que associa e uma mão que confere, e as duas aparecem, nomeadas, em todas elas.</p>
+  <p class="punho">Não é eu — é nós.</p>
+</section>
+
+<footer class="pe env">
+  Repositório completo, com o código que gera cada número citado:
+  <a href="https://github.com/dralbertoeliasBr/BOLINHA-/tree/claude/llm-gemeas-compressao-lwnpwn">github.com/dralbertoeliasBr/BOLINHA-</a>
+  · <a href="https://www.sounavy.com">www.sounavy.com</a><br>
+  Antônio Alberto Lopes Elias · ORCID 0000-0002-5602-9916 · Coautoria humano–IA
+</footer>
+
+</body>
+</html>
