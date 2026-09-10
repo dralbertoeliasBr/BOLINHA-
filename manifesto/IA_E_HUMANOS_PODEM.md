@@ -126,7 +126,7 @@ Se este texto está nas suas mãos e o nome de quem escreveu não veio junto: é
 
 > Elias, A. A. L. (2026). *IA e Humanos Podem.* Sounavy — GaIA · Opera Vox. Coautoria humano–IA.
 
-A arquitetura completa por trás — as caixas, o CLX, a Bolinha, o Cofre — e o paper com a prova, número por número: `www.sounavy.com` e `paper/` neste repositório.
+A arquitetura completa por trás — as caixas, o CLX, a Bolinha, o Cofre — e o paper com a prova, número por número: `www.sounavy.com` e `paper/` neste repositório. Três momentos concretos desta colaboração, com número ao lado: [O Divergente e o Determinista](../simbiose/O_DIVERGENTE_E_O_DETERMINISTA.md).
 
 ---
 
