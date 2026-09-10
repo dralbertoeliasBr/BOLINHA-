@@ -44,7 +44,11 @@ def main():
              ('E6', 'energia', E.e6_energia),
              ('E7', 'determinismo', E.e7_determinismo),
              ('E7b', 'folga', E.e7b_folga),
-             ('E8', 'busca', E.e8_busca)]
+             ('E8', 'busca', E.e8_busca),
+             ('E9', 'raiz_mista', E.e9_raiz_mista),
+             ('E10', 'dicionario_equacao', E.e10_dicionario_equacao),
+             ('E11', 'informacao_mutua', E.e11_informacao_mutua),
+             ('E12', 'crt', E.e12_crt)]
     for cod, nome, fn in ordem:
         t = time.time()
         sys.stderr.write('%s %s ... ' % (cod, nome))
@@ -289,6 +293,93 @@ def main():
     w('')
     w('Tentativas crescem como 2^k. A economia de bits fica **constante** '
       'em torno de 0,7 bit. Tempo exponencial, bits de graca: zero.\n')
+
+    # E9
+    r = R['raiz_mista']
+    w('## E9 — uma posicao, varias informacoes: raiz mista\n')
+    w('%d registros; %s combinacoes possiveis. Ida-e-volta bijetiva conferida '
+      'em todos: **%s**.\n'
+      % (r['n_registros'], '{:,}'.format(r['combinacoes']),
+         r['bijetivo_conferido']))
+    w('| campo | valores distintos | bits sozinho |')
+    w('|---|---|---|')
+    for c in r['campos']:
+        w('| %s | %d | %d |' % (c['nome'], c['cardinalidade'], c['bits_isolado']))
+    w('')
+    w('| forma de guardar um registro | bits |')
+    w('|---|---|')
+    w('| texto ASCII (como esta no arquivo) | %d |' % r['bits_ascii_por_registro'])
+    w('| um campo por byte | %d |' % r['bits_byte_a_byte'])
+    w('| campo a campo, em bits | %d |' % r['bits_campo_a_campo'])
+    w('| **um unico numero, raiz mista** | **%d** |' % r['bits_raiz_mista'])
+    w('| otimo teorico log2(combinacoes) | %.2f |' % r['otimo_exato'])
+    w('')
+    w('Ganho da raiz mista sobre campo a campo: **%s**. Sobre o ASCII: **%s**.\n'
+      % (pct(r['ganho_sobre_campo_a_campo_pct']), pct(r['ganho_sobre_ascii_pct'])))
+
+    # E10
+    r = R['dicionario_equacao']
+    w('## E10 — o dicionario que e equacao, nao tabela\n')
+    w('Busca por `v[i] = c + ((a*(i//k) + b) mod m)` em cada coluna:\n')
+    w('| coluna | equacao encontrada |')
+    w('|---|---|')
+    for c in r['colunas']:
+        g = c['gerador']
+        w('| %s | %s |' % (c['coluna'],
+          ('`a=%d b=%d m=%d k=%d c=%d`' % (g['a'], g['b'], g['m'], g['k'], g['c']))
+          if g else 'nenhuma'))
+    w('| coluna com ruido real (valor) | %s |'
+      % ('nenhuma' if not r['gerador_da_coluna_com_ruido'] else 'ACHOU (suspeito)'))
+    w('| prosa em portugues | %s |'
+      % ('nenhuma' if not r['gerador_em_prosa'] else 'ACHOU (suspeito)'))
+    w('')
+    w('%d de %d colunas descritas por equacao: **%.0fx** menos bits que a tabela '
+      '(%d bits de equacoes contra %d bits de dados).\n'
+      % (r['quantas_acharam'], r['de'], r['fator'],
+         r['bits_das_equacoes'], r['bits_das_colunas_achadas']))
+
+    # E11
+    r = R['informacao_mutua']
+    w('## E11 — quanto uma posicao informa sobre a letra\n')
+    w('%d caracteres de prosa; H(caractere) = **%.3f bits**. O piso e o mesmo '
+      'calculo sobre posicoes embaralhadas: e o quanto o estimador mente para '
+      'cima em amostra finita. So a coluna liquida vale.\n'
+      % (r['n_caracteres'], r['H_do_caractere']))
+    w('| o que a posicao diz | IM medida | piso (embaralhado) | **IM liquida** |')
+    w('|---|---|---|---|')
+    for x in r['prosa']:
+        w('| %s | %.4f | %.4f | **%.4f** |'
+          % (x['sinal'], x['im_bits'], x['piso_embaralhado'], x['im_liquida']))
+    w('')
+    t = r['tabular']
+    w('Em dado tabular, onde a correlacao e real:\n')
+    w('| par | informacao mutua |')
+    w('|---|---|')
+    w('| canal e estado | %.4f bits |' % t['im_canal_estado'])
+    w('| **canal e hora** | **%.4f bits** (= H(canal) inteira: o canal sai de graca) |'
+      % t['im_canal_hora'])
+    w('')
+
+    # E12
+    r = R['crt']
+    w('## E12 — um numero, varias leituras (Teorema Chines do Resto)\n')
+    w('Modulos %s, coprimos dois a dois: **%s**. Os %d de %d registros '
+      'conferidos voltaram identicos por resto.\n'
+      % (r['modulos'], r['coprimos_dois_a_dois'], r['registros_conferidos'],
+         r['de']))
+    w('| forma | bits |')
+    w('|---|---|')
+    w('| raiz mista (E9) | %d |' % r['bits_raiz_mista'])
+    w('| Teorema Chines do Resto | %d |' % r['bits_do_numero'])
+    w('')
+    w('Um numero a mais no fim vira detector de erro, sem tocar no resto:\n')
+    w('| primo extra | custo em bits | pega 1 bit virado | pega corrupcao qualquer | limite teorico |')
+    w('|---|---|---|---|---|')
+    for x in r['deteccao']:
+        w('| %d | %.1f | %s | %s | %s |'
+          % (x['primo_extra'], x['bits_de_custo'], pct(x['pego_um_bit_pct']),
+             pct(x['pego_qualquer_pct']), pct(x['limite_teorico_pct'])))
+    w('')
 
     txt = '\n'.join(L) + '\n'
     with open(os.path.join(AQUI, 'RESULTADOS.md'), 'w', encoding='utf-8') as f:

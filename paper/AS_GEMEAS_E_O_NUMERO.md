@@ -17,7 +17,7 @@ Descreve-se e testa-se uma arquitetura de comunicação em que **duas inteligên
 
 Este trabalho faz três coisas. **Primeira**: separa, com rigor, o que na ideia é teorema, o que é engenharia difícil e o que é impossível — e mede cada parte. **Segunda**: formaliza a intuição das *camadas* e das *ordens de leitura* (para frente, para trás, em laço, vertical, retro-leitura) numa única lei — a **Lei da Admissibilidade** — e mostra experimentalmente quando cada leitura paga e quando cobra. **Terceira**: ancora a arquitetura na literatura de 2023–2026, que já mediu boa parte dela.
 
-**Resultados centrais medidos aqui** (Python puro, sem dependências, 10 experimentos, hashes no Apêndice D):
+**Resultados centrais medidos aqui** (Python puro, sem dependências, 12 experimentos, hashes no Apêndice D):
 
 | | achado | número |
 |---|---|---|
@@ -29,6 +29,10 @@ Este trabalho faz três coisas. **Primeira**: separa, com rigor, o que na ideia 
 | ❌ | Fatiar em camadas não é de graça | o esquema em duas camadas custa **16,6% mais** que não fatiar |
 | ❌ | Vetor de primos (Gödel) como compressão | **expande 79,4×** em 32 bytes |
 | ❌ | "Um bit que gera tudo" por busca de semente | tempo **2^k**, economia constante de **0,7 bit** |
+| ✅ | Uma posição determina outra de graça — quando há correlação | canal e hora: **1,585 bits**, a entropia inteira |
+| ✅ | Um dicionário pode ser equação em vez de tabela | **40×** menos bits, onde a estrutura existe |
+| ❌ | A paridade da posição informa sobre a letra, em prosa | **0,000 bit** líquido, com controle |
+| ❌ | Raiz mista como grande ganho sobre campos em bits | **4,17%** — é 1 bit em 24 |
 | ⚠️ | Folga numérica entre as gêmeas | **nenhuma**: erro de ±1 em 4096 quebra no **1º byte** |
 
 **Veredito.** A arquitetura é real e boa parte dela já foi medida por terceiros: com LLM + adaptador de domínio chega-se a razão **0,09** (91% de redução) sem perda, e com protocolo interativo de perguntas binárias a **0,0006–0,004** (>99,9%) com perda semântica controlada [7]. O gargalo não é a ideia: é o **determinismo**. Duas LLMs em máquinas diferentes **não** são gêmeas por padrão — e este trabalho mede, em código próprio, o quanto isso é implacável.
@@ -338,6 +342,144 @@ A busca cega falha porque não tem bússola. O modelo compartilhado **é** a bú
 
 ---
 
+## 6-bis. Uma posição, várias informações
+
+Há um segundo andar na ideia do número único, e ele responde a uma pergunta diferente: em vez de *"quantos bits a mensagem inteira precisa?"*, pergunta *"quantas coisas uma única posição consegue determinar?"*.
+
+A intuição é essa: **uma localidade pode determinar duas ou três informações**, e um dicionário pode ser uma conta — que multiplica, soma e subtrai — em vez de uma tabela. As duas partes estão certas. Uma delas rende pouco e a outra rende muito, e o resto desta seção diz qual é qual.
+
+### 6-bis.1 A raiz mista: empacotar sem desperdiçar
+
+A forma exata de "uma posição determina várias informações" chama-se **numeração de raiz mista**. Com campos de cardinalidades c₁, c₂, … cₖ:
+
+```
+N = ((v₁·c₂ + v₂)·c₃ + v₃)·… + vₖ
+```
+
+e cada campo volta por divisões e restos sucessivos. É bijetivo: nada se perde, nada sobra.
+
+**Medido** (E9), sobre os registros reais do corpus tabular — 6 campos, 4.354.560 combinações, ida e volta conferida em todos os 400 registros:
+
+| campo | valores distintos | bits sozinho |
+|---|---|---|
+| mês | 12 | 4 |
+| dia | 28 | 5 |
+| hora | 24 | 5 |
+| minuto | 60 | 6 |
+| canal | 3 | 2 |
+| estado | 3 | 2 |
+
+| forma de guardar um registro | bits |
+|---|---|
+| texto ASCII, como está no arquivo | 280 |
+| um campo por byte | 48 |
+| campo a campo, já em bits | 24 |
+| **um único número, raiz mista** | **23** |
+| ótimo teórico, log₂(combinações) | 22,05 |
+
+**E aqui é preciso ser exato sobre o tamanho do ganho, porque é fácil vendê-lo grande demais.**
+
+A raiz mista **não cria bits. Ela para de desperdiçar.** O desperdício é o arredondamento: cada campo isolado é arredondado para um número inteiro de bits. Seis campos, seis arredondamentos, **1 bit perdido** — 24 contra 23. Isso é **4,17%**, e é o ganho real da ideia nova.
+
+Os 91,79% contra o ASCII são verdadeiros, mas medem outra coisa: medem *parar de guardar número como texto*. Isso já se sabia; não é a ideia nova, e confundir os dois é como o projeto perdeu 95,2% uma vez.
+
+**Onde a ideia rende de verdade:** o desperdício cresce com o *número de campos*, não com o tamanho deles. Em média meio bit por campo, até um bit no pior caso. Um registro com 6 campos perde 1 bit; um com 60 campos pequenos perde uns 30. **Quanto mais fatiado o dado, mais a raiz mista paga** — e é exatamente esse o caso do registro de consentimento da Bolinha, com suas nove categorias e suas portas de idade.
+
+### 6-bis.2 O dicionário que é equação, não tabela
+
+A segunda parte da intuição: *um dicionário que multiplique, some e subtraia, a partir do início do processo*. Em vez de guardar a tabela, guarda-se a **conta que gera a tabela**:
+
+```
+v[i] = c + ((a · (i ÷ k) + b) mod m)
+```
+
+Cinco números descrevem uma coluna inteira, de qualquer comprimento.
+
+**Medido** (E10). A busca varre k e m, deduz a e b dos primeiros termos e confere o resto:
+
+| coluna | equação encontrada |
+|---|---|
+| mês | `a=1 b=0 m=12 k=1 c=0` |
+| dia | `a=1 b=0 m=28 k=1 c=0` |
+| hora | `a=1 b=0 m=24 k=1 c=0` |
+| minuto | `a=7 b=0 m=60 k=1 c=0` |
+| canal | `a=1 b=0 m=3 k=1 c=0` |
+| estado | `a=1 b=0 m=3 k=7 c=0` |
+| coluna com ruído real (valor) | **nenhuma** |
+| prosa em português | **nenhuma** |
+
+Seis de seis colunas descritas por equação: **240 bits de equações no lugar de 9.600 bits de dados — 40× menos.**
+
+**Ressalva, e ela é grande:** o corpus tabular deste repositório **foi gerado exatamente por essa família de equações** (semente 33, o gerador está no repositório). Então E10 **não prova nada sobre dado real**. O que E10 prova é outra coisa, e é o que interessa: **a busca funciona e não mente.** Ela achou o que existia, não achou nada na coluna que tem ruído de verdade, e não achou nada em prosa. Uma busca que inventasse estrutura onde não há seria pior que inútil — seria a próxima queda. Esta não inventa.
+
+**O que isto é, em termos da §2.3.** Kolmogorov diz que o programa mínimo é incomputável. Verdade — *no geral*. Mas dentro de uma **família declarada** (aqui: afim-modular, cinco parâmetros), a busca é decidível e custa O(k·m·n). Não se acha o menor programa; acha-se **o menor programa de uma família que você escolheu**. Essa é a versão utilizável da ideia, e é assim que ela escapa do resultado negativo de E8: ali a busca era cega no espaço de todos os programas; aqui ela é dirigida dentro de um espaço minúsculo.
+
+### 6-bis.3 Onde o ganho de juntar realmente mora
+
+Agora a pergunta que decide tudo: **uma posição determina duas ou três informações de graça?**
+
+A resposta tem forma fechada. Codificar X e Y juntos, em vez de separados, economiza exatamente:
+
+```
+H(X) + H(Y) − H(X,Y)  =  I(X;Y)      a informação mútua
+```
+
+Nem um bit a mais. Se as duas informações forem independentes, I = 0 e juntar não rende **nada**. Se uma determinar a outra por completo, a segunda sai **de graça**.
+
+**Medido** (E11), sobre 7.653 caracteres da prosa do projeto, onde H(caractere) = 5,017 bits. A coluna do piso é o mesmo cálculo com as posições embaralhadas — é o quanto o estimador mente para cima numa amostra finita. **Só a coluna líquida vale:**
+
+| o que a posição diz | IM medida | piso (embaralhado) | **IM líquida** |
+|---|---|---|---|
+| paridade da posição — *o ímpar* | 0,0100 | 0,0101 | **−0,0001** |
+| posição módulo 3 | 0,0192 | 0,0196 | **−0,0004** |
+| posição dentro da palavra | 0,3282 | 0,0670 | **0,2612** |
+| comprimento da palavra | 0,3212 | 0,0990 | **0,2221** |
+
+E em dado tabular, onde a correlação é real:
+
+| par | informação mútua |
+|---|---|
+| canal e estado | 0,0292 bits |
+| **canal e hora** | **1,5850 bits** — que é H(canal) inteira |
+
+**A resposta à intuição, com número:**
+
+> *"Uma localidade pode determinar duas ou três informações"* — **sim, e a medida exata de quanto é a informação mútua.** Onde ela é total, a segunda informação custa **zero**: sabendo a hora, o canal vem junto, 1,585 de 1,585 bits. Onde ela é nula, não vem nada.
+
+**E a paridade em prosa é o caso nulo.** A *graduação para o ímpar* mede **0,000 bit** — não pouco, **zero**. Saber que a letra está numa posição par ou ímpar não diz absolutamente nada sobre qual letra é.
+
+**REFUTADO** — e vale olhar como, porque este é o método inteiro do projeto num parágrafo. Sem o controle, a paridade mediu 0,0100 bit. Um número pequeno, mas não zero. Multiplicado por 7.653 caracteres, viraria "76 bits de graça na paridade" — e isso teria virado uma afirmação, e depois a quarta queda. O embaralhamento mostrou que o piso do puro acaso é 0,0101. **Não havia sinal nenhum ali. Havia o estimador mentindo, e o controle pegou.**
+
+O que a posição *realmente* informa em prosa é o lugar dentro da palavra: **0,26 bit líquido**, ou 5,2% da entropia do caractere. Pequeno, mas real e reprodutível — e é uma camada admissível pela §4, porque o decodificador sabe onde está na palavra sem precisar do futuro.
+
+### 6-bis.4 Um número, várias leituras: o Teorema Chinês do Resto
+
+Existe uma segunda álgebra que faz um número responder a várias perguntas: com módulos coprimos dois a dois, N determina simultaneamente N mod m₁, N mod m₂, … — e cada campo se lê **independentemente dos outros**, sem desempacotar nada.
+
+**Medido** (E12): módulos 31, 32, 25, 61, 3 e 7; 200 de 200 registros voltaram idênticos.
+
+| forma | bits |
+|---|---|
+| raiz mista (E9) | **23** |
+| Teorema Chinês do Resto | 25 |
+
+**REFUTADO como compressão:** o CRT custa **2 bits a mais**, porque os módulos precisam ser coprimos entre si e maiores ou iguais às cardinalidades — não dá para encaixá-los justos. Para encolher, a raiz mista ganha.
+
+**Mas o CRT compra outra coisa, e é justamente o que faltava à arquitetura.** A §8.6 registrou que o fluxo das gêmeas é frágil a erro de canal: um bit corrompido destrói tudo depois dele. Um módulo a mais, no fim do mesmo número, vira detector — sem tocar em nada do resto:
+
+| primo extra | custo | pega 1 bit virado | pega corrupção qualquer | limite teórico |
+|---|---|---|---|---|
+| 7 | 2,8 bits | 100,00% | 85,25% | 85,71% |
+| 31 | 5,0 bits | 100,00% | 97,75% | 96,77% |
+| 127 | 7,0 bits | 100,00% | 98,75% | 99,21% |
+| 1021 | 10,0 bits | 100,00% | **100,00%** | 99,90% |
+
+**Dez bits detectam praticamente qualquer corrupção.** E o bit virado é pego **sempre**, em 100% dos casos e por construção: um módulo ímpar nunca divide 2ʲ, então trocar um bit muda o resto obrigatoriamente. Isso é mais forte que o limite genérico, e é de graça.
+
+É o par que a arquitetura precisava: **a raiz mista para encolher, o resto extra para provar que chegou inteiro.** E os primos, que fracassaram como compressão em 6.2, aparecem de novo aqui no papel que é deles — o de identidade, como já apontava 6.3.
+
+---
+
 ## 7. Energia: quando trocar tempo por bits
 
 *"Economia verde não aquece"* é uma tese sobre energia, e tese sobre energia se resolve com desigualdade, não com adjetivo.
@@ -491,6 +633,14 @@ Esta é a seção anti-esquecimento. Cada linha é falsificável e diz **qual te
 | A22 | O modelo compartilhado é criptografia | **REFUTADO** | §8.6: sem chave, sem prova | — |
 | A23 | Uma decomposição semântica de camadas (CLX) se paga | **CONJECTURA** | não medida | §10.2 |
 | A24 | Um par gêmeo LLM roda em telefone de borda | **CONJECTURA** | 14,1 tok/s medidos; codec não portado | §10.1 |
+| A25 | Raiz mista empacota k campos sem desperdiçar bit | **TEOREMA + MEDIDO** | E9: 23 bits, bijetivo em 400/400 | nada |
+| A26 | O ganho da raiz mista sobre campos já em bits é grande | **REFUTADO** | E9: **4,17%** — é 1 bit em 24 | registros com dezenas de campos |
+| A27 | Dicionário-equação descreve estrutura por ~40× menos bits | **MEDIDO** *(corpus gerado assim — ver §11)* | E10: 240 bits contra 9.600 | um log real sem estrutura afim |
+| A28 | A busca de equação não inventa estrutura onde não há | **MEDIDO** | E10: nada em prosa, nada na coluna com ruído | um falso positivo |
+| A29 | O ganho de juntar campos é exatamente a informação mútua | **TEOREMA + MEDIDO** | E11: canal↔hora = 1,585 = H(canal) | nada |
+| A30 | A paridade da posição informa sobre a letra, em prosa | **REFUTADO** | E11: **0,000** líquido, com controle | um corpus com métrica ou verso |
+| A31 | O Teorema Chinês do Resto comprime mais que a raiz mista | **REFUTADO** | E12: 25 bits contra 23 | cardinalidades já coprimas |
+| A32 | Um módulo extra detecta corrupção por quase nada | **MEDIDO** | E12: 10 bits pegam ~100% | — |
 
 ---
 
@@ -499,7 +649,8 @@ Esta é a seção anti-esquecimento. Cada linha é falsificável e diz **qual te
 ### 10.1 Barato e decisivo (dias)
 1. **Portar `nucleo.py` para o a-Shell no iPhone e rodar `roda_tudo.py`.** Ele é Python puro justamente para isso. Se os hashes baterem com os deste repositório, está provado que as gêmeas conseguem ser gêmeas **entre plataformas** — que é a asserção A24 e o alicerce de tudo.
 2. **Trocar o corpus.** 9 KB é pouco. Rodar sobre os capítulos do Livro e sobre a Violet Box real dá o número que interessa: quanto o dicionário do próprio autor vale sobre o texto do próprio autor.
-3. **Medir o CLX com controle.** Aplicar §4.2 aos três canais, sempre contra um controle de mesmo número de modelos. Decide A23.
+3. **Rodar a busca de equação (E10) num log de verdade** — a Violet Box, o `vault.jsonl`, qualquer registro com carimbo de tempo e identificador. Logs reais têm estrutura parcial: tempo monótono, id sequencial, coluna de enum cíclica. Cada coluna que a equação descrever sai do fluxo inteira. **Critério fixado antes de rodar:** vale se pelo menos uma coluna real for descrita e nenhuma falsa for aceita.
+4. **Medir o CLX com controle.** Aplicar §4.2 aos três canais, sempre contra um controle de mesmo número de modelos. Decide A23.
 
 ### 10.2 O teste que decide o fatiamento (semanas)
 A9 caiu para a decomposição nibble alto/baixo, que é **arbitrária** — não tem significado. A hipótese viva é que uma decomposição **semântica** ganhe onde a sintática perdeu:
@@ -525,7 +676,8 @@ Dito antes que alguém pergunte:
 3. **Os valores de energia de rede são suposições declaradas**, não medições. A desigualdade de §7 é o resultado; os números da tabela são ilustração.
 4. **PMATIC e o protocolo interativo não foram reproduzidos aqui.** São citados como literatura [1][7], não como medida própria.
 5. **O tabular de E3 é sintético** (gerado com semente 33, no repositório). O de prosa é real.
-6. **Um só ambiente.** Tudo rodou em um Linux x86-64, Python 3.11.15. A afirmação mais interessante — que dá o mesmo em outra máquina — é justamente a que falta (§10.1).
+6. **E10 roda sobre dado que foi gerado pelas mesmas equações que ele procura.** Isso mede a busca, não o mundo. O número de 40× **não** é uma taxa de compressão de dado real — é a prova de que a busca acha o que existe e recusa o que não existe. O teste que vale está em §10.2b.
+7. **Um só ambiente.** Tudo rodou em um Linux x86-64, Python 3.11.15. A afirmação mais interessante — que dá o mesmo em outra máquina — é justamente a que falta (§10.1).
 
 ---
 
@@ -602,7 +754,7 @@ Saem dois arquivos: `paper/prova/RESULTADOS.md` (legível) e `paper/prova/result
 | arquivo | o que é |
 |---|---|
 | `paper/prova/nucleo.py` | codificador aritmético binário, contadores, misturador. Inteiros puros, zero float no caminho crítico |
-| `paper/prova/experimentos.py` | os dez experimentos. Cada função é uma asserção da §9 |
+| `paper/prova/experimentos.py` | os doze experimentos. Cada função é uma asserção da §9 |
 | `paper/prova/roda_tudo.py` | executa tudo e escreve o relatório |
 | `paper/prova/corpus/pt_sounavy.txt` | 9.228 B de português real do projeto |
 | `paper/prova/corpus/tabular.csv` | 14.037 B sintéticos, semente 33 |
@@ -627,13 +779,18 @@ Da língua do arquiteto para a língua da literatura. Nenhuma das colunas é sup
 | o tempo não é a nossa preocupação | fronteira compressão–computação | §7, [7] |
 | bit fatorial que aproveita a informação | base fatorial / código de Lehmer | §6.1 |
 | vetor de primos local | numeração de Gödel (refutado) / impressão por resíduos (útil) | §6.2, §6.3 |
+| uma localidade determina 2 ou 3 informações | numeração de raiz mista; informação mútua | §6-bis.1, §6-bis.3 |
+| dicionário que multiplica, soma e subtrai | dicionário generativo afim-modular | §6-bis.2 |
+| uma graduação para o ímpar | informação mútua com a paridade da posição (refutado) | §6-bis.3 |
+| um número que responde a várias perguntas | Teorema Chinês do Resto | §6-bis.4 |
+| levar mais informação por byte | reduzir o desperdício de arredondamento | §6-bis.1 |
 | economia verde não aquece | critério `e_calc/N < (1−r)·e_rede` | §7 |
 
 ## Apêndice D — Procedência
 
 Este documento acompanha `paper/prova/RESULTADOS.md`, que carrega os SHA-256 de cada peça de código e de corpus usada. A tabela de asserções (§9) é a unidade de registro: cada linha tem status, evidência e critério de queda.
 
-**Compromisso de registro**, herdado do projeto e mantido aqui: quando uma asserção cair, ela **não sai** deste documento. Muda de status para REFUTADO, ganha a data e a medição que a derrubou, e fica. Seis já nasceram assim — A7, A9, A11, A13, A20 e A22 — e é por isso que se sabe que o registro está funcionando.
+**Compromisso de registro**, herdado do projeto e mantido aqui: quando uma asserção cair, ela **não sai** deste documento. Muda de status para REFUTADO, ganha a data e a medição que a derrubou, e fica. Nove já nasceram assim — A7, A9, A11, A13, A20, A22, A26, A30 e A31 — e é por isso que se sabe que o registro está funcionando.
 
 ---
 

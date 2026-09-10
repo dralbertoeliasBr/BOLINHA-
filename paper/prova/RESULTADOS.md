@@ -8,11 +8,11 @@ Gerado por `python3 paper/prova/roda_tudo.py`. Nada aqui foi digitado a mao.
 | plataforma | Linux-6.18.44-fc-v24-x86_64-with-glibc2.39 |
 | sha256 tabelas logisticas | `317f8cfbd08ae2a90832a5fb3ab14a44` |
 | sha256 nucleo.py | `221305ad5c99931e107ee1316e75c061` |
-| sha256 experimentos.py | `efcc5f714a015076c89fb00d0e3e4fb4` |
+| sha256 experimentos.py | `d48fbd91c339e0a8ca3d7c9fc65032a9` |
 | sha256 corpus/estruturado.json | `cbae9c24e7e445096db0d441c3699aa1` |
 | sha256 corpus/pt_sounavy.txt | `42c799b15165e8d426d9e594d08cfdce` |
 | sha256 corpus/tabular.csv | `d1a4cc9c485df64138329c977d5a9e06` |
-| tempo total | 39.0 s |
+| tempo total | 40.1 s |
 
 ## E1 — o teto da contagem
 
@@ -149,14 +149,14 @@ comprimir compensa  <=>  e_calc / N  <  (1 - r) * e_rede
 
 `e_calc` = potencia / vazao (J por byte processado) · `r` = 0.383 (razao medida deste codec) · `e_rede` = J por byte no enlace · `N` = quantas vezes o mesmo objeto sera enviado ou lido.
 
-Medido: 3076 bytes em 0.49 s = 6227 B/s (Python puro, um nucleo). xz -9: 1744 bytes; este codec: 1179 bytes.
+Medido: 3076 bytes em 0.49 s = 6309 B/s (Python puro, um nucleo). xz -9: 1744 bytes; este codec: 1179 bytes.
 
 | motor | e_calc (J/byte) | enlace | limiar (1-r)*e_rede | compensa em 1 envio? | envios p/ empatar |
 |---|---|---|---|---|---|
-| este codec, Python puro (MEDIDO) | 0.000803 | fibra / datacenter | 1.23e-08 | nao | 65,097 |
-| este codec, Python puro (MEDIDO) | 0.000803 | 4G movel | 1.23e-06 | nao | 651 |
-| este codec, Python puro (MEDIDO) | 0.000803 | satelite / LoRa | 0.000123 | nao | 7 |
-| este codec, Python puro (MEDIDO) | 0.000803 | espaco profundo | 0.0123 | SIM | 1 |
+| este codec, Python puro (MEDIDO) | 0.000793 | fibra / datacenter | 1.23e-08 | nao | 64,255 |
+| este codec, Python puro (MEDIDO) | 0.000793 | 4G movel | 1.23e-06 | nao | 643 |
+| este codec, Python puro (MEDIDO) | 0.000793 | satelite / LoRa | 0.000123 | nao | 6 |
+| este codec, Python puro (MEDIDO) | 0.000793 | espaco profundo | 0.0123 | SIM | 1 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | fibra / datacenter | 1.23e-08 | nao | 41 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | 4G movel | 1.23e-06 | SIM | 1 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | satelite / LoRa | 0.000123 | SIM | 1 |
@@ -217,8 +217,84 @@ A gemea receptora calcula cada probabilidade com erro de ate +-D (numa escala de
 |---|---|---|---|---|---|
 | 8 | 280 | 256 | 7.75 | **+0.25** | 0.0002 |
 | 12 | 3,545 | 4,096 | 11.42 | **+0.58** | 0.0026 |
-| 16 | 33,237 | 65,536 | 15.08 | **+0.92** | 0.0236 |
-| 20 | 751,504 | 1,048,576 | 19.33 | **+0.67** | 0.5433 |
+| 16 | 33,237 | 65,536 | 15.08 | **+0.92** | 0.0242 |
+| 20 | 751,504 | 1,048,576 | 19.33 | **+0.67** | 0.5611 |
 
 Tentativas crescem como 2^k. A economia de bits fica **constante** em torno de 0,7 bit. Tempo exponencial, bits de graca: zero.
+
+## E9 — uma posicao, varias informacoes: raiz mista
+
+400 registros; 4,354,560 combinacoes possiveis. Ida-e-volta bijetiva conferida em todos: **True**.
+
+| campo | valores distintos | bits sozinho |
+|---|---|---|
+| mes | 12 | 4 |
+| dia | 28 | 5 |
+| hora | 24 | 5 |
+| min | 60 | 6 |
+| canal | 3 | 2 |
+| estado | 3 | 2 |
+
+| forma de guardar um registro | bits |
+|---|---|
+| texto ASCII (como esta no arquivo) | 280 |
+| um campo por byte | 48 |
+| campo a campo, em bits | 24 |
+| **um unico numero, raiz mista** | **23** |
+| otimo teorico log2(combinacoes) | 22.05 |
+
+Ganho da raiz mista sobre campo a campo: **4.17%**. Sobre o ASCII: **91.79%**.
+
+## E10 — o dicionario que e equacao, nao tabela
+
+Busca por `v[i] = c + ((a*(i//k) + b) mod m)` em cada coluna:
+
+| coluna | equacao encontrada |
+|---|---|
+| mes | `a=1 b=0 m=12 k=1 c=0` |
+| dia | `a=1 b=0 m=28 k=1 c=0` |
+| hora | `a=1 b=0 m=24 k=1 c=0` |
+| min | `a=7 b=0 m=60 k=1 c=0` |
+| canal | `a=1 b=0 m=3 k=1 c=0` |
+| estado | `a=1 b=0 m=3 k=7 c=0` |
+| coluna com ruido real (valor) | nenhuma |
+| prosa em portugues | nenhuma |
+
+6 de 6 colunas descritas por equacao: **40x** menos bits que a tabela (240 bits de equacoes contra 9600 bits de dados).
+
+## E11 — quanto uma posicao informa sobre a letra
+
+7653 caracteres de prosa; H(caractere) = **5.017 bits**. O piso e o mesmo calculo sobre posicoes embaralhadas: e o quanto o estimador mente para cima em amostra finita. So a coluna liquida vale.
+
+| o que a posicao diz | IM medida | piso (embaralhado) | **IM liquida** |
+|---|---|---|---|
+| paridade da posicao (o impar) | 0.0100 | 0.0101 | **-0.0001** |
+| posicao modulo 3 | 0.0192 | 0.0196 | **-0.0004** |
+| posicao dentro da palavra | 0.3282 | 0.0670 | **0.2612** |
+| comprimento da palavra | 0.3212 | 0.0990 | **0.2221** |
+
+Em dado tabular, onde a correlacao e real:
+
+| par | informacao mutua |
+|---|---|
+| canal e estado | 0.0292 bits |
+| **canal e hora** | **1.5850 bits** (= H(canal) inteira: o canal sai de graca) |
+
+## E12 — um numero, varias leituras (Teorema Chines do Resto)
+
+Modulos [31, 32, 25, 61, 3, 7], coprimos dois a dois: **True**. Os 200 de 200 registros conferidos voltaram identicos por resto.
+
+| forma | bits |
+|---|---|
+| raiz mista (E9) | 23 |
+| Teorema Chines do Resto | 25 |
+
+Um numero a mais no fim vira detector de erro, sem tocar no resto:
+
+| primo extra | custo em bits | pega 1 bit virado | pega corrupcao qualquer | limite teorico |
+|---|---|---|---|---|
+| 7 | 2.8 | 100.00% | 85.25% | 85.71% |
+| 31 | 5.0 | 100.00% | 97.75% | 96.77% |
+| 127 | 7.0 | 100.00% | 98.75% | 99.21% |
+| 1021 | 10.0 | 100.00% | 100.00% | 99.90% |
 

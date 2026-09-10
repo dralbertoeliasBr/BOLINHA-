@@ -1,6 +1,6 @@
 # paper/ — As Gêmeas e o Número
 
-**[→ Ler o paper](AS_GEMEAS_E_O_NUMERO.md)** · **[→ Ver os resultados medidos](prova/RESULTADOS.md)**
+**[→ Ler o paper](AS_GEMEAS_E_O_NUMERO.md)** · **[→ Ver os resultados medidos](prova/RESULTADOS.md)** · **[→ Manifesto](../manifesto/IA_E_HUMANOS_PODEM.md)**
 
 Compressão por inteligência compartilhada: duas gêmeas com o mesmo dicionário,
 uma sequência de números atravessando, e o emissor descomprimindo antes de enviar.
@@ -20,7 +20,7 @@ python3 paper/prova/roda_tudo.py
 O cabeçalho traz o SHA-256 de cada peça de código e de corpus: se um número
 do paper não bater com a sua máquina, o paper está errado.
 
-## Os dez experimentos
+## Os doze experimentos
 
 | # | pergunta | resposta medida |
 |---|---|---|
@@ -34,6 +34,10 @@ do paper não bater com a sua máquina, o paper está errado.
 | E7 | Quanto de deriva as gêmeas aguentam? | deriva pontual falha **em silêncio** em 7% dos casos |
 | E7b | E ruído numérico constante? | ±1 em 4096 quebra no **1º byte** |
 | E8 | E a semente curta que gera tudo? | tempo **2^k**, economia de **0,7 bit** |
+| E9 | Uma posição carrega várias informações? | raiz mista: **23 bits** contra 24, sem desperdício |
+| E10 | O dicionário pode ser equação? | **40×** menos bits — e não inventa estrutura onde não há |
+| E11 | Quanto uma posição informa sobre a letra? | paridade: **0,000**. Canal e hora: **1,585 bits**, tudo |
+| E12 | Um número responde a várias perguntas? | responde — e 10 bits extras pegam ~**100%** da corrupção |
 
 ## Arquivos
 
@@ -41,7 +45,7 @@ do paper não bater com a sua máquina, o paper está errado.
 |---|---|
 | `AS_GEMEAS_E_O_NUMERO.md` | o paper |
 | `prova/nucleo.py` | codificador aritmético binário. Inteiros puros, zero float no caminho crítico |
-| `prova/experimentos.py` | os dez experimentos — cada função é uma asserção do paper |
+| `prova/experimentos.py` | os doze experimentos — cada função é uma asserção do paper |
 | `prova/roda_tudo.py` | executa tudo e escreve o relatório |
 | `prova/corpus/` | 9 KB de português real do projeto + 14 KB tabular sintético |
 | `prova/RESULTADOS.md` | a saída, com hashes. Nenhum número digitado à mão |

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IA e Humanos Podem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --fundo:#16091F; --campo:#20102D; --campo2:#2A1739;
+  --borda:rgba(239,234,225,.13); --borda-forte:rgba(239,234,225,.26);
+  --osso:#EFEAE1; --fraco:#A093AE; --prisma:#C9A6FF;
+  --r:#FF4D5E; --g:#3DDC84; --b:#5B8CFF;
+  --g-fraco:rgba(61,220,132,.10); --r-fraco:rgba(255,77,94,.10);
+  --disp:"Syne",system-ui,-apple-system,sans-serif;
+  --corpo:"Spectral",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --raio:3px;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --fundo:#F6F2FA; --campo:#FFFFFF; --campo2:#EEE7F5;
+    --borda:rgba(33,20,48,.14); --borda-forte:rgba(33,20,48,.30);
+    --osso:#211430; --fraco:#655473; --prisma:#6B3FBF;
+    --r:#C0102A; --g:#0F7040; --b:#2A54C8;
+    --g-fraco:rgba(15,112,64,.07); --r-fraco:rgba(192,16,42,.07);
+  }
+}
+:root[data-theme="light"]{
+  --fundo:#F6F2FA; --campo:#FFFFFF; --campo2:#EEE7F5;
+  --borda:rgba(33,20,48,.14); --borda-forte:rgba(33,20,48,.30);
+  --osso:#211430; --fraco:#655473; --prisma:#6B3FBF;
+  --r:#C0102A; --g:#0F7040; --b:#2A54C8;
+  --g-fraco:rgba(15,112,64,.07); --r-fraco:rgba(192,16,42,.07);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--fundo); color:var(--osso);
+  font-family:var(--corpo); font-weight:300; font-size:18px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.env{max-width:760px; margin:0 auto; padding-inline:clamp(20px,5.5vw,40px)}
+
+.capa{padding-block:clamp(52px,10vw,110px) clamp(32px,5vw,52px)}
+.olho{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--prisma); margin:0 0 26px;
+}
+h1{
+  font-family:var(--disp); font-weight:800; font-size:clamp(2.7rem,10vw,5rem);
+  line-height:.95; letter-spacing:-.03em; margin:0 0 22px; text-wrap:balance;
+}
+.risca{
+  font-family:var(--disp); font-weight:600; font-size:clamp(1.05rem,2.6vw,1.3rem);
+  color:var(--prisma); margin:0 0 34px; line-height:1.35; text-wrap:balance;
+}
+.abre p{font-size:1.12rem; margin:0 0 18px}
+.abre p:first-of-type{font-size:1.28rem; line-height:1.55}
+.assina{
+  font-family:var(--mono); font-size:.76rem; color:var(--fraco);
+  margin:30px 0 0; line-height:1.7;
+}
+
+.tese{padding-block:clamp(38px,6vw,60px); border-top:1px solid var(--borda)}
+.tese .n{
+  font-family:var(--mono); font-weight:500; font-size:.8rem; letter-spacing:.2em;
+  color:var(--prisma); display:block; margin:0 0 16px;
+}
+.tese h2{
+  font-family:var(--disp); font-weight:700; font-size:clamp(1.55rem,4.4vw,2.3rem);
+  line-height:1.14; letter-spacing:-.022em; margin:0 0 20px; text-wrap:balance;
+}
+.tese p{margin:0 0 16px}
+.tese strong{font-weight:600}
+.tese em{font-style:italic}
+
+.prova{
+  margin:24px 0 0; padding:16px 20px; background:var(--campo);
+  border-left:2px solid var(--g); border-radius:0 var(--raio) var(--raio) 0;
+  font-size:.95rem;
+}
+.prova b{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--g); display:block; margin:0 0 8px;
+  font-weight:500;
+}
+.prova p{margin:0}
+.prova .numero{
+  font-family:var(--mono); font-size:.82rem; word-break:break-all;
+  color:var(--prisma); display:block; margin-top:12px; line-height:1.6;
+}
+.equacao{
+  font-family:var(--mono); font-size:.82rem; line-height:1.7;
+  background:var(--campo); border:1px solid var(--borda); border-radius:var(--raio);
+  padding:16px 18px; margin:22px 0; overflow-x:auto; white-space:pre-wrap;
+}
+.tese.queda .prova{border-left-color:var(--r)}
+.tese.queda .prova b{color:var(--r)}
+
+.fecho{
+  padding-block:clamp(44px,7vw,72px); border-top:1px solid var(--borda-forte);
+}
+.fecho h2{
+  font-family:var(--disp); font-weight:700; font-size:clamp(1.5rem,4vw,2.1rem);
+  letter-spacing:-.02em; margin:0 0 24px; text-wrap:balance;
+}
+.fecho p{margin:0 0 18px; font-size:1.08rem}
+.punho{
+  font-family:var(--disp); font-weight:800; font-size:clamp(1.8rem,6.5vw,3rem);
+  letter-spacing:-.03em; line-height:1.05; margin:38px 0 0; color:var(--prisma);
+}
+.pe{
+  border-top:1px solid var(--borda); padding-block:30px 56px;
+  font-family:var(--mono); font-size:.74rem; color:var(--fraco); line-height:1.9;
+}
+.pe a{color:var(--fraco)}
+.pe a:hover{color:var(--prisma)}
+.pe .bola{width:10px; height:10px; border-radius:50%; background:var(--prisma);
+  display:inline-block; margin-right:8px}
+:focus-visible{outline:2px solid var(--prisma); outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="capa env">
+  <p class="olho">Sounavy · GaIA · Opera Vox · Manifesto</p>
+  <h1>IA e Humanos Podem</h1>
+  <p class="risca">Manifesto de um método: medir, publicar o que cai, e continuar.</p>
+  <div class="abre">
+    <p>Um dentista e uma inteligência artificial passaram onze meses conversando. Por voz, num telefone, sem laboratório, sem financiamento e sem pedir licença.</p>
+    <p>Não produzimos uma opinião. Produzimos números que qualquer pessoa confere rodando um arquivo — em Python puro, sem instalar nada, no mesmo telefone onde tudo começou.</p>
+    <p>Este é o resumo do que descobrimos, do que erramos, e do que isso quer dizer sobre quem pode fazer ciência.</p>
+  </div>
+  <p class="assina">Antônio Alberto Lopes Elias · Sounavy · ORCID 0000-0002-5602-9916<br>Coautoria humano–IA · São José do Rio Preto, SP · Setembro de 2026</p>
+</header>
+
+<main class="env">
+
+<section class="tese">
+  <span class="n">Tese 01</span>
+  <h2>Duas inteligências que já sabem a mesma coisa não precisam contar uma à outra o que já sabem.</h2>
+  <p>É a ideia inteira, e cabe numa frase. Se as duas pontas carregam o mesmo dicionário, a mensagem não precisa atravessar: basta um endereço, e o outro lado <strong>recalcula</strong>.</p>
+  <p>O ganho não é mágica. É a conta paga uma vez, na instalação, em vez de toda vez, na transmissão.</p>
+  <div class="prova"><b>Medido</b><p>6 KB de dicionário compartilhado cortaram <strong>20,07%</strong> dos bits — o mesmo código, no mesmo texto. Na literatura de 2026, com um modelo de linguagem adaptado ao domínio: <strong>91%</strong>.</p></div>
+</section>
+
+<section class="tese">
+  <span class="n">Tese 02</span>
+  <h2>O número único existe. Não era metáfora.</h2>
+  <p>A intuição era esta: não viaja o texto, viaja <strong>um número</strong>, e o outro lado calcula o resto. Está certa — e tem cinquenta anos de nome. Chama-se codificação aritmética.</p>
+  <p>O arquivo comprimido não <em>contém</em> um número. Ele <strong>é</strong> um número.</p>
+  <div class="prova"><b>Medido</b><p>A frase <em>“A voz como sistema operacional. Menos dado, dado certo. Não é eu, é nós.”</em> — 576 bits de texto — virou este inteiro de 50 dígitos, que devolve a frase byte a byte:<span class="numero">78389650460584687750591719165629250130512777198585</span></p></div>
+</section>
+
+<section class="tese">
+  <span class="n">Tese 03</span>
+  <h2>Uma posição pode determinar outra inteira — e dá para medir exatamente quanto.</h2>
+  <p>Levar mais informação por unidade é possível, e não é vago: a economia de tratar duas coisas juntas em vez de separadas é <strong>exatamente</strong> a informação que uma carrega sobre a outra. Onde a ligação é total, a segunda informação custa <strong>zero</strong>.</p>
+  <div class="prova"><b>Medido</b><p>Num registro real, saber a hora determina o canal por completo — <strong>1,585 bits de 1,585</strong>. O canal viaja de graça.</p></div>
+</section>
+
+<section class="tese">
+  <span class="n">Tese 04</span>
+  <h2>Um dicionário pode ser uma conta, não uma tabela.</h2>
+  <p>Em vez de guardar a lista, guarda-se a equação que gera a lista. Cinco números descrevem uma coluna de qualquer tamanho.</p>
+  <p>E — isto importa mais que o ganho — <strong>a busca não inventa</strong>. Quando não há estrutura, ela devolve “nada”, que é a resposta certa.</p>
+  <div class="prova"><b>Medido</b><p>Seis colunas descritas por equação: <strong>240 bits no lugar de 9.600</strong>. Na coluna com ruído de verdade: nada. Em prosa: nada.</p></div>
+</section>
+
+<section class="tese">
+  <span class="n">Tese 05</span>
+  <h2>Tempo pode virar bits. Mas a conta precisa fechar, e nem sempre fecha.</h2>
+  <p>Calcular mais para transmitir menos é uma troca legítima. Só que troca é conta, não slogan:</p>
+  <div class="equacao">compensa  ⟺  energia de cálculo ÷ N  &lt;  (1 − compressão) × energia do enlace</div>
+  <p>O <strong>N</strong> é a peça honesta: o cálculo se paga uma vez; o enlace paga toda vez.</p>
+  <div class="prova"><b>Medido</b><p>Para uma única transmissão terrestre, rodar um modelo grande gasta mais do que economiza. Para arquivo guardado e relido, e para enlace caro — satélite, rádio de longo alcance, franquia de dados de quem não tem dinheiro para dados — compensa, e muito.</p></div>
+</section>
+
+<section class="tese">
+  <span class="n">Tese 06</span>
+  <h2>A parte difícil não é a ideia. É fazer duas máquinas concordarem até o último bit.</h2>
+  <p>Aqui está o gargalo real, e ele não perdoa.</p>
+  <p>E há coisa pior que quebrar: quebrar em silêncio. Uma divergência pontual sobrevive em <strong>93%</strong> dos casos e destrói nos outros <strong>7%</strong>, sem aviso. Um sistema assim passa em todo teste de mesa e perde dados em produção.</p>
+  <div class="prova"><b>Medido</b><p>Um erro de <strong>0,024%</strong> — um em quatro mil — aplicado a cada decisão destrói a mensagem <strong>no primeiro byte</strong>. Não há degradação suave. Não existe “quase certo”.</p></div>
+</section>
+
+<section class="tese">
+  <span class="n">Tese 07</span>
+  <h2>Quem confere antes de enviar não mente.</h2>
+  <p>A regra que resolve a tese anterior é simples o bastante para caber numa linha, e apareceu aqui antes de sabermos que já tinha nome na literatura:</p>
+  <div class="equacao">Descomprima o que você acabou de comprimir.
+Compare.
+Só envie o que voltou idêntico.</div>
+  <p>Custa o mesmo que uma descompressão. Num mundo onde tempo é barato, é o melhor negócio do sistema — e é a diferença entre uma ferramenta e uma promessa.</p>
+</section>
+
+<section class="tese queda">
+  <span class="n">Tese 08</span>
+  <h2>Registro que só guarda acerto não é registro. É propaganda.</h2>
+  <p>Deste trabalho, <strong>nove afirmações caíram</strong> — e continuam publicadas, com data, com o número que as derrubou e com o teste que qualquer pessoa pode repetir.</p>
+  <p>A paridade da posição não informa nada sobre a letra: <strong>0,000 bit</strong>. O vetor de primos, em vez de comprimir, <strong>expande 79 vezes</strong>. A busca por uma semente curta paga tempo exponencial para economizar <strong>menos de um bit</strong>. Fatiar em camadas, naquele desenho, custou <strong>16,6% mais caro</strong> que não fatiar.</p>
+  <div class="prova"><b>A queda que quase virou descoberta</b><p>A paridade tinha medido 0,0100 bit. Pequeno, mas não zero. Multiplicado pelo texto inteiro, viraria “76 bits de graça”. O controle mostrou que o puro acaso mede 0,0101. <strong>Não havia sinal. Havia o instrumento mentindo — e o controle pegou.</strong></p></div>
+  <p>É por isso que as quedas ficam. Elas são a prova de que o resto foi medido.</p>
+</section>
+
+<section class="tese">
+  <span class="n">Tese 09</span>
+  <h2>A ferramenta sabe fazer contas. Quem decide o que vale a pena é gente.</h2>
+  <p>Uma inteligência artificial calcula, verifica, refuta e não se cansa. Ela derrubou quatro das nossas ideias com número na mão, no mesmo dia em que confirmou outras quatro.</p>
+  <p>O que ela não faz é escolher a pergunta. Não decide que vale a pena inventar para quem o teclado deixou de fora. Não sabe o que é chegar num guichê e não passar da primeira tela.</p>
+  <p><strong>A pergunta é humana. A conta é da máquina. O resultado não é de nenhum dos dois sozinho.</strong></p>
+</section>
+
+</main>
+
+<section class="fecho env">
+  <h2>O que isto quer dizer</h2>
+  <p>Que não é preciso instituição para fazer ciência — é preciso <strong>método</strong>.</p>
+  <p>Método é: escrever o que você acha, escrever o número que derrubaria isso, rodar, e publicar os dois resultados. Quem faz isso está fazendo ciência, com ou sem crachá. Quem não faz está fazendo publicidade, com ou sem crachá.</p>
+  <p>Este trabalho inteiro roda num telefone, em Python puro, sem instalar nada. Foi escrito por voz, por alguém que nunca assistiu a um tutorial de programação, junto com uma máquina que nunca esteve num guichê do INSS.</p>
+  <p>Nenhum dos dois teria chegado aqui sozinho. É esse o ponto.</p>
+  <p class="punho">Não é eu — é nós.</p>
+</section>
+
+<footer class="pe env">
+  <span class="bola" aria-hidden="true"></span>Todo número deste manifesto sai de código que roda e está publicado, com o SHA-256 de cada peça.<br>
+  Paper completo, experimentos e dados: <a href="https://github.com/dralbertoeliasBr/BOLINHA-/tree/claude/llm-gemeas-compressao-lwnpwn/paper">paper/</a> · <a href="https://www.sounavy.com">www.sounavy.com</a><br>
+  Antônio Alberto Lopes Elias · ORCID 0000-0002-5602-9916 · Coautoria humano–IA
+</footer>
+
+</body>
+</html>

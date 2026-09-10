@@ -47,8 +47,8 @@
   "ok_frio": true,
   "ok_quente": true,
   "sha": "eb092b8fda4b51185628455a0f3279fc2d85f73c5f1eb70a04f9a76d98279733",
-  "seg_frio": 0.3581392765045166,
-  "seg_quente": 0.9842793941497803,
+  "seg_frio": 0.3575003147125244,
+  "seg_quente": 0.9845359325408936,
   "bytes_frio": 1475,
   "bytes_quente": 1179
  },
@@ -176,55 +176,55 @@
  },
  "energia": {
   "r": 0.38328998699609884,
-  "seg": 0.4939589500427246,
-  "vazao_medida": 6227.238113073857,
+  "seg": 0.48757004737854004,
+  "vazao_medida": 6308.83709230779,
   "msg_bytes": 3076,
   "nosso_bytes": 1179,
   "xz_bytes": 1744,
   "linhas": [
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6227.238113073857,
+    "vazao_B_por_s": 6308.83709230779,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0008029241710707487,
+    "e_calc_J_por_byte": 0.0007925390887167426,
     "enlace": "fibra / datacenter",
     "e_rede_J_por_byte": 2e-08,
     "limiar_J_por_byte": 1.2334200260078023e-08,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 65097.38403304225
+    "envios_para_compensar": 64255.40951219558
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6227.238113073857,
+    "vazao_B_por_s": 6308.83709230779,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0008029241710707487,
+    "e_calc_J_por_byte": 0.0007925390887167426,
     "enlace": "4G movel",
     "e_rede_J_por_byte": 2e-06,
     "limiar_J_por_byte": 1.2334200260078022e-06,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 650.9738403304226
+    "envios_para_compensar": 642.5540951219559
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6227.238113073857,
+    "vazao_B_por_s": 6308.83709230779,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0008029241710707487,
+    "e_calc_J_por_byte": 0.0007925390887167426,
     "enlace": "satelite / LoRa",
     "e_rede_J_por_byte": 0.0002,
     "limiar_J_por_byte": 0.00012334200260078024,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 6.509738403304225
+    "envios_para_compensar": 6.425540951219557
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6227.238113073857,
+    "vazao_B_por_s": 6308.83709230779,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0008029241710707487,
+    "e_calc_J_por_byte": 0.0007925390887167426,
     "enlace": "espaco profundo",
     "e_rede_J_por_byte": 0.02,
     "limiar_J_por_byte": 0.012334200260078023,
     "compensa_em_1_envio": true,
-    "envios_para_compensar": 0.06509738403304226
+    "envios_para_compensar": 0.06425540951219558
    },
    {
     "motor": "mesmo codec em C, estimado 10 MB/s",
@@ -492,7 +492,7 @@
     "esperado_2_elevado_k": 256,
     "bits_medios_da_semente": 7.75,
     "bits_economizados_medios": 0.25,
-    "segundos_medios": 0.00019592046737670898
+    "segundos_medios": 0.00020523866017659506
    },
    {
     "bits_do_alvo": 12,
@@ -501,7 +501,7 @@
     "esperado_2_elevado_k": 4096,
     "bits_medios_da_semente": 11.416666666666666,
     "bits_economizados_medios": 0.5833333333333339,
-    "segundos_medios": 0.0025977989037831626
+    "segundos_medios": 0.002594908078511556
    },
    {
     "bits_do_alvo": 16,
@@ -510,7 +510,7 @@
     "esperado_2_elevado_k": 65536,
     "bits_medios_da_semente": 15.083333333333334,
     "bits_economizados_medios": 0.9166666666666661,
-    "segundos_medios": 0.02362346649169922
+    "segundos_medios": 0.02416539192199707
    },
    {
     "bits_do_alvo": 20,
@@ -519,7 +519,215 @@
     "esperado_2_elevado_k": 1048576,
     "bits_medios_da_semente": 19.333333333333332,
     "bits_economizados_medios": 0.6666666666666679,
-    "segundos_medios": 0.5433181126912435
+    "segundos_medios": 0.5610818862915039
+   }
+  ]
+ },
+ "raiz_mista": {
+  "campos": [
+   {
+    "nome": "mes",
+    "cardinalidade": 12,
+    "bits_isolado": 4
+   },
+   {
+    "nome": "dia",
+    "cardinalidade": 28,
+    "bits_isolado": 5
+   },
+   {
+    "nome": "hora",
+    "cardinalidade": 24,
+    "bits_isolado": 5
+   },
+   {
+    "nome": "min",
+    "cardinalidade": 60,
+    "bits_isolado": 6
+   },
+   {
+    "nome": "canal",
+    "cardinalidade": 3,
+    "bits_isolado": 2
+   },
+   {
+    "nome": "estado",
+    "cardinalidade": 3,
+    "bits_isolado": 2
+   }
+  ],
+  "n_registros": 400,
+  "combinacoes": 4354560,
+  "bits_ascii_por_registro": 280,
+  "bits_campo_a_campo": 24,
+  "bits_byte_a_byte": 48,
+  "bits_raiz_mista": 23,
+  "otimo_exato": 22.05409552055075,
+  "ganho_sobre_campo_a_campo_pct": 4.166666666666667,
+  "ganho_sobre_ascii_pct": 91.78571428571429,
+  "bijetivo_conferido": true
+ },
+ "dicionario_equacao": {
+  "colunas": [
+   {
+    "coluna": "mes",
+    "gerador": {
+     "a": 1,
+     "b": 0,
+     "m": 12,
+     "k": 1,
+     "c": 0
+    },
+    "bits_da_coluna": 1600,
+    "bits_da_equacao": 40
+   },
+   {
+    "coluna": "dia",
+    "gerador": {
+     "a": 1,
+     "b": 0,
+     "m": 28,
+     "k": 1,
+     "c": 0
+    },
+    "bits_da_coluna": 2000,
+    "bits_da_equacao": 40
+   },
+   {
+    "coluna": "hora",
+    "gerador": {
+     "a": 1,
+     "b": 0,
+     "m": 24,
+     "k": 1,
+     "c": 0
+    },
+    "bits_da_coluna": 2000,
+    "bits_da_equacao": 40
+   },
+   {
+    "coluna": "min",
+    "gerador": {
+     "a": 7,
+     "b": 0,
+     "m": 60,
+     "k": 1,
+     "c": 0
+    },
+    "bits_da_coluna": 2400,
+    "bits_da_equacao": 40
+   },
+   {
+    "coluna": "canal",
+    "gerador": {
+     "a": 1,
+     "b": 0,
+     "m": 3,
+     "k": 1,
+     "c": 0
+    },
+    "bits_da_coluna": 800,
+    "bits_da_equacao": 40
+   },
+   {
+    "coluna": "estado",
+    "gerador": {
+     "a": 1,
+     "b": 0,
+     "m": 3,
+     "k": 7,
+     "c": 0
+    },
+    "bits_da_coluna": 800,
+    "bits_da_equacao": 40
+   }
+  ],
+  "quantas_acharam": 6,
+  "de": 6,
+  "bits_das_colunas_achadas": 9600,
+  "bits_das_equacoes": 240,
+  "fator": 40.0,
+  "gerador_da_coluna_com_ruido": null,
+  "gerador_em_prosa": null
+ },
+ "informacao_mutua": {
+  "n_caracteres": 7653,
+  "H_do_caractere": 5.016663481128308,
+  "prosa": [
+   {
+    "sinal": "paridade da posicao (o impar)",
+    "im_bits": 0.00996262960568739,
+    "piso_embaralhado": 0.010065219378299694,
+    "im_liquida": -0.00010258977261230415
+   },
+   {
+    "sinal": "posicao modulo 3",
+    "im_bits": 0.01924950443498652,
+    "piso_embaralhado": 0.019613548907726396,
+    "im_liquida": -0.0003640444727398759
+   },
+   {
+    "sinal": "posicao dentro da palavra",
+    "im_bits": 0.3282255506182077,
+    "piso_embaralhado": 0.06699746348292432,
+    "im_liquida": 0.26122808713528334
+   },
+   {
+    "sinal": "comprimento da palavra",
+    "im_bits": 0.3211581746384633,
+    "piso_embaralhado": 0.09901654677602104,
+    "im_liquida": 0.22214162786244226
+   }
+  ],
+  "tabular": {
+   "H_canal": 1.58495349136308,
+   "H_estado": 1.58495349136308,
+   "im_canal_estado": 0.029150373944728525,
+   "im_canal_hora": 1.5849534913630796
+  }
+ },
+ "crt": {
+  "modulos": [
+   31,
+   32,
+   25,
+   61,
+   3,
+   7
+  ],
+  "coprimos_dois_a_dois": true,
+  "bits_do_numero": 25,
+  "bits_raiz_mista": 23,
+  "registros_conferidos": 200,
+  "de": 200,
+  "deteccao": [
+   {
+    "primo_extra": 7,
+    "bits_de_custo": 2.807354922057604,
+    "pego_um_bit_pct": 100.0,
+    "pego_qualquer_pct": 85.25,
+    "limite_teorico_pct": 85.71428571428572
+   },
+   {
+    "primo_extra": 31,
+    "bits_de_custo": 4.954196310386876,
+    "pego_um_bit_pct": 100.0,
+    "pego_qualquer_pct": 97.75,
+    "limite_teorico_pct": 96.7741935483871
+   },
+   {
+    "primo_extra": 127,
+    "bits_de_custo": 6.988684686772166,
+    "pego_um_bit_pct": 100.0,
+    "pego_qualquer_pct": 98.75,
+    "limite_teorico_pct": 99.21259842519686
+   },
+   {
+    "primo_extra": 1021,
+    "bits_de_custo": 9.995767150877802,
+    "pego_um_bit_pct": 100.0,
+    "pego_qualquer_pct": 100.0,
+    "limite_teorico_pct": 99.9020568070519
    }
   ]
  },
@@ -528,12 +736,12 @@
   "plataforma": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
   "sha_tabelas": "317f8cfbd08ae2a90832a5fb3ab14a4485c72dbd5ba592d8c28265e7222245e7",
   "sha_nucleo": "221305ad5c99931e107ee1316e75c061f04e9a8812fb081ace491ff5474a9483",
-  "sha_experimentos": "efcc5f714a015076c89fb00d0e3e4fb4c209b48586cdb681e7fbbfe8b9879320",
+  "sha_experimentos": "d48fbd91c339e0a8ca3d7c9fc65032a977b39aece6740bd4236874035f3270e9",
   "corpus": {
    "estruturado.json": "cbae9c24e7e445096db0d441c3699aa1672cdd39c07a016d623d6d3bb3df783a",
    "pt_sounavy.txt": "42c799b15165e8d426d9e594d08cfdce5a83731a196076d3d6756b26e827e353",
    "tabular.csv": "d1a4cc9c485df64138329c977d5a9e06da0e72c3725250122ae22a6da6798e7b"
   },
-  "segundos_total": 39.0
+  "segundos_total": 40.1
  }
 }

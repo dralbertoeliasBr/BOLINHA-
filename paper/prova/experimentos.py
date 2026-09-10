@@ -626,3 +626,282 @@ def e8_busca():
             'segundos_medios': sum(seg) / float(reps),
         })
     return {'buscas': saidas}
+
+
+# ================================ E9 — uma posicao, varias informacoes
+
+def _campos_do_tabular():
+    """Le tabular.csv e devolve os campos como inteiros + suas cardinalidades."""
+    linhas = le('tabular.csv').decode('utf-8').strip().split('\n')[1:]
+    canais, estados = ['VERM', 'VERD', 'AZUL'], ['ok', 'espe', 'falh']
+    regs = []
+    for l in linhas:
+        p = l.split(';')
+        regs.append((
+            int(p[0][5:7]) - 1,          # mes  0..11
+            int(p[0][8:10]) - 1,         # dia  0..27
+            int(p[1][0:2]),              # hora 0..23
+            int(p[1][3:5]),              # min  0..59
+            canais.index(p[2].strip()),  # canal 0..2
+            estados.index(p[4].strip()), # estado 0..2
+        ))
+    nomes = ['mes', 'dia', 'hora', 'min', 'canal', 'estado']
+    cards = [max(r[j] for r in regs) + 1 for j in range(6)]
+    return nomes, cards, regs, linhas
+
+
+def e9_raiz_mista():
+    """Empacotar k campos num UNICO numero, sem desperdicar bit.
+
+    A intuicao: 'uma localidade pode determinar duas ou tres informacoes'.
+    E' verdade -- e a forma exata chama-se numeracao de raiz mista.
+    O ganho NAO vem de magica: vem de nao arredondar cada campo para cima.
+    """
+    nomes, cards, regs, linhas = _campos_do_tabular()
+
+    def empacota(r):
+        n = 0
+        for v, c in zip(r, cards):
+            n = n * c + v
+        return n
+
+    def desempacota(n):
+        saida = []
+        for c in reversed(cards):
+            saida.append(n % c)
+            n //= c
+        return tuple(reversed(saida))
+
+    assert all(desempacota(empacota(r)) == r for r in regs), 'raiz mista nao e bijetiva'
+
+    prod = 1
+    for c in cards:
+        prod *= c
+    bits_mista = ceil(log(prod, 2))
+    bits_campo = sum(ceil(log(c, 2)) for c in cards)
+    bits_byte = sum(max(8, 8 * ceil(log(c, 2) / 8.0)) for c in cards)
+    bits_ascii = (len(linhas[0]) + 1) * 8
+
+    return {
+        'campos': [{'nome': n, 'cardinalidade': c, 'bits_isolado': ceil(log(c, 2))}
+                   for n, c in zip(nomes, cards)],
+        'n_registros': len(regs),
+        'combinacoes': prod,
+        'bits_ascii_por_registro': bits_ascii,
+        'bits_campo_a_campo': bits_campo,
+        'bits_byte_a_byte': bits_byte,
+        'bits_raiz_mista': bits_mista,
+        'otimo_exato': log(prod, 2),
+        'ganho_sobre_campo_a_campo_pct': (bits_campo - bits_mista) * 100.0 / bits_campo,
+        'ganho_sobre_ascii_pct': (bits_ascii - bits_mista) * 100.0 / bits_ascii,
+        'bijetivo_conferido': True,
+    }
+
+
+# ================================ E10 — o dicionario que e equacao
+
+def busca_gerador(v, max_k=16, max_m=128):
+    """Procura v[i] = c + ((a*(i//k) + b) mod m). Devolve a equacao ou None.
+
+    E' o 'dicionario que multiplica, soma e subtrai': em vez de guardar a
+    tabela, guarda-se a conta que a gera.
+    """
+    n = len(v)
+    if n < 4:
+        return None
+    c = min(v)
+    r = [x - c for x in v]
+    for k in range(1, max_k + 1):
+        for m in range(2, max_m + 1):
+            if max(r) >= m:
+                continue
+            b = r[0] % m
+            a = None
+            for i in range(1, n):
+                if i // k != 0:
+                    a = ((r[i] - b) * pow(i // k, -1, m)) % m if _inv_ok(i // k, m) else None
+                    if a is not None:
+                        break
+            if a is None:
+                continue
+            if all(r[i] == (a * (i // k) + b) % m for i in range(n)):
+                return {'a': a, 'b': b, 'm': m, 'k': k, 'c': c}
+    return None
+
+
+def _inv_ok(x, m):
+    from math import gcd
+    return x != 0 and gcd(x, m) == 1
+
+
+def e10_dicionario_equacao():
+    """Onde o dicionario-equacao ganha, e onde ele corretamente nao acha nada."""
+    nomes, cards, regs, linhas = _campos_do_tabular()
+    achados = []
+    for j, nome in enumerate(nomes):
+        col = [r[j] for r in regs]
+        g = busca_gerador(col)
+        achados.append({'coluna': nome, 'gerador': g,
+                        'bits_da_coluna': len(col) * ceil(log(cards[j], 2)),
+                        'bits_da_equacao': 5 * 8 if g else None})
+
+    # a coluna 'valor' tem ruido de verdade: o gerador NAO pode existir
+    vals = []
+    for l in linhas:
+        vals.append(int(float(l.split(';')[3]) * 100) % 5000)
+    g_valor = busca_gerador(vals[:60])
+
+    # e sobre prosa nao ha nada a achar -- e a resposta certa e' 'nada'
+    prosa = list(le('pt_sounavy.txt')[:400])
+    g_prosa = busca_gerador(prosa)
+
+    achou = [a for a in achados if a['gerador']]
+    bits_tab = sum(a['bits_da_coluna'] for a in achou)
+    bits_eq = sum(a['bits_da_equacao'] for a in achou)
+    return {
+        'colunas': achados,
+        'quantas_acharam': len(achou), 'de': len(achados),
+        'bits_das_colunas_achadas': bits_tab,
+        'bits_das_equacoes': bits_eq,
+        'fator': bits_tab / float(bits_eq) if bits_eq else None,
+        'gerador_da_coluna_com_ruido': g_valor,
+        'gerador_em_prosa': g_prosa,
+    }
+
+
+# ============================ E11 — onde o ganho de juntar realmente mora
+
+def _H(cont):
+    n = float(sum(cont.values()))
+    return -sum((c / n) * log(c / n, 2) for c in cont.values() if c)
+
+
+def _conta(seq):
+    d = {}
+    for x in seq:
+        d[x] = d.get(x, 0) + 1
+    return d
+
+
+def _im(xs, ys):
+    """Informacao mutua I(X;Y) = H(X) + H(Y) - H(X,Y), em bits."""
+    return _H(_conta(xs)) + _H(_conta(ys)) - _H(_conta(list(zip(xs, ys))))
+
+
+def e11_informacao_mutua():
+    """A pergunta exata: 'essa letra, essa posicao' informa quanto?
+
+    Uma posicao so' determina varias informacoes de graca quando elas sao
+    CORRELACIONADAS. O ganho de juntar e' exatamente a informacao mutua.
+    Com controle por embaralhamento, porque estimador de IM sempre mente
+    para cima em amostra finita.
+    """
+    txt = le('pt_sounavy.txt').decode('utf-8')
+    chars, par, tri, pos_pal, comp_pal = [], [], [], [], []
+    p = 0
+    for palavra in txt.split(' '):
+        for i, ch in enumerate(palavra):
+            chars.append(ch)
+            par.append(p % 2)
+            tri.append(p % 3)
+            pos_pal.append(min(i, 7))
+            comp_pal.append(min(len(palavra), 12))
+            p += 1
+        p += 1
+
+    rnd = random.Random(33)
+
+    def com_controle(ys, rot):
+        real = _im(chars, ys)
+        emb = ys[:]
+        pisos = []
+        for _ in range(5):
+            rnd.shuffle(emb)
+            pisos.append(_im(chars, emb))
+        piso = sum(pisos) / len(pisos)
+        return {'sinal': rot, 'im_bits': real, 'piso_embaralhado': piso,
+                'im_liquida': real - piso}
+
+    nomes, cards, regs, _ = _campos_do_tabular()
+    canal = [r[4] for r in regs]
+    estado = [r[5] for r in regs]
+    hora = [r[2] for r in regs]
+
+    return {
+        'n_caracteres': len(chars),
+        'H_do_caractere': _H(_conta(chars)),
+        'prosa': [
+            com_controle(par, 'paridade da posicao (o impar)'),
+            com_controle(tri, 'posicao modulo 3'),
+            com_controle(pos_pal, 'posicao dentro da palavra'),
+            com_controle(comp_pal, 'comprimento da palavra'),
+        ],
+        'tabular': {
+            'H_canal': _H(_conta(canal)), 'H_estado': _H(_conta(estado)),
+            'im_canal_estado': _im(canal, estado),
+            'im_canal_hora': _im(canal, hora),
+        },
+    }
+
+
+# ================== E12 — um numero, varias leituras (Teorema Chines do Resto)
+
+def e12_crt():
+    """UM numero que responde a varias perguntas, cada uma por um resto.
+
+    E de quebra: um primo a mais transforma o mesmo numero em detector de
+    erro -- que e' exatamente o que falta ao fluxo fragil da secao 8.
+    """
+    nomes, cards, regs, _ = _campos_do_tabular()
+    mods = [31, 32, 25, 61, 3, 7]          # coprimos dois a dois, >= cardinalidade
+    from math import gcd
+    coprimos = all(gcd(mods[i], mods[j]) == 1
+                   for i in range(len(mods)) for j in range(i + 1, len(mods)))
+
+    M = 1
+    for m in mods:
+        M *= m
+
+    def crt(rs):
+        x = 0
+        for r, m in zip(rs, mods):
+            Mi = M // m
+            x = (x + r * Mi * pow(Mi, -1, m)) % M
+        return x
+
+    ok = 0
+    for r in regs[:200]:
+        N = crt(list(r))
+        if tuple(N % m for m in mods) == tuple(r):
+            ok += 1
+
+    # um primo a mais = deteccao de erro pelo mesmo numero
+    rnd = random.Random(33)
+    linhas = []
+    for extra in (7, 31, 127, 1021):
+        pego_bit, pego_qq = 0, 0
+        tent = 400
+        for _ in range(tent):
+            r = list(regs[rnd.randrange(len(regs))])
+            N = crt(r)
+            selo = N % extra
+            # (a) UM bit virado
+            um = N ^ (1 << rnd.randrange(max(1, N.bit_length())))
+            if um % extra != selo:
+                pego_bit += 1
+            # (b) corrupcao qualquer (o caso generico)
+            qq = rnd.randrange(M)
+            if qq % extra != selo:
+                pego_qq += 1
+        linhas.append({'primo_extra': extra, 'bits_de_custo': log(extra, 2),
+                       'pego_um_bit_pct': pego_bit * 100.0 / tent,
+                       'pego_qualquer_pct': pego_qq * 100.0 / tent,
+                       'limite_teorico_pct': (1 - 1.0 / extra) * 100.0})
+
+    return {
+        'modulos': mods, 'coprimos_dois_a_dois': coprimos,
+        'bits_do_numero': ceil(log(M, 2)),
+        'bits_raiz_mista': ceil(log(eval('*'.join(str(c) for c in cards)), 2)),
+        'registros_conferidos': ok, 'de': 200,
+        'deteccao': linhas,
+    }
