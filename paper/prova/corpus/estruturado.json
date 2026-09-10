@@ -1,0 +1,32 @@
+{
+  "name": "GaIA · Opera Vox — Sounavy",
+  "short_name": "Sounavy",
+  "description": "GaIA: IA pessoal soberana que nasce no telefone. Opera Vox: a voz como sistema operacional.",
+  "scope": "./",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#16091F",
+  "theme_color": "#16091F",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "data:image/png;base64,<blob>",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/png;base64,<blob>",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/png;base64,<blob>",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

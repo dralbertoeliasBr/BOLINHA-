@@ -1,0 +1,539 @@
+{
+ "contagem": {
+  "tabela": [
+   [
+    1,
+    0.5
+   ],
+   [
+    4,
+    0.0625
+   ],
+   [
+    8,
+    0.00390625
+   ],
+   [
+    16,
+    1.52587890625e-05
+   ],
+   [
+    32,
+    2.3283064365386963e-10
+   ],
+   [
+    64,
+    5.421010862427522e-20
+   ]
+  ],
+  "aleatorio": {
+   "n": 64,
+   "tam": 256,
+   "nosso_medio": 1.0223388671875,
+   "xz_medio": 1.234375,
+   "nosso_min": 1.015625
+  }
+ },
+ "dicionario": {
+  "dic_bytes": 6152,
+  "msg_bytes": 3076,
+  "bruto_bpc": 8.0,
+  "gzip_bpc": 4.23407022106632,
+  "bz2_bpc": 4.3485045513654095,
+  "xz_bpc": 4.535760728218466,
+  "zdict_bpc": 3.5500650195058516,
+  "frio_bpc": 3.836150845253576,
+  "quente_bpc": 3.0663198959687907,
+  "ok_frio": true,
+  "ok_quente": true,
+  "sha": "eb092b8fda4b51185628455a0f3279fc2d85f73c5f1eb70a04f9a76d98279733",
+  "seg_frio": 0.3581392765045166,
+  "seg_quente": 0.9842793941497803,
+  "bytes_frio": 1475,
+  "bytes_quente": 1179
+ },
+ "camadas": {
+  "prosa": {
+   "passo_detectado": 45,
+   "taxa_igualdade_vertical": 0.06588260916911684,
+   "frente4": 3.4869492456145235,
+   "frente6_controle": 3.4690881252537356,
+   "so_vertical2": 5.206147835146763,
+   "frente4_mais_vertical2": 3.566530889449085,
+   "tras4": 3.565502140155345,
+   "bytes": 9228,
+   "ganho_vertical_vs_controle": -2.808886966174205,
+   "assimetria_frente_tras": 2.2527685093098566
+  },
+  "tabular": {
+   "passo_detectado": 105,
+   "taxa_igualdade_vertical": 0.685113407981625,
+   "frente4": 1.136557091095029,
+   "frente6_controle": 1.1245655206013825,
+   "so_vertical2": 0.8812378556193148,
+   "frente4_mais_vertical2": 0.7004705113582289,
+   "tras4": 1.2248814881320733,
+   "bytes": 14037,
+   "ganho_vertical_vs_controle": 37.711898637649924,
+   "assimetria_frente_tras": 7.771223964820568
+  }
+ },
+ "retroleitura": {
+  "bytes": 9228,
+  "bpc_camada_alta": 1.9562703729336528,
+  "bpc_baixa_so_passado": 2.2616418153257087,
+  "bpc_baixa_com_futuro": 2.1097506852977572,
+  "bpc_total_so_passado": 4.217912188259362,
+  "bpc_total_com_futuro": 4.066021058231409,
+  "ganho_do_futuro_pct": 6.71596753290827
+ },
+ "fatorial_primos": {
+  "lehmer": [
+   {
+    "n": 8,
+    "bits_indice": 15,
+    "bits_otimo_log2_n_fat": 15.29920801838728,
+    "bits_ingenuo": 24,
+    "economia_pct": 36.253299923386336
+   },
+   {
+    "n": 12,
+    "bits_indice": 28,
+    "bits_otimo_log2_n_fat": 28.835455234075408,
+    "bits_ingenuo": 48,
+    "economia_pct": 39.926134929009564
+   },
+   {
+    "n": 52,
+    "bits_indice": 225,
+    "bits_otimo_log2_n_fat": 225.5810031237028,
+    "bits_ingenuo": 312,
+    "economia_pct": 27.69839643471064
+   },
+   {
+    "n": 100,
+    "bits_indice": 524,
+    "bits_otimo_log2_n_fat": 524.7649932900597,
+    "bits_ingenuo": 700,
+    "economia_pct": 25.033572387134328
+   }
+  ],
+  "godel": [
+   {
+    "m_bytes": 4,
+    "bits_godel": 217,
+    "bits_crus": 32,
+    "fator": 6.78125
+   },
+   {
+    "m_bytes": 8,
+    "bits_godel": 3164,
+    "bits_crus": 64,
+    "fator": 49.4375
+   },
+   {
+    "m_bytes": 16,
+    "bits_godel": 8637,
+    "bits_crus": 128,
+    "fator": 67.4765625
+   },
+   {
+    "m_bytes": 32,
+    "bits_godel": 20322,
+    "bits_crus": 256,
+    "fator": 79.3828125
+   }
+  ],
+  "crt": [
+   {
+    "k_primos": 4,
+    "bits_da_impressao": 8,
+    "prob_colisao_max": 0.004761904761904762
+   },
+   {
+    "k_primos": 8,
+    "bits_da_impressao": 24,
+    "prob_colisao_max": 1.0309607832827648e-07
+   },
+   {
+    "k_primos": 16,
+    "bits_da_impressao": 65,
+    "prob_colisao_max": 3.0685051309315784e-20
+   }
+  ]
+ },
+ "numero_unico": {
+  "frase": "A voz como sistema operacional. Menos dado, dado certo. Nao e eu, e nos.",
+  "bytes_originais": 72,
+  "bits_originais": 576,
+  "numero_frio_bits": 472,
+  "numero_quente_bits": 166,
+  "numero_quente_digitos": 50,
+  "numero_quente": "78389650460584687750591719165629250130512777198585",
+  "ok_frio": true,
+  "ok_quente": true,
+  "sha": "ac7af243eeb9fdfd8365e8c9ebfbbb5481d87ee8de2735220bcb8b2af8cebd40"
+ },
+ "energia": {
+  "r": 0.38328998699609884,
+  "seg": 0.4939589500427246,
+  "vazao_medida": 6227.238113073857,
+  "msg_bytes": 3076,
+  "nosso_bytes": 1179,
+  "xz_bytes": 1744,
+  "linhas": [
+   {
+    "motor": "este codec, Python puro (MEDIDO)",
+    "vazao_B_por_s": 6227.238113073857,
+    "potencia_W": 5.0,
+    "e_calc_J_por_byte": 0.0008029241710707487,
+    "enlace": "fibra / datacenter",
+    "e_rede_J_por_byte": 2e-08,
+    "limiar_J_por_byte": 1.2334200260078023e-08,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 65097.38403304225
+   },
+   {
+    "motor": "este codec, Python puro (MEDIDO)",
+    "vazao_B_por_s": 6227.238113073857,
+    "potencia_W": 5.0,
+    "e_calc_J_por_byte": 0.0008029241710707487,
+    "enlace": "4G movel",
+    "e_rede_J_por_byte": 2e-06,
+    "limiar_J_por_byte": 1.2334200260078022e-06,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 650.9738403304226
+   },
+   {
+    "motor": "este codec, Python puro (MEDIDO)",
+    "vazao_B_por_s": 6227.238113073857,
+    "potencia_W": 5.0,
+    "e_calc_J_por_byte": 0.0008029241710707487,
+    "enlace": "satelite / LoRa",
+    "e_rede_J_por_byte": 0.0002,
+    "limiar_J_por_byte": 0.00012334200260078024,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 6.509738403304225
+   },
+   {
+    "motor": "este codec, Python puro (MEDIDO)",
+    "vazao_B_por_s": 6227.238113073857,
+    "potencia_W": 5.0,
+    "e_calc_J_por_byte": 0.0008029241710707487,
+    "enlace": "espaco profundo",
+    "e_rede_J_por_byte": 0.02,
+    "limiar_J_por_byte": 0.012334200260078023,
+    "compensa_em_1_envio": true,
+    "envios_para_compensar": 0.06509738403304226
+   },
+   {
+    "motor": "mesmo codec em C, estimado 10 MB/s",
+    "vazao_B_por_s": 10000000.0,
+    "potencia_W": 5.0,
+    "e_calc_J_por_byte": 5e-07,
+    "enlace": "fibra / datacenter",
+    "e_rede_J_por_byte": 2e-08,
+    "limiar_J_por_byte": 1.2334200260078023e-08,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 40.53769109119663
+   },
+   {
+    "motor": "mesmo codec em C, estimado 10 MB/s",
+    "vazao_B_por_s": 10000000.0,
+    "potencia_W": 5.0,
+    "e_calc_J_por_byte": 5e-07,
+    "enlace": "4G movel",
+    "e_rede_J_por_byte": 2e-06,
+    "limiar_J_por_byte": 1.2334200260078022e-06,
+    "compensa_em_1_envio": true,
+    "envios_para_compensar": 0.4053769109119663
+   },
+   {
+    "motor": "mesmo codec em C, estimado 10 MB/s",
+    "vazao_B_por_s": 10000000.0,
+    "potencia_W": 5.0,
+    "e_calc_J_por_byte": 5e-07,
+    "enlace": "satelite / LoRa",
+    "e_rede_J_por_byte": 0.0002,
+    "limiar_J_por_byte": 0.00012334200260078024,
+    "compensa_em_1_envio": true,
+    "envios_para_compensar": 0.0040537691091196626
+   },
+   {
+    "motor": "mesmo codec em C, estimado 10 MB/s",
+    "vazao_B_por_s": 10000000.0,
+    "potencia_W": 5.0,
+    "e_calc_J_por_byte": 5e-07,
+    "enlace": "espaco profundo",
+    "e_rede_J_por_byte": 0.02,
+    "limiar_J_por_byte": 0.012334200260078023,
+    "compensa_em_1_envio": true,
+    "envios_para_compensar": 4.053769109119663e-05
+   },
+   {
+    "motor": "LLM gemea no iPhone: 14,1 tok/s medidos x 4 B/token",
+    "vazao_B_por_s": 56.4,
+    "potencia_W": 2.0,
+    "e_calc_J_por_byte": 0.03546099290780142,
+    "enlace": "fibra / datacenter",
+    "e_rede_J_por_byte": 2e-08,
+    "limiar_J_por_byte": 1.2334200260078023e-08,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 2875013.552567137
+   },
+   {
+    "motor": "LLM gemea no iPhone: 14,1 tok/s medidos x 4 B/token",
+    "vazao_B_por_s": 56.4,
+    "potencia_W": 2.0,
+    "e_calc_J_por_byte": 0.03546099290780142,
+    "enlace": "4G movel",
+    "e_rede_J_por_byte": 2e-06,
+    "limiar_J_por_byte": 1.2334200260078022e-06,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 28750.135525671372
+   },
+   {
+    "motor": "LLM gemea no iPhone: 14,1 tok/s medidos x 4 B/token",
+    "vazao_B_por_s": 56.4,
+    "potencia_W": 2.0,
+    "e_calc_J_por_byte": 0.03546099290780142,
+    "enlace": "satelite / LoRa",
+    "e_rede_J_por_byte": 0.0002,
+    "limiar_J_por_byte": 0.00012334200260078024,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 287.5013552567137
+   },
+   {
+    "motor": "LLM gemea no iPhone: 14,1 tok/s medidos x 4 B/token",
+    "vazao_B_por_s": 56.4,
+    "potencia_W": 2.0,
+    "e_calc_J_por_byte": 0.03546099290780142,
+    "enlace": "espaco profundo",
+    "e_rede_J_por_byte": 0.02,
+    "limiar_J_por_byte": 0.012334200260078023,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 2.875013552567137
+   },
+   {
+    "motor": "LLM gemea em GPU: 2000 tok/s x 4 B/token",
+    "vazao_B_por_s": 8000,
+    "potencia_W": 400.0,
+    "e_calc_J_por_byte": 0.05,
+    "enlace": "fibra / datacenter",
+    "e_rede_J_por_byte": 2e-08,
+    "limiar_J_por_byte": 1.2334200260078023e-08,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 4053769.109119663
+   },
+   {
+    "motor": "LLM gemea em GPU: 2000 tok/s x 4 B/token",
+    "vazao_B_por_s": 8000,
+    "potencia_W": 400.0,
+    "e_calc_J_por_byte": 0.05,
+    "enlace": "4G movel",
+    "e_rede_J_por_byte": 2e-06,
+    "limiar_J_por_byte": 1.2334200260078022e-06,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 40537.69109119663
+   },
+   {
+    "motor": "LLM gemea em GPU: 2000 tok/s x 4 B/token",
+    "vazao_B_por_s": 8000,
+    "potencia_W": 400.0,
+    "e_calc_J_por_byte": 0.05,
+    "enlace": "satelite / LoRa",
+    "e_rede_J_por_byte": 0.0002,
+    "limiar_J_por_byte": 0.00012334200260078024,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 405.37691091196626
+   },
+   {
+    "motor": "LLM gemea em GPU: 2000 tok/s x 4 B/token",
+    "vazao_B_por_s": 8000,
+    "potencia_W": 400.0,
+    "e_calc_J_por_byte": 0.05,
+    "enlace": "espaco profundo",
+    "e_rede_J_por_byte": 0.02,
+    "limiar_J_por_byte": 0.012334200260078023,
+    "compensa_em_1_envio": false,
+    "envios_para_compensar": 4.053769109119663
+   }
+  ]
+ },
+ "determinismo": {
+  "float_soma_ordens_diferentes_igual": false,
+  "float_delta": 1.9371509552001953e-07,
+  "inteiro_repetivel": true,
+  "sha_tabelas": "317f8cfbd08ae2a90832a5fb3ab14a4485c72dbd5ba592d8c28265e7222245e7",
+  "n": 1500,
+  "contador_alvo": 521761,
+  "a_um_bit": [
+   {
+    "delta_p_em_4096": 1,
+    "contadores_testados": 60,
+    "falharam": 0,
+    "taxa_falha_pct": 0.0,
+    "primeiro_erro_medio": null
+   },
+   {
+    "delta_p_em_4096": 16,
+    "contadores_testados": 60,
+    "falharam": 4,
+    "taxa_falha_pct": 6.666666666666667,
+    "primeiro_erro_medio": 596.0
+   },
+   {
+    "delta_p_em_4096": 256,
+    "contadores_testados": 60,
+    "falharam": 4,
+    "taxa_falha_pct": 6.666666666666667,
+    "primeiro_erro_medio": 595.25
+   },
+   {
+    "delta_p_em_4096": 2048,
+    "contadores_testados": 60,
+    "falharam": 4,
+    "taxa_falha_pct": 6.666666666666667,
+    "primeiro_erro_medio": 594.75
+   }
+  ],
+  "b_deriva_versao": {
+   "pct_certo": 5.666666666666667,
+   "primeiro_erro": 67
+  },
+  "c_deriva_dicionario": {
+   "pct_certo": 4.133333333333334,
+   "primeiro_erro": 0
+  }
+ },
+ "folga": {
+  "n": 1200,
+  "linhas": [
+   {
+    "folga_em_4096": 0,
+    "folga_relativa": 0.0,
+    "reps": 1,
+    "quebrou": 0,
+    "taxa_quebra_pct": 0.0,
+    "primeiro_erro_medio": null,
+    "bytes_certos_pct_medio": 100.0
+   },
+   {
+    "folga_em_4096": 1,
+    "folga_relativa": 0.000244140625,
+    "reps": 12,
+    "quebrou": 12,
+    "taxa_quebra_pct": 100.0,
+    "primeiro_erro_medio": 1.0833333333333333,
+    "bytes_certos_pct_medio": 0.2708333333333333
+   },
+   {
+    "folga_em_4096": 2,
+    "folga_relativa": 0.00048828125,
+    "reps": 12,
+    "quebrou": 12,
+    "taxa_quebra_pct": 100.0,
+    "primeiro_erro_medio": 1.0,
+    "bytes_certos_pct_medio": 0.31250000000000006
+   },
+   {
+    "folga_em_4096": 4,
+    "folga_relativa": 0.0009765625,
+    "reps": 12,
+    "quebrou": 12,
+    "taxa_quebra_pct": 100.0,
+    "primeiro_erro_medio": 0.8333333333333334,
+    "bytes_certos_pct_medio": 0.29166666666666663
+   },
+   {
+    "folga_em_4096": 8,
+    "folga_relativa": 0.001953125,
+    "reps": 12,
+    "quebrou": 12,
+    "taxa_quebra_pct": 100.0,
+    "primeiro_erro_medio": 0.8333333333333334,
+    "bytes_certos_pct_medio": 0.24305555555555555
+   },
+   {
+    "folga_em_4096": 16,
+    "folga_relativa": 0.00390625,
+    "reps": 12,
+    "quebrou": 12,
+    "taxa_quebra_pct": 100.0,
+    "primeiro_erro_medio": 0.6666666666666666,
+    "bytes_certos_pct_medio": 0.36111111111111116
+   },
+   {
+    "folga_em_4096": 64,
+    "folga_relativa": 0.015625,
+    "reps": 12,
+    "quebrou": 12,
+    "taxa_quebra_pct": 100.0,
+    "primeiro_erro_medio": 0.3333333333333333,
+    "bytes_certos_pct_medio": 0.20833333333333334
+   },
+   {
+    "folga_em_4096": 256,
+    "folga_relativa": 0.0625,
+    "reps": 12,
+    "quebrou": 12,
+    "taxa_quebra_pct": 100.0,
+    "primeiro_erro_medio": 0.08333333333333333,
+    "bytes_certos_pct_medio": 0.2916666666666667
+   }
+  ]
+ },
+ "busca": {
+  "buscas": [
+   {
+    "bits_do_alvo": 8,
+    "repeticoes": 24,
+    "tentativas_medias": 279.6666666666667,
+    "esperado_2_elevado_k": 256,
+    "bits_medios_da_semente": 7.75,
+    "bits_economizados_medios": 0.25,
+    "segundos_medios": 0.00019592046737670898
+   },
+   {
+    "bits_do_alvo": 12,
+    "repeticoes": 24,
+    "tentativas_medias": 3545.125,
+    "esperado_2_elevado_k": 4096,
+    "bits_medios_da_semente": 11.416666666666666,
+    "bits_economizados_medios": 0.5833333333333339,
+    "segundos_medios": 0.0025977989037831626
+   },
+   {
+    "bits_do_alvo": 16,
+    "repeticoes": 12,
+    "tentativas_medias": 33237.0,
+    "esperado_2_elevado_k": 65536,
+    "bits_medios_da_semente": 15.083333333333334,
+    "bits_economizados_medios": 0.9166666666666661,
+    "segundos_medios": 0.02362346649169922
+   },
+   {
+    "bits_do_alvo": 20,
+    "repeticoes": 6,
+    "tentativas_medias": 751504.5,
+    "esperado_2_elevado_k": 1048576,
+    "bits_medios_da_semente": 19.333333333333332,
+    "bits_economizados_medios": 0.6666666666666679,
+    "segundos_medios": 0.5433181126912435
+   }
+  ]
+ },
+ "_ambiente": {
+  "python": "3.11.15",
+  "plataforma": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
+  "sha_tabelas": "317f8cfbd08ae2a90832a5fb3ab14a4485c72dbd5ba592d8c28265e7222245e7",
+  "sha_nucleo": "221305ad5c99931e107ee1316e75c061f04e9a8812fb081ace491ff5474a9483",
+  "sha_experimentos": "efcc5f714a015076c89fb00d0e3e4fb4c209b48586cdb681e7fbbfe8b9879320",
+  "corpus": {
+   "estruturado.json": "cbae9c24e7e445096db0d441c3699aa1672cdd39c07a016d623d6d3bb3df783a",
+   "pt_sounavy.txt": "42c799b15165e8d426d9e594d08cfdce5a83731a196076d3d6756b26e827e353",
+   "tabular.csv": "d1a4cc9c485df64138329c977d5a9e06da0e72c3725250122ae22a6da6798e7b"
+  },
+  "segundos_total": 39.0
+ }
+}

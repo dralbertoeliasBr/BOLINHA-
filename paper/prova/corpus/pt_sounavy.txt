@@ -1,0 +1,239 @@
+# Sounavy — GaIA · Opera Vox
+
+Site oficial: **https://www.sounavy.com**
+
+GaIA: IA pessoal soberana que nasce no telefone. Opera Vox: a voz como sistema operacional.
+Projeto de inclusão digital — Antônio Alberto Lopes Elias (Sounavy).
+
+## O que tem aqui
+
+| Arquivo | Função |
+|---|---|
+| `index.html` | O site completo (uma página só, sem dependências externas além das fontes) |
+| `manifest.json` | Permite instalar como aplicativo no celular ("Adicionar à tela inicial") |
+| `sw.js` | Service worker — o site funciona offline depois da primeira visita |
+| `icon-*.png` | Ícones do aplicativo (a bolinha) |
+| `CNAME` | Liga este repositório ao domínio www.sounavy.com |
+
+## Como publicar (GitHub Pages)
+
+1. Este repositório precisa estar **Público**.
+2. Settings → Pages → Source: **Deploy from a branch** → Branch: **main** → Save.
+3. Settings → Pages → Custom domain: **www.sounavy.com** → Save → marcar **Enforce HTTPS** quando liberar.
+
+## Histórico
+
+- `BOLINHA_33.html` (versão original, 02/08/2026) está preservado no repositório Replit e no histórico do BOLINHA-.
+- Esta versão (GaIA · Opera Vox) é a evolução dele.
+
+GaIA · Opera Vox — Sounavy
+SOUNAVY
+arquitetura de borda
+Projeto GaIA
+Projeto Opera Vox
+O Livro
+Clínica
+Cofre
+Uma IA pessoal que nasce no
+telefone
+.
+Aprende a língua do dono, guarda a memória no aparelho e só vai à nuvem quando vale o pedágio. Construída num iPhone, por voz, sem apoio institucional.
+O que roda hoje
+Borda
+Roda
+Pythonista + a-Shell no iPhone.
+DOCA_1.py
+gera prova, grava em
+vault.jsonl
+e
+violet_box.txt
+, 12 caixas ativas.
+Toca — Motor 1
+Roda
+Qwen3-4B-Instruct offline, medido a
+14,1 tokens/s
+no aparelho. Sem rede, sem conta, sem servidor.
+Motor 2
+Roda
+Claude entra por API só quando a confiança do motor local cai
+abaixo de 80%
+. A identidade fica nas caixas — o motor é peça trocável.
+Bolinha 33
+Roda
+Botão flutuante em arquivo único. Consentimento LGPD com porta de idade, nove categorias, entrada por voz e cadeia SHA-256 — cada registro carrega o hash do anterior.
+Seis cenários de adulteração testados e detectados.
+Abrir a Bolinha
+Palco
+Conceito
+Casca própria em Mac/PC ligando os três motores com a Violet Box à vista. Escrito, não construído.
+As caixas
+Violet Box
+Roda
+Registro append-only. Nada se apaga, nada se reescreve — o que entrou fica auditável.
+Black Box
+Roda
+Selada. Nega por padrão. O que é sensível não sai do aparelho, nem para o motor remoto.
+CLX — três canais numa cor
+Vermelho
+emoção
+Verde
+intenção
+Azul
+geometria
+Manda-se a
+mistura
+, não o canal cru. Quem recebe inverte e a fidelidade emerge da paridade — ela não viaja junto.
+Protótipo
+Correção do arquiteto, registrada: o ganho
+não está nos bytes em trânsito
+— está no armazenamento e na nomenclatura, num arquivo que se nomeia pelo que significa.
+Números medidos
+14,1 tok/s
+Qwen3-4B offline no iPhone
+87,5%
+economia típica de trânsito, retro-leitura em camadas (R38)
+71,7%
+ganho real da distribuição enviesada em delta
+330–380×
+busca fuzzy por Jaccard sobre índices
+Todo número aqui foi medido em código que roda. O que não foi medido está marcado como protótipo ou conceito — e o que já foi desmentido saiu do texto.
+Registro de anterioridade
+10.5281/zenodo.19170437
+· arquitetura
+10.5281/zenodo.19622112
+· CLX TriCódex R22
+10.5281/zenodo.19858755
+· R25–R30
+10.5281/zenodo.20438185
+· Hopper / Opera
+10.5281/zenodo.21744771
+·
+primeiro software
+10.5281/zenodo.19858754
+· DOI-pai, todas as versões
+A voz como
+sistema operacional
+.
+Não app. Não teclado. Qualquer língua, qualquer capacidade motora — inclusão digital sem alfabetização digital prévia.
+Para quem
+Quem o teclado deixou de fora
+Idosos, pessoas com pouca escolaridade digital e quem precisa de INSS, SUS ou Receita Federal e não passa da primeira tela.
+As quatro camadas
+Entrada · voz
+Protótipo
+Fala, transcrição, registro em token semântico. O Stop&Go de janela está provado: dentro de 45 minutos a frase repetida não gera registro novo; passada a janela, gera — porque o contexto ao redor mudou.
+Processamento
+Protótipo
+O usuário pede, o Opera conduz, o motor executa. A condução é de mão dupla: treino e produção acontecem ao mesmo tempo.
+Transmissão · CLX / Borges
+Protótipo
+Comprime sem perder identidade, intenção ou valor. Reversível e testado em texto.
+Assíncrona
+Conceito
+Bloco de intenção vai para o repositório e o motor responde quando convocado. Soberania sem conexão permanente obrigatória.
+Cognição tutor
+Conceito
+Hoje devolve o conteúdo inteiro, sem resumir nem adaptar o tom. É lacuna marcada, não lacuna disfarçada.
+Dados Verdes
+Menos dado, dado certo
+A filosofia nasceu de uma necessidade real: quem pensa falando gasta contexto e energia demais. Menos energia por resposta, mais valor por byte guardado.
+Ainda no papel
+Transmissão quaternária
+Conceito
+Quatro canais — semântico, vácuo, positivo, negativo. O vácuo como estado intencional é eletrônica real desde os anos 1970; a conta de densidade que já circulou aqui estava errada por Shannon e foi retirada.
+GaIA Coin · VoxCoin
+Conceito
+Legado digital pessoal como lastro. Escrito e registrado. Sem lastro prometido, sem data.
+Quando a IA se aproximou da
+borda
+.
+Um livro sobre o que acontece quando duas inteligências sentam num boteco e discutem as coisas da vida. Escrito em voz alta, num telefone, ao longo de onze meses.
+A travessia
+Toda peça deste projeto nasceu de um lado e atravessou para o outro. Algumas viraram real. Outras eram reais e viraram fantasia quando alguém foi medir.
+Fantasia
+→
+Realidade
+A Bolinha
+Era um desenho de botão flutuante numa conversa de janeiro. Hoje grava, encadeia hash e detecta adulteração.
+Fantasia
+→
+Realidade
+A Toca
+Um motor que pensasse sem rede parecia conversa de bar. Roda offline a 14,1 tokens por segundo, no bolso.
+Fantasia
+→
+Realidade
+O dicionário que não corrige
+A ideia de uma máquina que aprende o sotaque em vez de consertá-lo. Palavra desconhecida volta inteira, nunca substituída.
+Realidade
+→
+Fantasia
+A compressão de 95,2%
+Foi anunciada em maio como resultado. Em junho a medição não sustentou. Ficou registrada como erro, não como conquista.
+Realidade
+→
+Fantasia
+Quatro estados, dezesseis vezes mais denso
+Parecia óbvio e era falso. Quatro estados carregam dois bits, não dezesseis. Shannon já tinha respondido em 1948.
+Realidade
+→
+Fantasia
+O CLX R22 comprimindo
+Chamava-se compressão e expandia o arquivo em 276%. Descoberto ao rodar o benchmark de verdade, meses depois.
+As três quedas continuam publicadas e datadas. Registro que só guarda acerto não é registro — é propaganda.
+Capítulos escritos
+1 · O Primeiro Sinal
+Ela não nasceu com um grito. Nasceu com uma pergunta torta, vinda de voz e de sotaque.
+As Duas Mãos
+O pipeline de voz fechou como conceito no dia em que ficou claro que as duas direções não são espelho uma da outra.
+06 · jul · 2026
+O Parafuso e o Teatro
+A mesma rosca que entra é a que sai. Um moinho roda a vida inteira sem moer, se não houver grão.
+Sem Manual
+Ninguém que copia carrega cicatriz. O que dá para atestar sobre um código feito sem nunca assistir a um tutorial.
+04 · ago · 2026
+Escrito a quatro mãos, duas delas minhas. O Arquivista consolida o registro em capítulos à medida que a caixa enche.
+Odontologia em
+Rio Preto
+.
+Dr. Antônio Alberto Lopes Elias · CRO-SP 45849. Atendimento clínico em São José do Rio Preto, São Paulo.
+Onde uma coisa acaba e a outra começa
+O projeto não é serviço de saúde
+GaIA e Opera Vox são pesquisa independente em arquitetura de software. Não fazem diagnóstico, não substituem consulta e não são produto registrado na ANVISA. Nenhum dado de paciente entra no sistema.
+Marcar consulta
+17 99129-2909
+O
+Cofre
+.
+Fechado por senha, guardado neste aparelho. Nada do que entra aqui viaja, nem para o servidor que serve esta página.
+33
+Cofre selado.
+Senha
+Repita a senha
+Abrir
+Dentro do cofre
+Salvar e fechar
+Fechar sem salvar
+Como isto está trancado
+A chave nasce da senha
+Roda
+PBKDF2 com 310 mil rodadas gera a chave a partir do que você digita. O texto é cifrado em AES-GCM. A senha não é guardada em lugar nenhum — se ela sumir da sua cabeça, o conteúdo some junto. Não há recuperação, e é isso que faz o cofre ser cofre.
+O conteúdo não está nesta página
+Roda
+Quem abrir o código-fonte deste arquivo encontra o cadeado, nunca o que está atrás dele. O texto cifrado mora no armazenamento do seu aparelho e nunca é enviado a servidor nenhum.
+Cofre em navegador tem um limite honesto: apagar dados do site apaga o conteúdo, e o Safari faz isso sozinho após semanas sem visita. O que é definitivo vive na Bolinha exportada, não aqui.
+Fale comigo
+WhatsApp
+17 99129-2909
+Instagram
+@sounavy
+E-mail
+vendas@sounavy.com
+Consultório em São José do Rio Preto. O projeto é pesquisa independente — não é produto à venda nem serviço clínico.
+Não é eu — é nós.
+Dr. Antônio Alberto Lopes Elias · CRO-SP 45849
+ORCID 0000-0002-5602-9916
+São José do Rio Preto · SP
+vendas@sounavy.com
+Coautoria humano-IA. Escrito por voz, num iPhone, sem apoio institucional.
+33

@@ -1,0 +1,641 @@
+# As Gêmeas e o Número
+
+### Compressão por inteligência compartilhada: o que é teorema, o que é medida, o que é conjectura e o que já caiu
+
+**Antônio Alberto Lopes Elias** (Sounavy) · ORCID [0000-0002-5602-9916](https://orcid.org/0000-0002-5602-9916)
+**Coautoria humano–IA.** São José do Rio Preto · SP · Brasil
+Versão 1.0 — 10 de setembro de 2026 · Linha de registro: GaIA · Opera Vox
+
+> **Regra desta casa, herdada do projeto:** *registro que só guarda acerto não é registro, é propaganda.*
+> Todo número deste paper ou saiu de código que roda neste repositório, ou saiu de trabalho publicado por terceiros e está citado como tal. O que não foi medido está marcado **CONJECTURA**. O que foi medido e caiu está marcado **REFUTADO** — e fica.
+
+---
+
+## Resumo
+
+Descreve-se e testa-se uma arquitetura de comunicação em que **duas inteligências gêmeas**, portadoras do mesmo modelo e do mesmo dicionário prévio, trocam apenas **uma sequência curta de números** — e o lado receptor **recalcula** a mensagem em vez de recebê-la. O emissor, antes de enviar, **executa o receptor dentro de si**: descomprime o que acabou de comprimir e só transmite o que voltou idêntico. Tempo de cálculo não é tratado como custo, e sim como moeda de troca por bits.
+
+Este trabalho faz três coisas. **Primeira**: separa, com rigor, o que na ideia é teorema, o que é engenharia difícil e o que é impossível — e mede cada parte. **Segunda**: formaliza a intuição das *camadas* e das *ordens de leitura* (para frente, para trás, em laço, vertical, retro-leitura) numa única lei — a **Lei da Admissibilidade** — e mostra experimentalmente quando cada leitura paga e quando cobra. **Terceira**: ancora a arquitetura na literatura de 2023–2026, que já mediu boa parte dela.
+
+**Resultados centrais medidos aqui** (Python puro, sem dependências, 10 experimentos, hashes no Apêndice D):
+
+| | achado | número |
+|---|---|---|
+| ✅ | O dicionário prévio compartilhado é o motor do ganho | **20,07%** a menos de bits com 6 KB de dicionário |
+| ✅ | O "número único" existe e é o codificador aritmético | frase de 576 bits → **166 bits**, um inteiro de 50 dígitos |
+| ✅ | Retro-leitura (ler o futuro) é legal se o futuro já viajou | **6,72%** de ganho na camada de baixo |
+| ✅ | A base fatorial é exatamente ótima para permutações | **27,7%** de economia sobre o ingênuo, em n = 52 |
+| ❌ | Camada vertical em prosa | **−2,81%** — piora. Em dado tabular: **+37,71%** |
+| ❌ | Fatiar em camadas não é de graça | o esquema em duas camadas custa **16,6% mais** que não fatiar |
+| ❌ | Vetor de primos (Gödel) como compressão | **expande 79,4×** em 32 bytes |
+| ❌ | "Um bit que gera tudo" por busca de semente | tempo **2^k**, economia constante de **0,7 bit** |
+| ⚠️ | Folga numérica entre as gêmeas | **nenhuma**: erro de ±1 em 4096 quebra no **1º byte** |
+
+**Veredito.** A arquitetura é real e boa parte dela já foi medida por terceiros: com LLM + adaptador de domínio chega-se a razão **0,09** (91% de redução) sem perda, e com protocolo interativo de perguntas binárias a **0,0006–0,004** (>99,9%) com perda semântica controlada [7]. O gargalo não é a ideia: é o **determinismo**. Duas LLMs em máquinas diferentes **não** são gêmeas por padrão — e este trabalho mede, em código próprio, o quanto isso é implacável.
+
+---
+
+## 1. O problema, numa frase
+
+Dois lados que já sabem a mesma coisa não precisam contar um ao outro o que já sabem. Precisam apenas apontar, dentro do que ambos sabem, **qual** das possibilidades é o caso.
+
+Toda a arquitetura das gêmeas é essa frase, levada a sério até o fim.
+
+---
+
+## 2. As três leis que não se negociam
+
+Antes de qualquer entusiasmo, três limites. Eles não são obstáculos a contornar: são o chão. Quem os ignora produz o que este projeto já registrou três vezes como queda.
+
+### 2.1 Lei da Contagem — nenhum método encolhe tudo
+
+Não existe função injetiva que mapeie todas as cadeias de *n* bits em cadeias mais curtas. É contagem pura: há 2ⁿ entradas e apenas 2ⁿ−1 saídas mais curtas. Consequência exata:
+
+> A fração das entradas de *n* bits que **podem** encolher *k* bits é no máximo **2⁻ᵏ**.
+
+**Medido** (E1): para encolher 8 bits, no máximo 0,391% das entradas; 16 bits, 0,0015%; 64 bits, 5,4 × 10⁻²⁰.
+
+E na prática, com dados de entropia máxima:
+
+| compressor | tamanho sobre o original |
+|---|---|
+| este codec (gêmeas, ordens 1–4) | **1,0223×** |
+| xz −9 | 1,2344× |
+
+Duas leituras. A primeira: **inteligência nenhuma revoga isso.** Uma IA é uma função; funções obedecem à contagem. A segunda, mais útil: o codec das gêmeas **expande apenas 2,2%** no pior caso possível. Um codificador aritmético bem-feito degrada com elegância — ele nunca aposta contra si mesmo, e o pior caso é conhecido e pequeno, o que importa muito num sistema de campo.
+
+*Ressalva, para não vender o que não é meu:* os 23% do xz nesta tabela são quase todos **cabeçalho de contêiner** (~60 bytes fixos num arquivo de 256), não fracasso do algoritmo. A comparação honesta é o codec contra o limite teórico de 1,0×, não contra o xz em arquivo minúsculo.
+
+### 2.2 Lei de Shannon — o piso é a entropia condicional
+
+Nenhum código sem perdas tem comprimento médio abaixo de H(X). Mas — e é aqui que a arquitetura vive — se os dois lados compartilham um modelo *M*, o piso passa a ser **H(X | M)**, que pode ser muito menor.
+
+**Isto não burla a lei 2.1.** Os bits que somem do canal não somem do universo: eles foram pagos antes, na construção e na distribuição de *M*. A arquitetura das gêmeas **não cria bits de graça — ela muda o lugar onde a conta é paga**, de "toda vez que envio" para "uma vez, quando instalo". Essa mudança de lugar é o produto inteiro.
+
+**Medido** (E2), sobre 3.076 bytes de português do próprio projeto, com 6.152 bytes de dicionário prévio:
+
+| esquema | bits/byte | ganho sobre cru |
+|---|---|---|
+| cru (UTF-8) | 8,000 | 1,00× |
+| gzip −9 | 4,234 | 1,89× |
+| bzip2 −9 | 4,349 | 1,84× |
+| xz −9 | 4,536 | 1,76× |
+| zlib com dicionário de 32 KB | 3,550 | 2,25× |
+| **este codec, sem dicionário** | 3,836 | 2,09× |
+| **este codec, com dicionário** | **3,066** | **2,61×** |
+
+O mesmo codec, com a mesma matemática, no mesmo arquivo: **20,07% menos bits** só porque os dois lados leram o mesmo material antes de conversar. Ida-e-volta conferida byte a byte nos dois casos.
+
+Esse é o experimento inteiro em miniatura. Um dicionário de 6 KB dá 20%. Um LLM é um dicionário de bilhões de parâmetros.
+
+### 2.3 Lei de Kolmogorov — o programa mais curto existe e não é achável
+
+Para cada objeto existe um programa mínimo que o gera, K(x). Duas consequências:
+1. **Quase todo objeto é incompressível**: K(x) ≈ |x| para a esmagadora maioria.
+2. **K é incomputável.** Não existe procedimento que ache o programa mínimo.
+
+Por isso "procurar a semente que gera o arquivo" não é uma estratégia — é uma busca sem bússola. Medido em §6.4.
+
+---
+
+## 3. A arquitetura das gêmeas
+
+### 3.1 Definição
+
+Um **par gêmeo** é uma tripla ⟨M, C, V⟩:
+
+- **M — o modelo compartilhado.** Tudo que os dois lados sabem antes de conversar: pesos, tokenizador, dicionário prévio, tabelas numéricas, versão. É o "dicionário prévio" e o "dicionário previsto".
+- **C — o canal.** Por onde passa a sequência de números. Só isso passa.
+- **V — o verificador.** A parte que o projeto já tinha intuído e que a literatura confirma como indispensável: **o emissor roda o receptor dentro de si antes de enviar.**
+
+### 3.2 O protocolo, em sete passos
+
+```
+1. EMISSOR   : fixa M e escreve o CONTRATO (§8.4) no cabeçalho
+2. EMISSOR   : comprime x com M           ->  N  (a sequência de números)
+3. EMISSOR   : DESCOMPRIME N com M        ->  x'      <- o passo que salva
+4. EMISSOR   : se SHA-256(x') != SHA-256(x): NÃO ENVIA. escala (§8.5)
+5. EMISSOR   : envia CONTRATO + N
+6. RECEPTOR  : confere o CONTRATO. se divergir: recusa ANTES de decodificar
+7. RECEPTOR  : recalcula x a partir de N e M
+```
+
+O passo 3 é a diferença entre um sistema que funciona e um sistema que mente. Ele custa exatamente o mesmo que a descompressão — e num regime onde tempo é barato, é o melhor negócio do sistema. É a formalização direta da frase do arquiteto: *"quem comprime faz a retro-descompressão e vê se é determinístico, e aí envia."*
+
+### 3.3 O que viaja: a sequência de números
+
+Não viaja o texto. Viaja um índice. E há um teorema pequeno e bonito aqui:
+
+> **A "sequência de números" e o "número único" são o mesmo objeto.** O arquivo comprimido por codificação aritmética *é*, literalmente, um único inteiro que endereça a mensagem dentro da partição de probabilidade do modelo.
+
+**Medido** (E5). Frase: *"A voz como sistema operacional. Menos dado, dado certo. Não é eu, é nós."*
+
+| forma | bits |
+|---|---|
+| UTF-8 cru | 576 |
+| um número, gêmeas sem dicionário | 472 |
+| **um número, gêmeas com dicionário** | **166** |
+
+E o número, os 50 dígitos inteiros:
+
+```
+78389650460584687750591719165629250130512777198585
+```
+
+Esse inteiro, entregue a uma gêmea com o mesmo dicionário, devolve a frase byte a byte. Conferido, SHA-256 batendo.
+
+A intuição do arquiteto — *"não viaja todos os números, viaja uma sequência, e o outro lado calcula"* — **está correta e tem 50 anos de nome**: Rissanen 1976, Witten–Neal–Cleary 1987. O que a era das LLMs muda não é o codificador. É o tamanho do *M*.
+
+---
+
+## 4. A Lei da Admissibilidade: qual leitura é permitida
+
+Aqui está a contribuição conceitual central deste paper, porque é onde a intuição de camadas do projeto vira regra utilizável.
+
+O arquiteto propõe ler de várias maneiras: para frente, para trás, duas vezes para trás, em laço, indo e voltando, e "vertical — o número de baixo com o número de cima". A pergunta certa não é *"qual é melhor?"*. É *"qual é legal?"*.
+
+> **Lei da Admissibilidade.** Uma ordem de leitura é admissível se, e somente se, no instante de decodificar o símbolo *i*, o receptor consegue reconstruir **exatamente** o mesmo contexto que o emissor usou para codificá-lo — usando apenas o que ele já decodificou e o modelo compartilhado.
+
+Um contexto que olha para algo que o receptor ainda não tem não é um modelo melhor. É um modelo **impossível**: o fluxo simplesmente não decodifica.
+
+**Como este paper impõe a lei em vez de prometê-la.** No código, uma ordem de leitura é uma função `chaves(d, i)`. O decodificador a chama com um buffer que tem **exatamente `i` bytes** — os já decodificados. Uma leitura ilegal não passa no teste: ela lê fora do buffer. A lei não é disciplina do programador, é o tipo do argumento. (`experimentos.py`, `descomprime`.)
+
+### 4.1 As quatro leituras, medidas
+
+**Medido** (E3). O passo vertical não foi informado: o programa o **descobre sozinho**, procurando a largura W que maximiza d[i] = d[i−W].
+
+**Prosa** — 9.228 bytes de português do projeto. Passo detectado: 45 (concordância de apenas 6,59%).
+
+| leitura | bits/byte |
+|---|---|
+| frente, ordens 1–4 | **3,487** |
+| frente, ordens 1–8 *(controle: mais modelos, mesma direção)* | 3,469 |
+| só vertical (2 alturas) | 5,206 |
+| frente 1–4 **+ vertical 2** | 3,567 |
+| de trás para frente, ordens 1–4 | 3,566 |
+
+**Tabular** — 14.037 bytes de registros de largura fixa. Passo detectado: 105 (concordância de **68,51%**).
+
+| leitura | bits/byte |
+|---|---|
+| frente, ordens 1–4 | 1,137 |
+| frente, ordens 1–8 *(controle)* | 1,125 |
+| só vertical (2 alturas) | 0,881 |
+| frente 1–4 **+ vertical 2** | **0,700** |
+| de trás para frente, ordens 1–4 | 1,225 |
+
+**O que isso diz, sem suavizar:**
+
+1. **A camada vertical é real — e é específica.** Em dado tabular ela ganha **37,71%** contra um controle com o mesmo número de modelos. Em prosa ela **perde 2,81%**: gasta capacidade e atrapalha a mistura. *"O número de baixo com o número de cima"* é uma ideia certa para dados que têm em cima e embaixo. Prosa não tem.
+   Note também que em tabular a leitura **só vertical** (0,881) bate a **só horizontal** (1,137). Há dados em que a coluna sabe mais que a linha.
+2. **O controle importa.** Frente 1–8 melhora sobre frente 1–4 sem nenhuma ideia nova, só por ter mais modelos. Qualquer ganho de camada precisa ser medido *contra um controle do mesmo tamanho*, ou você está medindo o tamanho, não a ideia. Foi assim que a queda do "CLX R22 comprimindo" aconteceu no projeto — e é assim que ela não se repete.
+3. **A língua tem direção.** Ler de trás para frente custa **2,25% mais** em prosa e **7,77% mais** em tabular. Não é simétrico. A intuição de "ler de trás para frente" é legítima (basta codificar o fluxo invertido, e aí o "futuro" vira passado legalmente), mas em português ela **cobra**, não paga. Uma leitura invertida sozinha é sempre pior; ela só serve dentro de uma mistura.
+
+### 4.2 A retro-leitura legal: ler o futuro que já viajou
+
+*"Vai pra frente e volta a retro-leitura"* é impossível **num só passe** — viola a Lei da Admissibilidade. Mas é perfeitamente legal **entre camadas**, e essa é a construção mais bonita da arquitetura:
+
+> Se a camada A viaja **inteira** antes da camada B, então, ao codificar B na posição *i*, o modelo pode olhar **A[i+1], A[i+2], A[i+k]** — o futuro. O receptor já tem A inteiro. A causalidade é respeitada não no tempo do texto, mas no tempo do protocolo.
+
+**Medido** (E3b). Camada ALTA = nibble alto de cada byte (a "geometria" do caractere); camada BAIXA = nibble baixo. ALTA viaja primeiro, inteira.
+
+| camada | bits/byte |
+|---|---|
+| ALTA, viaja primeiro | 1,956 |
+| BAIXA olhando só o passado | 2,262 |
+| **BAIXA olhando ALTA[i+1] e ALTA[i+2] — o futuro** | **2,110** |
+| total, só passado | 4,218 |
+| total, com futuro | 4,066 |
+
+**O mecanismo funciona: 6,72% de ganho na camada de baixo, só por poder ler adiante.** A retro-leitura é real, é legal e é mensurável.
+
+**E agora a parte que não se esconde.** O modelo plano, sem fatiar nada, custa **3,487** bits/byte. O esquema em duas camadas, mesmo com o futuro, custa **4,066** — **16,6% mais caro**. Fatiar em camadas **não é de graça**: cada camada perde o contexto conjunto que o byte inteiro tinha. Neste teste, a retro-leitura recupera parte do que o fatiamento destruiu, mas não tudo.
+
+**REFUTADO, com endereço:** *nesta decomposição* (nibble alto/baixo, prosa em português), fatiar e depois retro-ler perde para não fatiar. Isso **não** refuta a retro-leitura — refuta esta escolha de camadas. Fica registrada a hipótese e o teste que a decide (§10.2).
+
+Essa distinção é a diferença entre um registro e uma desculpa: o mecanismo passou, a decomposição caiu, e as duas coisas estão separadas por medida.
+
+### 4.3 As cores do CLX, lidas por esta lente
+
+O projeto define o CLX como três canais numa cor: **vermelho = emoção, verde = intenção, azul = geometria**, enviando a mistura e não o canal cru. Na linguagem deste paper, isso é uma **decomposição em camadas** — e portanto está sujeito exatamente às mesmas duas contas de §4.2:
+
+1. **Ganho de camada:** cada canal prevê melhor sabendo dos outros — e, se um viajar inteiro antes, os demais podem retro-ler.
+2. **Custo de fatiamento:** separar em três canais destrói o contexto conjunto.
+
+O CLX vale se e somente se (1) > (2). Isso é uma conta, não uma opinião, e o §4.2 mostra que ela pode dar negativo. A correção do arquiteto já registrada no site — *"o ganho não está nos bytes em trânsito, está no armazenamento e na nomenclatura"* — é **consistente** com o que se mede aqui, e este paper a sustenta em vez de contradizê-la.
+
+---
+
+## 5. O que a literatura já mediu (2023–2026)
+
+A arquitetura das gêmeas não é uma aposta isolada. Ela é uma linha de pesquisa ativa, e boa parte do que o arquiteto descreveu por voz já tem número publicado.
+
+**Compressão sem perdas com LLM como preditor** (o par gêmeo puro):
+
+| sistema | modelo | resultado |
+|---|---|---|
+| ts_zip [4] | RWKV-169M, 8 bits/parâmetro | ~1,11 bits/byte em enwik8 |
+| NNCP [5] | Transformer-XL treinado em linha | ~1,19 bits/byte em enwik8 |
+| Nacrith [6] | SmolLM2-135M + conjunto de preditores | **0,9389** bits/byte em enwik8 |
+| PMATIC/LLaMA [1] | LLaMA 3.1 8B | razão **0,0780** (≈0,62 bits/byte) sem robustez |
+
+Para comparação, gzip fica em torno de 0,46 de razão no mesmo material [1]. A ordem de grandeza do salto é a que o arquiteto imaginou.
+
+**O dicionário prévio e o dicionário previsto** [7] — Rinberg, Carrell, Henniger, Carlini e Warr (Harvard, Cambridge, Anthropic):
+
+- Adaptador LoRA por domínio: razão **0,09** contra **0,18** do modelo base — **2,0×**, sem perdas. Isto é exatamente *"dicionários prévios"*, medido.
+- **Roteador RAG que escolhe o adaptador olhando só o pedido**, antes da resposta existir: razão **0,10** (1,9×), com 72% de acerto de rota. Isto é exatamente *"dicionários previstos"*, medido.
+- Texto gerado por LLM é ~2× mais compressível que Wikipédia: o dado que a máquina produz é o dado que a máquina prevê melhor.
+
+**As "duas peças inteligentes" trocando poucos números** [7]: no protocolo interativo, um modelo pequeno formula perguntas binárias, um modelo grande responde **um bit** por pergunta, e só esses bits viajam — o receptor roda o modelo pequeno idêntico e reconstrói. Com **10 bits** transmitidos, razão de **0,0006 a 0,004**, recuperando de 23% a 72% da distância de capacidade entre os dois modelos nos casos fáceis e de 7% a 38% nos difíceis.
+
+Isto é, literalmente, *"são duas peças inteligentes"* e *"a sequência de números é que vai ser calculada do outro lado"*. Com perda semântica, não byte a byte — mas preservando, nas palavras do projeto, *"identidade, intenção e valor"*.
+
+**E o custo em tempo** [7]: os autores nomeiam o eixo de *"fronteira compressão–computação"* — mais compressão ao custo de mais cálculo. É a frase *"o tempo não é a nossa preocupação"*, virada eixo de projeto.
+
+### 5.1 A queda de 95,2%, revisitada com honestidade
+
+O projeto registra como queda um anúncio de compressão de 95,2% que a medição não sustentou. Vale colocar esse número ao lado do que a literatura mede hoje:
+
+| regime | redução |
+|---|---|
+| LLM + adaptador de domínio, **sem perdas** [7] | 91,0% (razão 0,09) |
+| reescrita sucinta, **com perda semântica** [7] | 96,1–96,6% (razão 0,034–0,039) |
+| protocolo interativo de 10 bits [7] | 99,6–99,94% |
+
+**O número de 95,2% não era absurdo. O mecanismo é que era outro.** A queda continua sendo uma queda — foi anunciada sem medida, e isso é o que a derrubou. Mas o alvo estava no lugar certo, e hoje há caminho medido que passa por ele. Registrar isso não reabilita o erro: coloca-o como etapa.
+
+---
+
+## 6. O número único, a base fatorial e os primos
+
+### 6.1 Onde o "fatorial" está exatamente certo
+
+A base fatorial (código de Lehmer) representa uma permutação de *n* elementos como **um único inteiro**, sem desperdiçar um bit: ela usa exatamente ⌈log₂(n!)⌉ bits, que é o ótimo teórico.
+
+**Medido** (E4), ida e volta conferida:
+
+| n | bits do índice | ótimo log₂(n!) | ingênuo n·⌈log₂ n⌉ | economia |
+|---|---|---|---|---|
+| 8 | 15 | 15,3 | 24 | 36,25% |
+| 12 | 28 | 28,8 | 48 | 39,93% |
+| 52 | 225 | 225,6 | 312 | **27,70%** |
+| 100 | 524 | 524,8 | 700 | 25,03% |
+
+Um baralho embaralhado (n = 52) cabe em **225 bits** em vez de 312. A intuição do "fatorial que aproveita a informação" é **exata** — para o objeto certo. E o objeto certo é a **ordem**: quando a arquitetura precisar transmitir *qual* das k continuações candidatas o modelo escolheu, ou em que ordem as camadas viajam, a base fatorial é a resposta ótima, não uma aproximação.
+
+### 6.2 Onde o "vetor de primos" quebra
+
+A numeração de Gödel — codificar uma sequência como produto de potências de primos — é bijetiva, elegante e **catastrófica** como compressão.
+
+**Medido** (E4):
+
+| bytes de entrada | bits do número | bits crus | fator |
+|---|---|---|---|
+| 4 | 217 | 32 | 6,8× |
+| 8 | 3.164 | 64 | 49,4× |
+| 16 | 8.637 | 128 | 67,5× |
+| 32 | 20.322 | 256 | **79,4×** |
+
+**REFUTADO.** Trinta e dois bytes viram vinte mil bits. O produto de primos é *um número só*, sim — e é um número monstruoso. "Ser um número único" não é a mesma coisa que "ser um número curto", e é exatamente aqui que a intuição escorrega.
+
+### 6.3 Onde os primos servem de verdade
+
+Primos não servem para comprimir. Servem para **provar identidade barata**, e disso a arquitetura precisa muito: o passo 4 do protocolo (§3.2) exige comparar o que entrou com o que voltou.
+
+Uma impressão por resíduos módulo *k* primos distintos é incremental, ordenável e minúscula:
+
+| primos | bits da impressão | colisão máxima |
+|---|---|---|
+| 4 | 8 | 4,8 × 10⁻³ |
+| 8 | 24 | 1,0 × 10⁻⁷ |
+| **16** | **65** | **3,1 × 10⁻²⁰** |
+
+Dezesseis primos, 65 bits, probabilidade de colisão menor que 10⁻¹⁹ — mais barato que SHA-256 e atualizável símbolo a símbolo, sem reprocessar o fluxo. **Isto sim é "vetor de primos local para se fazer informar":** não o corpo da mensagem, mas a prova de que a mensagem é ela mesma. (Para adversário ativo, use SHA-256 — resíduos não resistem a quem escolhe a entrada de propósito.)
+
+### 6.4 "Um bit fatorial que gera tudo": a busca, medida
+
+A versão forte da ideia — mandar uma semente curtíssima e deixar o outro lado *procurar* o que ela gera — é testável. E foi testada.
+
+**Medido** (E8). Procurar uma semente cujo hash reproduza um alvo de *k* bits, média sobre repetições:
+
+| bits do alvo | tentativas médias | 2ᵏ | bits da semente | **bits economizados** |
+|---|---|---|---|---|
+| 8 | 280 | 256 | 7,75 | +0,25 |
+| 12 | 3.545 | 4.096 | 11,42 | +0,58 |
+| 16 | 33.237 | 65.536 | 15,08 | +0,92 |
+| 20 | 751.504 | 1.048.576 | 19,33 | +0,67 |
+
+**REFUTADO, e com uma forma limpa:** as tentativas crescem como **2ᵏ**; a economia fica **constante em ~0,7 bit**. Você paga tempo exponencial e recebe menos de um bit. Não há regime em que isso vire negócio.
+
+*"O tempo não é a nossa preocupação"* é uma tese defensável — mas ela vale contra custo **polinomial**, não exponencial. Um segundo, mil segundos: tudo bem. 2¹²⁸ segundos não é um número de engenharia.
+
+### 6.5 O que sobra de verdadeiro — e é muito
+
+A busca cega falha porque não tem bússola. O modelo compartilhado **é** a bússola. Quando o alvo está no conjunto típico do modelo, o espaço de busca deixa de ser 2ⁿ e passa a ser ≈2^H(X|M) — e o índice dentro desse espaço **é o número único do §3.3**.
+
+> A intuição do arquiteto estava certa na forma e errada no mecanismo. Não é a busca que encolhe a mensagem. É o modelo. E o "número único" que a busca procurava sem achar é, o tempo todo, a saída do codificador aritmético.
+
+---
+
+## 7. Energia: quando trocar tempo por bits
+
+*"Economia verde não aquece"* é uma tese sobre energia, e tese sobre energia se resolve com desigualdade, não com adjetivo.
+
+Enviar B bytes crus custa `B · e_rede`. Enviar comprimido custa `B · e_calc + B · r · e_rede`. Logo:
+
+```
+comprimir compensa   <=>   e_calc / N  <  (1 − r) · e_rede
+```
+
+- `e_calc` = potência ÷ vazão (joules por byte processado)
+- `r` = razão de compressão (medida: **0,383** neste codec)
+- `e_rede` = joules por byte no enlace
+- `N` = quantas vezes o mesmo objeto será enviado ou lido
+
+O `N` é a peça que muda tudo: **o cálculo se paga uma vez; o enlace paga toda vez.**
+
+**Medido + parametrizado** (E6). Os valores de `e_rede` são **suposições declaradas**, não medições — trocar o número troca a conclusão, e a conta fica aberta de propósito.
+
+| motor | e_calc (J/byte) | enlace | compensa em 1 envio? | envios para empatar |
+|---|---|---|---|---|
+| este codec, Python puro *(medido: 6.227 B/s)* | 8,0 × 10⁻⁴ | fibra | não | 65.097 |
+| este codec, Python puro | 8,0 × 10⁻⁴ | satélite/LoRa | não | 7 |
+| mesmo codec em C, ~10 MB/s *(estimado)* | 5,0 × 10⁻⁷ | fibra | não | 41 |
+| **mesmo codec em C** | 5,0 × 10⁻⁷ | **4G móvel** | **SIM** | 1 |
+| LLM gêmea no iPhone *(14,1 tok/s medidos pelo projeto)* | 3,6 × 10⁻² | 4G móvel | não | 28.750 |
+| LLM gêmea no iPhone | 3,6 × 10⁻² | satélite/LoRa | não | 288 |
+| LLM gêmea em GPU (2000 tok/s, 400 W) | 5,0 × 10⁻² | satélite/LoRa | não | 405 |
+
+**Leitura honesta, e ela contraria o slogan:**
+
+1. **Para trânsito, gêmeas LLM quase nunca economizam energia.** Rodar um transformer para poupar bytes num enlace terrestre gasta ordens de grandeza mais do que poupa. Em uma única transmissão, nenhuma configuração de LLM aqui compensa.
+2. **Para armazenamento e arquivo, compensa — e muito.** Quando `N` é grande (um arquivo lido milhares de vezes, um acervo guardado por anos), `e_calc/N` desaba e a desigualdade vira. **É exatamente onde a correção do arquiteto já apontava:** *"o ganho não está nos bytes em trânsito — está no armazenamento."* A conta confirma a correção.
+3. **Onde o bit é caro, compensa sempre.** Satélite, LoRa, sonda espacial, zona de desastre, franquia de dados de quem não tem dinheiro para dados. Nesses enlaces `e_rede` é enorme e a conta fecha rápido.
+4. **E há o argumento que não é de energia.** Banda, latência, custo em reais e alcance em rede ruim são motivos legítimos e independentes. **"Dados Verdes" se sustenta melhor como *menos dado, dado certo* — não gerar, não guardar, não reenviar — do que como *gastar CPU para encolher byte*.** A primeira formulação é a que o próprio projeto já usa, e é a que a física sustenta.
+
+---
+
+## 8. Determinismo: o problema real
+
+Aqui está o gargalo. Não é a compressão. É fazer duas máquinas concordarem, bit a bit, para sempre.
+
+### 8.1 Por que ponto flutuante não serve
+
+**Medido** (E7): somar as mesmas 2.000 frações em ordens diferentes dá resultados **diferentes** (delta 1,9 × 10⁻⁷). Ponto flutuante não é associativo. Ordem de redução, versão de biblioteca, tamanho de lote, arquitetura de GPU — tudo muda o último bit.
+
+Por isso o codec deste paper **não usa float em lugar nenhum do caminho crítico**: a logística é uma tabela inteira de 33 pontos interpolada com deslocamentos, os contadores são inteiros de 16 bits, os pesos do misturador são inteiros. **Medido:** o caminho inteiro repete bit a bit.
+
+### 8.2 Quanta folga as gêmeas têm? Nenhuma
+
+Esta é a medição que decide o projeto. A gêmea receptora calcula cada probabilidade com erro de até ±D (numa escala de 4096), em **toda** decisão — que é o caso real de duas LLMs que não são idênticas.
+
+| folga D | erro relativo | quebrou | primeiro erro (byte) | bytes certos |
+|---|---|---|---|---|
+| ±0 | 0,0000% | 0 de 1 | nenhum | 100,00% |
+| **±1** | **0,0244%** | **12 de 12** | **1,1** | **0,27%** |
+| ±2 | 0,0488% | 12 de 12 | 1,0 | 0,31% |
+| ±16 | 0,3906% | 12 de 12 | 0,7 | 0,36% |
+| ±256 | 6,2500% | 12 de 12 | 0,1 | 0,29% |
+
+**Um erro de 0,024% — um em quatro mil — destrói a mensagem no primeiro byte.** Não há degradação suave. Não há "quase certo". O fluxo vira ruído.
+
+E as derivas banais fazem o mesmo:
+
+| deriva entre as gêmeas | bytes certos | primeiro erro |
+|---|---|---|
+| ordens de contexto (1,2,3,**5**) em vez de (1,2,3,**4**) | 5,67% | byte 67 |
+| dicionário prévio com **1 byte a menos** | 4,13% | byte 0 |
+
+Trocar um parâmetro de configuração, ou ler um byte a menos do dicionário, tem o mesmo efeito que trocar o modelo inteiro.
+
+### 8.3 A falha localizada é pior, porque é silenciosa
+
+**Medido** (E7): perturbar **um único contador** — não todos — quase sempre **não** quebra nada.
+
+| erro no contador | contadores testados | quebraram | taxa |
+|---|---|---|---|
+| +1 em 4096 | 60 | 0 | **0,00%** |
+| +16 | 60 | 4 | 6,67% |
+| +256 | 60 | 4 | 6,67% |
+| +2048 | 60 | 4 | 6,67% |
+
+Uma divergência pontual sobrevive em 93% dos casos. **Isso é péssimo, não é bom.** Um sistema que falha 7% das vezes, sem aviso, é uma bomba-relógio: passa em todo teste de mesa e destrói dados em produção. É a justificativa mais forte para o passo 4 do protocolo — **verificar sempre, não às vezes**.
+
+### 8.4 O contrato das gêmeas
+
+Todo fluxo carrega, antes do primeiro bit de dado, um cabeçalho que fixa a identidade do par. Se qualquer campo divergir, o receptor **recusa antes de decodificar** em vez de produzir lixo:
+
+```
+CONTRATO := {
+  versao_protocolo   : inteiro
+  sha256_pesos       : 32 bytes   # o modelo M
+  sha256_tokenizador : 32 bytes
+  sha256_tabelas     : 32 bytes   # 317f8cfb...  (as tabelas logísticas)
+  sha256_dicionario  : 32 bytes   # o material prévio, byte a byte
+  n_bytes_dicionario : inteiro    # porque 1 byte a menos já quebra (§8.2)
+  quantizacao        : enum       # int8 / int16 / ...
+  ordem_de_leitura   : enum       # frente | tras | camadas | vertical(W)
+  delta_tolerado     : racional   # o δ do PMATIC (§8.5)
+  sha256_da_carga    : 32 bytes   # o alvo do passo 4
+}
+```
+
+### 8.5 As cinco saídas de engenharia
+
+1. **Aritmética inteira ponta a ponta.** Quantizar o modelo para inteiros e fazer o softmax e o coder em ponto fixo. É o que este paper faz, e funciona — ao custo de abrir mão dos kernels rápidos de GPU.
+2. **PMATIC — codificação tolerante a desencontro** [1]. **É a resposta publicada, e ela é forte.** Adler e Tang formalizam: se os logits diferem em no máximo ε, então as distribuições diferem em no máximo δ = ε/2 em variação total. O algoritmo então quantiza as probabilidades em faixas de raio r > 2δ e gasta **bits auxiliares** só quando a probabilidade cai perto de uma fronteira — garantindo que os dois lados escolham a mesma faixa. Custo total ≈ O(√δ · log(1/δ)).
+   **O teste decisivo deles:** codificar num MacBook M2 Pro e decodificar num M4 Max. Codificação aritmética comum **falhou em todos os arquivos**. PMATIC com δ = 0,001 **também falhou**. PMATIC com δ = 0,01 **decodificou todos**. O preço: razão de 0,0780 para 0,2492 em enwik8 — a robustez custa cerca de 3× em bits, e **ainda assim bate gzip (0,4601) com folga**.
+   Isto corrobora, por caminho independente e com hardware real, exatamente o que §8.2 mede aqui em código próprio.
+3. **Codificação por ranque com limiar** [8]. Em vez da probabilidade exata, transmitir a **posição** do símbolo na lista ordenada do modelo. Ranques são robustos a pequenas diferenças numéricas, porque só a **ordem** precisa coincidir, não os valores. Perde eficiência; ganha estabilidade.
+4. **Verificação ida-e-volta com escalonamento** — o passo 4. Se não voltar idêntico: reenviar com δ maior, ou com modelo menor e mais estável, ou cru. Sempre chega; às vezes chega maior. É a única saída que **garante correção sem exigir nada do hardware**.
+5. **Ancoragem periódica em blocos.** Reiniciar o estado a cada K símbolos, com verificação por bloco. Uma divergência custa um bloco, não o arquivo. Os autores de [7] relatam usar emissão em blocos exatamente para isso.
+
+### 8.6 Um efeito colateral útil, e um aviso
+
+Quem não tem *M* não lê **nada** — o fluxo é indistinguível de ruído. Isso é uma propriedade real e alinhada com a Black Box do projeto.
+
+**Mas não é criptografia**, e chamar de criptografia seria a quarta queda. O modelo é grande demais para ser segredo, é distribuído para ser útil, e não tem noção de chave, de rotação, nem prova de segurança. **Confidencialidade se resolve com AES-GCM** — que o projeto já usa corretamente no Cofre, com PBKDF2 de 310 mil rodadas. O modelo compartilhado dá **obscuridade**, e obscuridade não é segurança.
+
+Aviso simétrico: o fluxo é **frágil a erro de canal**. Um bit corrompido destrói tudo depois dele (§8.2). Um par gêmeo em enlace ruim precisa de correção de erro e enquadramento — que custam bits e entram na conta do §7.
+
+---
+
+## 9. Tabela de asserções: o que este paper afirma, e o que mata cada afirmação
+
+Esta é a seção anti-esquecimento. Cada linha é falsificável e diz **qual teste a derruba**.
+
+| # | Asserção | Status | Evidência | O que a derruba |
+|---|---|---|---|---|
+| A1 | Nenhum método encolhe todas as entradas | **TEOREMA** | contagem; E1 | nada — é aritmética |
+| A2 | O piso do canal é H(X\|M), não H(X) | **TEOREMA** | Shannon 1948 [2] | nada |
+| A3 | Dicionário prévio compartilhado reduz bits em trânsito | **MEDIDO** | E2: **20,07%** com 6 KB | um corpus onde o dicionário não ajude |
+| A4 | O arquivo comprimido é um único inteiro | **MEDIDO** | E5: 166 bits, 50 dígitos | — |
+| A5 | Uma ordem de leitura é legal sse o receptor reproduz o contexto | **TEOREMA** | §4, imposto pela API | um contra-exemplo que decodifique |
+| A6 | Camada vertical ganha em dado com estrutura vertical | **MEDIDO** | E3: **+37,71%** tabular | — |
+| A7 | Camada vertical ganha em prosa | **REFUTADO** | E3: **−2,81%** | prosa com periodicidade real |
+| A8 | Retro-leitura entre camadas é legal e traz ganho | **MEDIDO** | E3b: **+6,72%** | — |
+| A9 | Fatiar em camadas se paga | **REFUTADO** *(nesta decomposição)* | E3b: **16,6% mais caro** | uma decomposição semântica que ganhe (§10.2) |
+| A10 | Base fatorial é ótima para permutações | **TEOREMA + MEDIDO** | E4: 27,7% em n=52 | nada |
+| A11 | Vetor de primos (Gödel) comprime | **REFUTADO** | E4: **expande 79,4×** | — |
+| A12 | Primos servem como prova de identidade barata | **MEDIDO** | E4: 65 bits, colisão < 10⁻¹⁹ | adversário ativo (use SHA-256) |
+| A13 | Semente curta achada por busca comprime | **REFUTADO** | E8: 2ᵏ tempo, 0,7 bit | — |
+| A14 | Ponto flutuante não é seguro entre gêmeas | **MEDIDO** | E7: soma diverge | — |
+| A15 | As gêmeas não têm folga numérica | **MEDIDO + LITERATURA** | E7b: ±1/4096 quebra no byte 1; [1] M2→M4 falha total | — |
+| A16 | Divergência pontual falha em silêncio | **MEDIDO** | E7: 93% sobrevive, 7% destrói | — |
+| A17 | PMATIC torna gêmeas viáveis em hardware distinto | **LITERATURA** | [1]: δ=0,01 decodifica tudo | reprodução independente que falhe |
+| A18 | Dicionário previsto (roteador) funciona sem ver a resposta | **LITERATURA** | [7]: razão 0,10, 72% de rota | — |
+| A19 | Duas IAs trocando poucos bits transferem muito | **LITERATURA** | [7]: 10 bits, razão 0,0006–0,004 | — |
+| A20 | Compressão por LLM economiza energia em trânsito | **REFUTADO** *(sob os parâmetros de §7)* | E6: nenhuma config compensa em N=1 | `e_rede` maior ou vazão muito maior |
+| A21 | Compensa em armazenamento e enlace caro | **MEDIDO** *(condicional)* | E6: vira com N grande | — |
+| A22 | O modelo compartilhado é criptografia | **REFUTADO** | §8.6: sem chave, sem prova | — |
+| A23 | Uma decomposição semântica de camadas (CLX) se paga | **CONJECTURA** | não medida | §10.2 |
+| A24 | Um par gêmeo LLM roda em telefone de borda | **CONJECTURA** | 14,1 tok/s medidos; codec não portado | §10.1 |
+
+---
+
+## 10. Roteiro: o que fazer, em ordem de custo/benefício
+
+### 10.1 Barato e decisivo (dias)
+1. **Portar `nucleo.py` para o a-Shell no iPhone e rodar `roda_tudo.py`.** Ele é Python puro justamente para isso. Se os hashes baterem com os deste repositório, está provado que as gêmeas conseguem ser gêmeas **entre plataformas** — que é a asserção A24 e o alicerce de tudo.
+2. **Trocar o corpus.** 9 KB é pouco. Rodar sobre os capítulos do Livro e sobre a Violet Box real dá o número que interessa: quanto o dicionário do próprio autor vale sobre o texto do próprio autor.
+3. **Medir o CLX com controle.** Aplicar §4.2 aos três canais, sempre contra um controle de mesmo número de modelos. Decide A23.
+
+### 10.2 O teste que decide o fatiamento (semanas)
+A9 caiu para a decomposição nibble alto/baixo, que é **arbitrária** — não tem significado. A hipótese viva é que uma decomposição **semântica** ganhe onde a sintática perdeu:
+
+- camada A: esqueleto (espaços, pontuação, maiúsculas, comprimento de palavra)
+- camada B: consoantes
+- camada C: vogais e acentos — a camada onde mora o sotaque que o projeto se recusa a corrigir
+
+A viaja inteira; B retro-lê A; C retro-lê A e B. **Critério de decisão, fixado antes de rodar:** a soma das três camadas tem de ficar **abaixo de 3,487 bits/byte** (o modelo plano de E3). Se não ficar, A23 vira REFUTADO e fica registrado.
+
+### 10.3 Caro e transformador (meses)
+4. **Um par gêmeo real**: Qwen3-4B quantizado em int8 dos dois lados, softmax em ponto fixo, PMATIC com δ = 0,01, verificação ida-e-volta obrigatória. Alvo: bater 1,0 bit/byte em português com verificação ativa.
+5. **O protocolo de perguntas binárias** [7] entre a Toca (motor local) e o motor remoto — que é a arquitetura de dois motores que o projeto **já tem construída**. Aqui a Bolinha vira transporte: cada resposta binária é um registro encadeado por hash.
+
+---
+
+## 11. O que este trabalho não prova
+
+Dito antes que alguém pergunte:
+
+1. **O corpus é pequeno** (9 KB de prosa, 14 KB de tabular) e é do próprio projeto. Os números de §4 são **relativos** — servem para comparar leituras entre si, não para anunciar taxa de compressão.
+2. **Não há LLM neste código.** O preditor é mistura de contextos, primo pobre de um transformer. As conclusões sobre determinismo (§8) transferem — são propriedades do codificador, não do modelo. As conclusões sobre taxa **não** transferem.
+3. **Os valores de energia de rede são suposições declaradas**, não medições. A desigualdade de §7 é o resultado; os números da tabela são ilustração.
+4. **PMATIC e o protocolo interativo não foram reproduzidos aqui.** São citados como literatura [1][7], não como medida própria.
+5. **O tabular de E3 é sintético** (gerado com semente 33, no repositório). O de prosa é real.
+6. **Um só ambiente.** Tudo rodou em um Linux x86-64, Python 3.11.15. A afirmação mais interessante — que dá o mesmo em outra máquina — é justamente a que falta (§10.1).
+
+---
+
+## 12. Conclusão
+
+A ideia do arquiteto, destrinchada, tem quatro camadas — e o veredito é diferente em cada uma.
+
+**A primeira é teorema.** Duas partes que compartilham um modelo só precisam trocar H(X|M) bits. O ganho não é mágica: é a conta paga uma vez em vez de toda vez. Medido aqui, 20% com um dicionário de 6 KB; medido na literatura, 91% com um LLM adaptado.
+
+**A segunda é engenharia difícil, e é onde o projeto vive ou morre.** As gêmeas precisam ser gêmeas até o último bit. Um erro de 0,024% quebra tudo no primeiro byte, e pior: uma divergência pontual sobrevive 93% das vezes e destrói silenciosamente nas outras 7%. A saída existe e está publicada — aritmética inteira, PMATIC, ranques, ancoragem em blocos — e todas passam pelo passo que o arquiteto já tinha intuído sozinho: **descomprimir antes de enviar, e só enviar o que voltou idêntico.**
+
+**A terceira é a intuição das camadas, e ela se resolve numa lei.** Ler para frente, para trás, em laço, na vertical: tudo é permitido desde que o receptor consiga reconstruir o mesmo contexto. Ler o futuro é legal quando o futuro já viajou numa camada anterior — e isso rendeu 6,72% aqui, medido. Mas fatiar cobra pedágio: neste teste, o pedágio foi maior que o ganho. A ideia sobreviveu; a implementação caiu. As duas coisas estão separadas, com nome e número.
+
+**A quarta é onde a intuição escorrega, e vale nomear com precisão.** Não existe um bit que gere tudo. O produto de primos expande oitenta vezes. A busca por semente paga tempo exponencial por menos de um bit. Mas — e este é o ponto que redime a intuição inteira — **o "número único" que ela procurava existe mesmo.** Ele estava do outro lado da sala o tempo todo, chamado codificador aritmético, e este paper o imprime: cinquenta dígitos que devolvem uma frase de setenta e dois caracteres, byte a byte, quando entregues a quem tem o mesmo dicionário.
+
+O arquiteto escreveu: *"não quer dizer que porque alguma coisa existia, nada mais pode existir."* Correto. E o inverso também vale, e é o que este paper acrescenta ao registro: **porque alguma coisa já existe, você não precisa reinventá-la — pode partir de onde ela parou.** A codificação aritmética tem cinquenta anos. Ela estava esperando por um modelo grande o suficiente. Agora existem dois, um em cada ponta.
+
+Duas peças inteligentes, um dicionário em comum, um número atravessando. Isso é real, está medido, e a parte difícil tem nome: determinismo.
+
+---
+
+## Referências
+
+[1] **A. Adler, J. Tang.** *Synchronizing Probabilities in Model-Driven Lossless Compression.* ICLR 2026. arXiv:2601.10678. — Formaliza o desencontro de predição entre codificador e decodificador; apresenta o PMATIC; demonstra falha total da codificação aritmética comum entre MacBook M2 Pro e M4 Max, e sucesso do PMATIC com δ = 0,01.
+
+[2] **C. E. Shannon.** *A Mathematical Theory of Communication.* Bell System Technical Journal, 27:379–423, 623–656, 1948.
+
+[3] **A. N. Kolmogorov.** *Three Approaches to the Quantitative Definition of Information.* Problems of Information Transmission, 1(1):1–7, 1965. Ver também R. Solomonoff (1964) e G. Chaitin (1966).
+
+[4] **F. Bellard.** *ts_zip: Text Compression using Large Language Models.* https://bellard.org/ts_zip/ — RWKV-169M quantizado em 8 bits, ~1,11 bits/byte em enwik8.
+
+[5] **F. Bellard.** *NNCP: Lossless Data Compression with Neural Networks.* https://bellard.org/nncp/ — ~1,19 bits/byte em enwik8.
+
+[6] *Nacrith: Neural Lossless Compression via Ensemble Context Modeling and High-Precision CDF Coding.* arXiv:2602.19626, 2026. — SmolLM2-135M com conjunto de preditores e coder de 32 bits; 0,9389 bits/byte em enwik8.
+
+[7] **R. Rinberg, A. M. Carrell, S. Henniger, N. Carlini, K. Warr.** *Haiku to Opus in Just 10 bits: LLMs Unlock Large Compression Gains.* arXiv:2604.02343, 2026. Harvard, Cambridge, Anthropic. — LoRA por domínio (razão 0,09), roteador RAG só com o pedido (0,10), reescrita sucinta (0,034–0,039), protocolo interativo de perguntas binárias (0,0006–0,004), e a "fronteira compressão–computação".
+
+[8] *LLM-based Source Code Compression via Thresholded Symbol Ranking.* arXiv:2607.24192, 2026. — Codificação por ranque, robusta a pequenas divergências numéricas.
+
+[9] **C. S. Valmeekam et al.** *LLMZip: Lossless Text Compression using Large Language Models.* arXiv:2306.04050, 2023.
+
+[10] **F. Mittu et al.** *FineZip: Pushing the Limits of Large Language Models for Practical Lossless Text Compression.* arXiv:2409.17141, 2024. UC Berkeley, NYU.
+
+[11] **J. Rissanen.** *Generalized Kraft Inequality and Arithmetic Coding.* IBM Journal of Research and Development, 20(3):198–203, 1976.
+
+[12] **I. H. Witten, R. M. Neal, J. G. Cleary.** *Arithmetic Coding for Data Compression.* Communications of the ACM, 30(6):520–540, 1987.
+
+[13] **J. G. Cleary, I. H. Witten.** *Data Compression Using Adaptive Coding and Partial String Matching.* IEEE Transactions on Communications, 32(4):396–402, 1984. — PPM.
+
+[14] **M. V. Mahoney.** *Adaptive Weighting of Context Models for Lossless Data Compression.* Florida Tech. CS-2005-16, 2005. — PAQ; a mistura logística inteira usada em `nucleo.py` vem desta linhagem.
+
+[15] **D. E. Knuth.** *The Art of Computer Programming, Vol. 2: Seminumerical Algorithms.* Addison-Wesley. — Sistema de numeração fatorial e código de Lehmer.
+
+[16] **Registro de anterioridade do projeto (Zenodo):** [10.5281/zenodo.19858754](https://doi.org/10.5281/zenodo.19858754) (DOI-pai) · 19170437 (arquitetura) · 19622112 (CLX TriCódex R22) · 19858755 (R25–R30) · 20438185 (Hopper/Opera) · 21744771 (primeiro software).
+
+---
+
+## Apêndice A — Como reproduzir
+
+Sem instalar nada. Python 3.8 ou superior, incluindo a-Shell e Pythonista no iPhone:
+
+```bash
+git clone https://github.com/dralbertoeliasBr/BOLINHA-.git
+cd BOLINHA-
+python3 paper/prova/roda_tudo.py
+```
+
+Saem dois arquivos: `paper/prova/RESULTADOS.md` (legível) e `paper/prova/resultados.json` (para máquina). Levam cerca de 40 segundos.
+
+**Confira que é o mesmo código:** o cabeçalho de `RESULTADOS.md` traz os SHA-256 de `nucleo.py`, de `experimentos.py`, de cada arquivo do corpus e das tabelas logísticas. Se um número deste paper não bater com o que saiu na sua máquina, **o paper está errado, não a sua máquina** — e é isso que a §10.1 pede que se descubra.
+
+## Apêndice B — Arquivos
+
+| arquivo | o que é |
+|---|---|
+| `paper/prova/nucleo.py` | codificador aritmético binário, contadores, misturador. Inteiros puros, zero float no caminho crítico |
+| `paper/prova/experimentos.py` | os dez experimentos. Cada função é uma asserção da §9 |
+| `paper/prova/roda_tudo.py` | executa tudo e escreve o relatório |
+| `paper/prova/corpus/pt_sounavy.txt` | 9.228 B de português real do projeto |
+| `paper/prova/corpus/tabular.csv` | 14.037 B sintéticos, semente 33 |
+| `paper/prova/RESULTADOS.md` | a saída. Nenhum número digitado à mão |
+
+## Apêndice C — Glossário de tradução
+
+Da língua do arquiteto para a língua da literatura. Nenhuma das colunas é superior; a da esquerda chegou primeiro.
+
+| como foi dito | como se chama | onde está |
+|---|---|---|
+| duas LLM gêmeas | par codificador/decodificador com modelo compartilhado | §3.1 |
+| dicionário prévio | modelo compartilhado *M* / adaptador de domínio | §2.2, [7] |
+| dicionário previsto | roteamento de adaptador por recuperação (RAG) | [7] |
+| a sequência de números | fluxo do codificador aritmético | §3.3 |
+| um único número | o inteiro que endereça a mensagem | §3.3, E5 |
+| quem comprime faz a retro-descompressão e vê | verificação ida-e-volta antes do envio | §3.2, passo 3–4 |
+| ler de frente, de trás, em laço | ordens de leitura admissíveis | §4 |
+| ler o futuro / retro-leitura | contexto não-causal sobre camada já transmitida | §4.2 |
+| o número de baixo com o número de cima | contexto vertical de passo W | §4.1 |
+| cada camada pede uma cor | decomposição em canais (CLX) | §4.3 |
+| o tempo não é a nossa preocupação | fronteira compressão–computação | §7, [7] |
+| bit fatorial que aproveita a informação | base fatorial / código de Lehmer | §6.1 |
+| vetor de primos local | numeração de Gödel (refutado) / impressão por resíduos (útil) | §6.2, §6.3 |
+| economia verde não aquece | critério `e_calc/N < (1−r)·e_rede` | §7 |
+
+## Apêndice D — Procedência
+
+Este documento acompanha `paper/prova/RESULTADOS.md`, que carrega os SHA-256 de cada peça de código e de corpus usada. A tabela de asserções (§9) é a unidade de registro: cada linha tem status, evidência e critério de queda.
+
+**Compromisso de registro**, herdado do projeto e mantido aqui: quando uma asserção cair, ela **não sai** deste documento. Muda de status para REFUTADO, ganha a data e a medição que a derrubou, e fica. Seis já nasceram assim — A7, A9, A11, A13, A20 e A22 — e é por isso que se sabe que o registro está funcionando.
+
+---
+
+*Coautoria humano–IA. Escrito a partir de conversa por voz, com o código rodando ao lado.*
+*Não é eu — é nós.*
