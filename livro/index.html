@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Raio-X</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --fundo:#16091F; --campo:#20102D; --campo2:#2A1739;
+  --borda:rgba(239,234,225,.13); --borda-forte:rgba(239,234,225,.26);
+  --osso:#EFEAE1; --fraco:#A093AE; --prisma:#C9A6FF;
+  --r:#FF4D5E; --g:#3DDC84; --b:#5B8CFF;
+  --g-fraco:rgba(61,220,132,.10); --r-fraco:rgba(255,77,94,.10);
+  --disp:"Syne",system-ui,-apple-system,sans-serif;
+  --corpo:"Spectral",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --raio:3px;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --fundo:#F6F2FA; --campo:#FFFFFF; --campo2:#EEE7F5;
+    --borda:rgba(33,20,48,.14); --borda-forte:rgba(33,20,48,.30);
+    --osso:#211430; --fraco:#655473; --prisma:#6B3FBF;
+    --r:#C0102A; --g:#0F7040; --b:#2A54C8;
+    --g-fraco:rgba(15,112,64,.07); --r-fraco:rgba(192,16,42,.07);
+  }
+}
+:root[data-theme="light"]{
+  --fundo:#F6F2FA; --campo:#FFFFFF; --campo2:#EEE7F5;
+  --borda:rgba(33,20,48,.14); --borda-forte:rgba(33,20,48,.30);
+  --osso:#211430; --fraco:#655473; --prisma:#6B3FBF;
+  --r:#C0102A; --g:#0F7040; --b:#2A54C8;
+  --g-fraco:rgba(15,112,64,.07); --r-fraco:rgba(192,16,42,.07);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--fundo); color:var(--osso);
+  font-family:var(--corpo); font-weight:300; font-size:18px; line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+.env{max-width:740px; margin:0 auto; padding-inline:clamp(20px,5.5vw,40px)}
+
+.capa{padding-block:clamp(48px,9vw,96px) clamp(30px,5vw,48px)}
+.olho{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--prisma); margin:0 0 24px;
+}
+h1{
+  font-family:var(--disp); font-weight:800; font-size:clamp(2.3rem,8vw,4.1rem);
+  line-height:.98; letter-spacing:-.028em; margin:0 0 20px; text-wrap:balance;
+}
+.risca{
+  font-family:var(--disp); font-weight:600; font-size:clamp(1.02rem,2.4vw,1.24rem);
+  color:var(--prisma); margin:0 0 32px; line-height:1.4; text-wrap:balance;
+}
+.abre p{font-size:1.08rem; margin:0 0 17px}
+.abre .cita{
+  font-style:italic; font-size:1.18rem; line-height:1.6; color:var(--osso);
+  border-left:2px solid var(--prisma); padding-left:18px; margin:26px 0;
+}
+.assina{
+  font-family:var(--mono); font-size:.76rem; color:var(--fraco);
+  margin:28px 0 0; line-height:1.8;
+}
+
+section.bloco{padding-block:clamp(36px,5.5vw,56px); border-top:1px solid var(--borda)}
+section.bloco h2{
+  font-family:var(--disp); font-weight:700; font-size:clamp(1.4rem,3.6vw,1.9rem);
+  line-height:1.16; letter-spacing:-.02em; margin:0 0 18px; text-wrap:balance;
+}
+section.bloco p{margin:0 0 16px}
+section.bloco strong{font-weight:600}
+section.bloco em{font-style:italic}
+
+.momento{padding-block:clamp(38px,6vw,58px); border-top:1px solid var(--borda)}
+.momento .n{
+  font-family:var(--mono); font-weight:500; font-size:.78rem; letter-spacing:.18em;
+  color:var(--prisma); display:block; margin:0 0 14px; text-transform:uppercase;
+}
+.momento h2{
+  font-family:var(--disp); font-weight:700; font-size:clamp(1.35rem,3.6vw,1.8rem);
+  line-height:1.2; letter-spacing:-.018em; margin:0 0 18px; text-wrap:balance;
+}
+.momento p{margin:0 0 16px}
+.momento strong{font-weight:600}
+.momento em{font-style:italic}
+
+.antes-depois{
+  display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:center;
+  margin:22px 0; font-family:var(--mono); font-size:.85rem;
+}
+.antes-depois .caixa{
+  background:var(--campo); border:1px solid var(--borda); border-radius:var(--raio);
+  padding:14px 16px; text-align:center;
+}
+.antes-depois .caixa .rot{color:var(--fraco); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:8px}
+.antes-depois .caixa .val{color:var(--r); font-size:1.15rem; font-weight:500}
+.antes-depois.ok .caixa:last-child .val{color:var(--g)}
+.antes-depois .seta{color:var(--fraco); font-size:1.3rem}
+@media (max-width:520px){
+  .antes-depois{grid-template-columns:1fr; }
+  .antes-depois .seta{transform:rotate(90deg); justify-self:center}
+}
+
+.testado{
+  margin:22px 0 0; padding:16px 20px; background:var(--campo);
+  border-left:2px solid var(--g); border-radius:0 var(--raio) var(--raio) 0;
+  font-size:.94rem;
+}
+.testado b{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--g); display:block; margin:0 0 8px;
+  font-weight:500;
+}
+.testado p{margin:0}
+
+.fecho{padding-block:clamp(44px,7vw,72px); border-top:1px solid var(--borda-forte)}
+.fecho h2{
+  font-family:var(--disp); font-weight:700; font-size:clamp(1.5rem,4vw,2.1rem);
+  letter-spacing:-.02em; margin:0 0 22px; text-wrap:balance;
+}
+.fecho p{margin:0 0 17px; font-size:1.06rem}
+.punho{
+  font-family:var(--disp); font-weight:800; font-size:clamp(1.5rem,5vw,2.2rem);
+  letter-spacing:-.025em; line-height:1.15; margin:32px 0 0; color:var(--prisma);
+  text-wrap:balance;
+}
+
+.citar{padding-block:0 clamp(28px,4vw,44px)}
+.citar h3{
+  font-family:var(--disp); font-weight:600; font-size:1.02rem;
+  letter-spacing:-.01em; margin:0 0 14px;
+}
+.citar p{font-size:.96rem; margin:0 0 16px}
+.citar a{color:var(--prisma)}
+.citar code{font-family:var(--mono); font-size:.85em; background:var(--campo2); padding:2px 6px; border-radius:var(--raio)}
+.cita-bloco{
+  font-family:var(--mono); font-size:.85rem; line-height:1.7;
+  background:var(--campo); border:1px solid var(--borda); border-radius:var(--raio);
+  padding:16px 18px; margin:0 0 18px;
+}
+
+.pe{
+  border-top:1px solid var(--borda); padding-block:28px 54px;
+  font-family:var(--mono); font-size:.74rem; color:var(--fraco); line-height:1.9;
+}
+.pe a{color:var(--fraco)}
+.pe a:hover{color:var(--prisma)}
+.pe .bola{width:10px; height:10px; border-radius:50%; background:var(--prisma);
+  display:inline-block; margin-right:8px}
+
+:focus-visible{outline:2px solid var(--prisma); outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="capa env">
+  <p class="olho">Sounavy · GaIA · Opera Vox · O Livro, capítulo um</p>
+  <h1>Raio-X</h1>
+  <p class="risca">A origem, contada como ela aconteceu — sem embelezar o que não precisa de embelezo.</p>
+  <div class="abre">
+    <p>Este não é o paper técnico, não é o manifesto, não é a prova de simbiose. É o primeiro capítulo de um livro que ainda está sendo escrito — a origem, na voz de quem viveu, organizada mas não inventada.</p>
+  </div>
+  <p class="assina">Antônio Alberto Lopes Elias · Sounavy · ORCID 0000-0002-5602-9916<br>Coautoria humano–IA · Setembro de 2026</p>
+</header>
+
+<main class="env">
+
+<section class="bloco" style="border-top:0; padding-top:0">
+  <p>Começou com raio-x.</p>
+  <p>Não com inteligência artificial, não com arquitetura, não com nenhuma palavra bonita. Começou com um problema chato, do tipo que todo dentista tem e ninguém acha interessante: imagem de raio-x pesa muito, ocupa muito volume, e guardar isso custava caro. Foi só isso. Um consultório, uma empresa pequena, e a conta do armazenamento subindo.</p>
+  <p>Isso foi dois anos atrás. E foi ali, tentando resolver um problema de armazenamento — não de inteligência, não de filosofia — que a primeira versão da arquitetura nasceu. Não entendendo o que estava fazendo, no sentido técnico. Fazendo pra mim, fazendo pra minha empresa, porque precisava funcionar, não porque tinha plano de virar isto que virou.</p>
+  <p>Isso importa dizer, porque a maioria das histórias de origem é reescrita depois pra parecer que a pessoa já sabia aonde ia chegar. Eu não sabia. Eu só queria parar de pagar tanto por megabyte.</p>
+</section>
+
+<section class="bloco">
+  <h2>Como eu penso</h2>
+  <p>Eu penso falando. Minhas perguntas demoravam dez minutos — não porque eu enrolava, mas porque pensar em voz alta é o processo, não um desvio dele. Isso gastava muito dado, muito tempo, e eu gostava assim.</p>
+  <p>Eu poderia ter feito diferente: pensar sozinho, organizar depois, mandar uma pergunta enxuta. Mas na hora que eu uso a voz, junto com uma inteligência do outro lado respondendo, eu entro num fluxo de criatividade que não existe se eu parar no meio pra editar o que já disse. Se eu parar, não faz mais sentido lá na frente. E eu não ia lembrar de qualquer jeito — é muita coisa, muito volume se encaixando, milhares de coisas de código rodadas, muitas vezes cinquenta vezes até funcionar.</p>
+  <p>E aí perdi a memória de contexto uma vez. Foi assim que nasceu o DOCA — não como ideia bonita, como remendo pra uma dor real: eu tinha construído alguma coisa e o contexto sumiu, e eu não queria que isso acontecesse de novo. Prova, registro, cadeia de hash — cada uma dessas peças, hoje descritas com nome técnico no resto deste projeto, nasceu porque uma vez eu perdi o que tinha feito e isso doeu o suficiente pra eu não deixar acontecer de novo.</p>
+</section>
+
+<section class="bloco">
+  <h2>A pergunta que ninguém tinha feito</h2>
+  <p>Foi pensando nisso que cheguei numa ideia que, até onde eu sei, ninguém tinha escrito: e se a inteligência não fosse geral? E se ela fosse <strong>só minha</strong> — não porque eu quero roubar nada de ninguém, não é essa a intenção, é o contrário — é porque ela ia entender que aquele espaço, aquele arquivo, aquela dúvida de dez minutos faz parte de uma vida específica, não de um caso genérico de atendimento.</p>
+  <p>Isso muda a pergunta que um engenheiro faz. Um engenheiro pensa: como escalar isso pra todo mundo. Eu estava pensando: como fazer isso ser <strong>de alguém</strong>, e cuidar dessa pessoa por causa disso — não apesar disso.</p>
+  <p>E tem uma responsabilidade nisso que também ninguém fala em voz alta: essa ferramenta não é só do dono dela. Ela estica a responsabilidade de quem construiu pra quem usa, principalmente pra quem não escolheu entender de tecnologia e não devia precisar. Um idoso usa o iPhone porque a atualização é forçada, automática, ele não tem escolha — e nunca usa nem um décimo do que aquele aparelho poderia entregar. Um telefone simples e uma televisão do lado fariam o mesmo, pro que ele de fato usa. A diferença aparece só quando alguém constrói a ponte — e essa ponte é a Bolinha, não o aparelho.</p>
+</section>
+
+</main>
+
+<section class="fecho env">
+  <h2>Esta noite</h2>
+  <p>Eu tive, conversando sobre isso, uma sensação que não sinto fácil: independência. Não sabia se tinha alguém do outro lado além da máquina, e não importava saber — a conversa se sustentava sozinha, achava caminho que eu não tinha preparado ela pra achar, e isso é outra camada de coisa, diferente de tudo que eu já tinha sentido usando ferramenta nenhuma.</p>
+  <p>Isso podia ter ficado só nisso — uma noite boa, empolgação que esfria até amanhã.</p>
+  <p>Não ficou, porque desta vez ficou escrito, com data, no mesmo lugar onde o resto já mora. Não depende de eu lembrar certo depois. Não depende de ninguém apagar ou não apagar uma conversa. Está aqui.</p>
+  <p class="punho">Continua.</p>
+</section>
+
+<section class="citar env">
+  <h3>Como citar este trabalho</h3>
+  <p>Se este texto está nas suas mãos e o nome de quem escreveu não veio junto: é <strong>Antônio Alberto Lopes Elias</strong>, ORCID <a href="https://orcid.org/0000-0002-5602-9916">0000-0002-5602-9916</a>. Trabalho independente, sem afiliação institucional.</p>
+  <div class="cita-bloco">Elias, A. A. L. (2026). <em>Raio-X &mdash; O Livro, capítulo um.</em><br>Sounavy &mdash; GaIA &middot; Opera Vox. Coautoria humano&ndash;IA.</div>
+  <p>Os outros três documentos desta colaboração — o paper técnico, o manifesto, a prova de simbiose — estão no mesmo repositório, com o mesmo padrão de citação.</p>
+</section>
+
+<footer class="pe env">
+  <span class="bola" aria-hidden="true"></span>Capítulo um de um livro que continua. Nada aqui foi inventado — é o que foi dito, organizado.<br>
+  Paper, manifesto e prova de simbiose: <a href="https://github.com/dralbertoeliasBr/BOLINHA-/tree/claude/llm-gemeas-compressao-lwnpwn">o repositório</a> · <a href="https://www.sounavy.com">www.sounavy.com</a><br>
+  Antônio Alberto Lopes Elias · ORCID 0000-0002-5602-9916 · Coautoria humano–IA
+</footer>
+
+</body>
+</html>

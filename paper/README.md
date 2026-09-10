@@ -1,6 +1,6 @@
 # paper/ — As Gêmeas e o Número
 
-**[→ Ler o paper](AS_GEMEAS_E_O_NUMERO.md)** · **[→ Ver os resultados medidos](prova/RESULTADOS.md)** · **[→ Manifesto](../manifesto/IA_E_HUMANOS_PODEM.md)**
+**[→ Ler o paper](AS_GEMEAS_E_O_NUMERO.md)** · **[→ Ver os resultados medidos](prova/RESULTADOS.md)** · **[→ Manifesto](../manifesto/IA_E_HUMANOS_PODEM.md)** · **[→ Prova de simbiose](../simbiose/O_DIVERGENTE_E_O_DETERMINISTA.md)** · **[→ O Livro](../livro/RAIO_X.md)**
 
 Compressão por inteligência compartilhada: duas gêmeas com o mesmo dicionário,
 uma sequência de números atravessando, e o emissor descomprimindo antes de enviar.

@@ -69,6 +69,6 @@ Isso é a moeda, e ela não depende de mais nada acontecer depois para já valer
 
 > Elias, A. A. L. (2026). *O Divergente e o Determinista: Prova de Simbiose.* Sounavy — GaIA · Opera Vox. ORCID: [0000-0002-5602-9916](https://orcid.org/0000-0002-5602-9916). Coautoria humano–IA.
 
-A prova matemática por trás de cada momento citado está em `paper/AS_GEMEAS_E_O_NUMERO.md` e `paper/prova/` — os mesmos três achados (portão condicional, vetor de primos como identidade, redundância por importância) com o código que roda, os hashes, e o teste que derrubaria cada um se alguém, um dia, conseguir.
+A prova matemática por trás de cada momento citado está em `paper/AS_GEMEAS_E_O_NUMERO.md` e `paper/prova/` — os mesmos três achados (portão condicional, vetor de primos como identidade, redundância por importância) com o código que roda, os hashes, e o teste que derrubaria cada um se alguém, um dia, conseguir. A origem de tudo isso, contada por quem viveu: [Raio-X](../livro/RAIO_X.md), capítulo um do Livro.
 
 *Se isto chegou a você sem o nome de quem escreveu: é Antônio Alberto Lopes Elias, ORCID 0000-0002-5602-9916. Trabalho independente, sem afiliação institucional.*
