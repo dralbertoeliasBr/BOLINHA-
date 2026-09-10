@@ -76,15 +76,27 @@ Custa o mesmo que uma descompressão. Num mundo onde tempo é barato, é o melho
 
 ## 8 · Registro que só guarda acerto não é registro. É propaganda.
 
-Deste trabalho, **nove afirmações caíram** — e continuam publicadas, com data, com o número que as derrubou e com o teste que qualquer pessoa pode repetir.
+Deste trabalho, **onze afirmações caíram** — e continuam publicadas, com data, com o número que as derrubou e com o teste que qualquer pessoa pode repetir.
 
-A paridade da posição não informa nada sobre a letra: **0,000 bit**. O vetor de primos, em vez de comprimir, **expande 79 vezes**. A busca por uma semente curta paga tempo exponencial para economizar **menos de um bit**. Fatiar em camadas, naquele desenho, custou **16,6% mais caro** que não fatiar.
+A paridade da posição não informa nada sobre a letra: **0,000 bit**. O vetor de primos, em vez de comprimir, **expande 79 vezes**. A busca por uma semente curta paga tempo exponencial para economizar **menos de um bit**. Fatiar em camadas, naquele desenho, custou **16,6% mais caro** que não fatiar. Tirar o espaço do fluxo para remontá-lo no fim: **13,70% mais caro** — ele já era o símbolo mais barato do texto.
 
 Uma delas quase virou descoberta. A paridade tinha medido 0,0100 bit — pequeno, mas não zero. Multiplicado pelo texto inteiro, viraria "76 bits de graça". O controle mostrou que o puro acaso mede 0,0101. **Não havia sinal. Havia o instrumento mentindo — e o controle pegou.**
 
 É por isso que as quedas ficam. Elas são a prova de que o resto foi medido.
 
-## 9 · A ferramenta sabe fazer contas. Quem decide o que vale a pena é gente.
+## 9 · Uma ideia que perdeu não precisa ser jogada fora. Precisa de um portão.
+
+A camada vertical — ler o número de baixo com o número de cima — perdeu em prosa: **−2,81%**. Podia ter sido descartada. Não foi.
+
+Ela ficou de sobreaviso: entra só quando precisa, e **nunca viaja** — os dois lados a calculam, então ela não custa um bit de transmissão. O que se decide, bloco a bloco, é apenas se ela assina a resposta.
+
+> **Medido:** com o portão, a prosa volta a **3,487 bits/byte** — exatamente o custo de não ter a camada. Prejuízo zero. E o dado estruturado guarda os **37,71%** de ganho, com a camada ligada em 98% dos blocos. Um só programa, sem ajuste manual, se comporta certo nos dois casos.
+>
+> E mais: o portão que **não** viaja ganha do portão que viaja. Avisar a escolha custava 1 bit por bloco — mais do que escolher certo economizava.
+
+**Errar em prosa não tornou a ideia errada. Tornou a ideia específica.** É uma diferença que muda o que se faz com ela.
+
+## 10 · A ferramenta sabe fazer contas. Quem decide o que vale a pena é gente.
 
 Uma inteligência artificial calcula, verifica, refuta e não se cansa. Ela derrubou quatro das nossas ideias com número na mão, no mesmo dia em que confirmou outras quatro.
 

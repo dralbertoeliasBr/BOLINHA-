@@ -905,3 +905,193 @@ def e12_crt():
         'registros_conferidos': ok, 'de': 200,
         'deteccao': linhas,
     }
+
+
+# ====================== E13 — a camada que so entra se precisar, e nao viaja
+
+def e13_camada_condicional():
+    """A camada vertical nao e' descartada: ela fica de sobreaviso.
+
+    Os DOIS lados rodam as duas camadas em paralelo, sempre. O que muda por
+    bloco e' apenas QUAL delas assina a probabilidade. Como as duas se
+    atualizam com o bit verdadeiro, os dois lados seguem identicos.
+
+    Tres portoes:
+      oraculo  — o emissor ve o bloco e escolhe; custa 1 bit por bloco
+      deduzido — os dois escolhem quem venceu o bloco ANTERIOR; custa ZERO
+      fixo     — sempre a mesma camada (as linhas de E3, para comparar)
+    """
+    saida = {}
+    for nome, arq in (('prosa', 'pt_sounavy.txt'), ('tabular', 'tabular.csv')):
+        d = le(arq)
+        W, _ = detecta_passo(d)
+        fA = faz_chaves_frente((1, 2, 3, 4))
+        fB = soma_chaves(fA, faz_chaves_vertical(W, (1, 2)))
+        prA, prB = Preditor(4, 8), Preditor(6, 8)
+        cA, cB = [], []
+        for i in range(len(d)):
+            cA.append(prA.custo_em_bits(d[i], fA(d, i)))
+            cB.append(prB.custo_em_bits(d[i], fB(d, i)))
+
+        linhas = []
+        for bloco in (64, 256, 1024):
+            n = len(d)
+            oraculo, deduzido = 0.0, 0.0
+            usa_B = False            # comeca na camada simples
+            vezes_B = 0
+            n_blocos = 0
+            for ini in range(0, n, bloco):
+                fim = min(ini + bloco, n)
+                sA = sum(cA[ini:fim])
+                sB = sum(cB[ini:fim])
+                oraculo += min(sA, sB) + 1.0      # +1 bit de aviso
+                deduzido += (sB if usa_B else sA)
+                if usa_B:
+                    vezes_B += 1
+                usa_B = (sB < sA)                 # o bloco anterior decide
+                n_blocos += 1
+            linhas.append({
+                'bloco': bloco, 'n_blocos': n_blocos,
+                'bpc_oraculo': oraculo / n,
+                'bpc_deduzido': deduzido / n,
+                'blocos_com_vertical_pct': vezes_B * 100.0 / n_blocos,
+                'custo_dos_avisos_bpc': n_blocos / float(n),
+            })
+
+        saida[nome] = {
+            'bytes': len(d), 'passo': W,
+            'bpc_so_frente': sum(cA) / len(d),
+            'bpc_sempre_vertical': sum(cB) / len(d),
+            'portoes': linhas,
+        }
+    return saida
+
+
+# ============================== E14 — o vacuo: quanto custa e quanto informa
+
+def _classe(b):
+    if b == 0x20:
+        return 'espaco'
+    if b in (0x0A, 0x0D, 0x09):
+        return 'quebra de linha'
+    if 48 <= b <= 57:
+        return 'digito'
+    if (65 <= b <= 90) or (97 <= b <= 122) or b >= 128:
+        return 'letra'
+    return 'pontuacao'
+
+
+def e14_vacuo():
+    """O espaco carrega informacao? Quanto ele custa, e quanto ele avisa.
+
+    (1) quantos bits o fluxo gasta em cada classe de simbolo
+    (2) e se o espaco NAO viajasse, e fosse remontado no fim?
+    (3) o espaco como 'mudanca de rota': ele vale como contexto?
+    """
+    d = le('pt_sounavy.txt')
+    fk = faz_chaves_frente((1, 2, 3, 4, 6))
+
+    # (1) custo por classe
+    pr = Preditor(5, 8)
+    por_classe = {}
+    total = 0.0
+    for i in range(len(d)):
+        c = pr.custo_em_bits(d[i], fk(d, i))
+        k = _classe(d[i])
+        a = por_classe.setdefault(k, [0, 0.0])
+        a[0] += 1
+        a[1] += c
+        total += c
+    classes = [{'classe': k, 'simbolos': v[0], 'bits': v[1],
+                'bits_por_simbolo': v[1] / v[0],
+                'pct_do_fluxo': v[1] * 100.0 / total}
+               for k, v in sorted(por_classe.items(), key=lambda x: -x[1][1])]
+
+    # (2) o espaco como camada terminal: nao viaja, e remontado no fim
+    sem = bytes(b for b in d if b != 0x20)
+    comps = []
+    n = 0
+    for b in d:
+        if b == 0x20:
+            comps.append(min(n, 255))
+            n = 0
+        else:
+            n += 1
+    comps.append(min(n, 255))
+    comps = bytes(comps)
+    bits_sem = custo_bits(sem, fk, 5)
+    bits_comp = custo_bits(comps, faz_chaves_frente((1, 2, 3)), 3)
+
+    # (3) o espaco como mudanca de rota
+    def faz_chaves_rota():
+        def f(dd, i):
+            dist, j = 0, i - 1
+            while j >= 0 and dd[j] != 0x20 and dist < 15:
+                dist += 1
+                j -= 1
+            ant = dd[i - 1] if i > 0 else 0
+            return [((dist + 1) * 0x9E3779B1) & 0xFFFFFFFF,
+                    ((dist * 256 + ant) * 0x85EBCA6B) & 0xFFFFFFFF]
+        return f
+
+    f4 = faz_chaves_frente((1, 2, 3, 4))
+    f6c = faz_chaves_frente((1, 2, 3, 4, 6, 8))
+    f4r = soma_chaves(f4, faz_chaves_rota())
+    bpc_base = custo_bits(d, f4, 4) / len(d)
+    bpc_ctrl = custo_bits(d, f6c, 6) / len(d)
+    bpc_rota = custo_bits(d, f4r, 6) / len(d)
+
+    # (4) o espaco ja' esta' DENTRO do contexto? informacao mutua condicional.
+    #     marginal:    o que a posicao-na-palavra diz sobre a letra, sozinha
+    #     condicional: o que ela AINDA diz, depois que se sabe a letra anterior
+    txt = d.decode('utf-8', 'ignore')
+    X, Y, Z = [], [], []
+    pos = 0
+    for pal in txt.split(' '):
+        for k, ch in enumerate(pal):
+            X.append(ch)
+            Y.append(txt[pos - 1] if pos else ' ')
+            Z.append(min(k, 7))
+            pos += 1
+        pos += 1
+    rnd2 = random.Random(7)
+
+    def im_cond(xs, ys, zs):
+        """I(X;Z|Y) = H(X,Y) + H(Y,Z) - H(Y) - H(X,Y,Z)"""
+        return (_H(_conta(list(zip(xs, ys)))) + _H(_conta(list(zip(ys, zs))))
+                - _H(_conta(ys)) - _H(_conta(list(zip(xs, ys, zs)))))
+
+    marg = _im(X, Z)
+    cond = im_cond(X, Y, Z)
+    pm, pc = [], []
+    for _ in range(5):
+        emb = Z[:]
+        rnd2.shuffle(emb)
+        pm.append(_im(X, emb))
+        pc.append(im_cond(X, Y, emb))
+    piso_m = sum(pm) / len(pm)
+    piso_c = sum(pc) / len(pc)
+
+    return {
+        'bytes': len(d), 'bits_totais': total, 'bpc': total / len(d),
+        'classes': classes,
+        'ja_esta_no_contexto': {
+            'im_marginal': marg, 'piso_marginal': piso_m,
+            'im_marginal_liquida': marg - piso_m,
+            'im_condicional': cond, 'piso_condicional': piso_c,
+            'im_condicional_liquida': cond - piso_c,
+        },
+        'terminal': {
+            'bits_com_espaco_no_fluxo': total,
+            'bits_texto_sem_espaco': bits_sem,
+            'bits_camada_de_comprimentos': bits_comp,
+            'bits_soma_das_duas': bits_sem + bits_comp,
+            'ganho_pct': (total - (bits_sem + bits_comp)) * 100.0 / total,
+        },
+        'rota': {
+            'bpc_frente4': bpc_base,
+            'bpc_controle_frente6': bpc_ctrl,
+            'bpc_frente4_mais_rota': bpc_rota,
+            'ganho_sobre_controle_pct': (bpc_ctrl - bpc_rota) * 100.0 / bpc_ctrl,
+        },
+    }

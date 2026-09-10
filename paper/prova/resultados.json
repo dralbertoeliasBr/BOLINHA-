@@ -47,8 +47,8 @@
   "ok_frio": true,
   "ok_quente": true,
   "sha": "eb092b8fda4b51185628455a0f3279fc2d85f73c5f1eb70a04f9a76d98279733",
-  "seg_frio": 0.3575003147125244,
-  "seg_quente": 0.9845359325408936,
+  "seg_frio": 0.36499500274658203,
+  "seg_quente": 0.9948713779449463,
   "bytes_frio": 1475,
   "bytes_quente": 1179
  },
@@ -176,55 +176,55 @@
  },
  "energia": {
   "r": 0.38328998699609884,
-  "seg": 0.48757004737854004,
-  "vazao_medida": 6308.83709230779,
+  "seg": 0.5301423072814941,
+  "vazao_medida": 5802.21566502277,
   "msg_bytes": 3076,
   "nosso_bytes": 1179,
   "xz_bytes": 1744,
   "linhas": [
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6308.83709230779,
+    "vazao_B_por_s": 5802.21566502277,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007925390887167426,
+    "e_calc_J_por_byte": 0.0008617397712638071,
     "enlace": "fibra / datacenter",
     "e_rede_J_por_byte": 2e-08,
     "limiar_J_por_byte": 1.2334200260078023e-08,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 64255.40951219558
+    "envios_para_compensar": 69865.8812969813
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6308.83709230779,
+    "vazao_B_por_s": 5802.21566502277,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007925390887167426,
+    "e_calc_J_por_byte": 0.0008617397712638071,
     "enlace": "4G movel",
     "e_rede_J_por_byte": 2e-06,
     "limiar_J_por_byte": 1.2334200260078022e-06,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 642.5540951219559
+    "envios_para_compensar": 698.6588129698131
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6308.83709230779,
+    "vazao_B_por_s": 5802.21566502277,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007925390887167426,
+    "e_calc_J_por_byte": 0.0008617397712638071,
     "enlace": "satelite / LoRa",
     "e_rede_J_por_byte": 0.0002,
     "limiar_J_por_byte": 0.00012334200260078024,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 6.425540951219557
+    "envios_para_compensar": 6.98658812969813
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6308.83709230779,
+    "vazao_B_por_s": 5802.21566502277,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007925390887167426,
+    "e_calc_J_por_byte": 0.0008617397712638071,
     "enlace": "espaco profundo",
     "e_rede_J_por_byte": 0.02,
     "limiar_J_por_byte": 0.012334200260078023,
     "compensa_em_1_envio": true,
-    "envios_para_compensar": 0.06425540951219558
+    "envios_para_compensar": 0.0698658812969813
    },
    {
     "motor": "mesmo codec em C, estimado 10 MB/s",
@@ -492,7 +492,7 @@
     "esperado_2_elevado_k": 256,
     "bits_medios_da_semente": 7.75,
     "bits_economizados_medios": 0.25,
-    "segundos_medios": 0.00020523866017659506
+    "segundos_medios": 0.00020825862884521484
    },
    {
     "bits_do_alvo": 12,
@@ -501,7 +501,7 @@
     "esperado_2_elevado_k": 4096,
     "bits_medios_da_semente": 11.416666666666666,
     "bits_economizados_medios": 0.5833333333333339,
-    "segundos_medios": 0.002594908078511556
+    "segundos_medios": 0.0026902655760447183
    },
    {
     "bits_do_alvo": 16,
@@ -510,7 +510,7 @@
     "esperado_2_elevado_k": 65536,
     "bits_medios_da_semente": 15.083333333333334,
     "bits_economizados_medios": 0.9166666666666661,
-    "segundos_medios": 0.02416539192199707
+    "segundos_medios": 0.024773796399434406
    },
    {
     "bits_do_alvo": 20,
@@ -519,7 +519,7 @@
     "esperado_2_elevado_k": 1048576,
     "bits_medios_da_semente": 19.333333333333332,
     "bits_economizados_medios": 0.6666666666666679,
-    "segundos_medios": 0.5610818862915039
+    "segundos_medios": 0.5644921461741129
    }
   ]
  },
@@ -731,17 +731,146 @@
    }
   ]
  },
+ "camada_condicional": {
+  "prosa": {
+   "bytes": 9228,
+   "passo": 45,
+   "bpc_so_frente": 3.4869492456145235,
+   "bpc_sempre_vertical": 3.566530889449085,
+   "portoes": [
+    {
+     "bloco": 64,
+     "n_blocos": 145,
+     "bpc_oraculo": 3.4986580473728397,
+     "bpc_deduzido": 3.4953447617523263,
+     "blocos_com_vertical_pct": 9.655172413793103,
+     "custo_dos_avisos_bpc": 0.015713047247507585
+    },
+    {
+     "bloco": 256,
+     "n_blocos": 37,
+     "bpc_oraculo": 3.490627061303032,
+     "bpc_deduzido": 3.4883202985754633,
+     "blocos_com_vertical_pct": 2.7027027027027026,
+     "custo_dos_avisos_bpc": 0.004009536194191591
+    },
+    {
+     "bloco": 1024,
+     "n_blocos": 10,
+     "bpc_oraculo": 3.487828623256661,
+     "bpc_deduzido": 3.486949245614529,
+     "blocos_com_vertical_pct": 0.0,
+     "custo_dos_avisos_bpc": 0.001083658430862592
+    }
+   ]
+  },
+  "tabular": {
+   "bytes": 14037,
+   "passo": 105,
+   "bpc_so_frente": 1.136557091095029,
+   "bpc_sempre_vertical": 0.7004705113582289,
+   "portoes": [
+    {
+     "bloco": 64,
+     "n_blocos": 220,
+     "bpc_oraculo": 0.7149250203648474,
+     "bpc_deduzido": 0.7090168504678448,
+     "blocos_com_vertical_pct": 98.18181818181819,
+     "custo_dos_avisos_bpc": 0.015672864572202037
+    },
+    {
+     "bloco": 256,
+     "n_blocos": 55,
+     "bpc_oraculo": 0.7043887275012599,
+     "bpc_deduzido": 0.7082353707002997,
+     "blocos_com_vertical_pct": 98.18181818181819,
+     "custo_dos_avisos_bpc": 0.003918216143050509
+    },
+    {
+     "bloco": 1024,
+     "n_blocos": 14,
+     "bpc_oraculo": 0.7014678754673482,
+     "bpc_deduzido": 0.7674550113324544,
+     "blocos_com_vertical_pct": 92.85714285714286,
+     "custo_dos_avisos_bpc": 0.0009973641091401296
+    }
+   ]
+  }
+ },
+ "vacuo": {
+  "bytes": 9228,
+  "bits_totais": 32033.97942046137,
+  "bpc": 3.471389187306174,
+  "classes": [
+   {
+    "classe": "letra",
+    "simbolos": 7136,
+    "bits": 25617.463310296047,
+    "bits_por_simbolo": 3.5898911589540425,
+    "pct_do_fluxo": 79.96965651396141
+   },
+   {
+    "classe": "pontuacao",
+    "simbolos": 364,
+    "bits": 2171.3131891373782,
+    "bits_por_simbolo": 5.965146124003787,
+    "pct_do_fluxo": 6.778156284106478
+   },
+   {
+    "classe": "espaco",
+    "simbolos": 1261,
+    "bits": 2045.22547937505,
+    "bits_por_simbolo": 1.6219075966495242,
+    "pct_do_fluxo": 6.38455014449027
+   },
+   {
+    "classe": "digito",
+    "simbolos": 229,
+    "bits": 1203.2168158906118,
+    "bits_por_simbolo": 5.2542219034524535,
+    "pct_do_fluxo": 3.7560641470665037
+   },
+   {
+    "classe": "quebra de linha",
+    "simbolos": 238,
+    "bits": 996.7606257623487,
+    "bits_por_simbolo": 4.188069856144322,
+    "pct_do_fluxo": 3.111572910375531
+   }
+  ],
+  "ja_esta_no_contexto": {
+   "im_marginal": 0.3282255506182077,
+   "piso_marginal": 0.06620522804670674,
+   "im_marginal_liquida": 0.26202032257150093,
+   "im_condicional": 0.5408774619373293,
+   "piso_condicional": 0.4319258353991827,
+   "im_condicional_liquida": 0.1089516265381466
+  },
+  "terminal": {
+   "bits_com_espaco_no_fluxo": 32033.97942046137,
+   "bits_texto_sem_espaco": 31178.647486121525,
+   "bits_camada_de_comprimentos": 5244.1783749249125,
+   "bits_soma_das_duas": 36422.82586104644,
+   "ganho_pct": -13.700597053457985
+  },
+  "rota": {
+   "bpc_frente4": 3.4869492456145235,
+   "bpc_controle_frente6": 3.4690881252537356,
+   "bpc_frente4_mais_rota": 3.56657278638941,
+   "ganho_sobre_controle_pct": -2.810094688169506
+  }
+ },
  "_ambiente": {
   "python": "3.11.15",
   "plataforma": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
   "sha_tabelas": "317f8cfbd08ae2a90832a5fb3ab14a4485c72dbd5ba592d8c28265e7222245e7",
   "sha_nucleo": "221305ad5c99931e107ee1316e75c061f04e9a8812fb081ace491ff5474a9483",
-  "sha_experimentos": "d48fbd91c339e0a8ca3d7c9fc65032a977b39aece6740bd4236874035f3270e9",
+  "sha_experimentos": "748923ac8930dcea0106aab0e64d7f52fd5074462d1f7646acf5f4a9aca08343",
   "corpus": {
    "estruturado.json": "cbae9c24e7e445096db0d441c3699aa1672cdd39c07a016d623d6d3bb3df783a",
    "pt_sounavy.txt": "42c799b15165e8d426d9e594d08cfdce5a83731a196076d3d6756b26e827e353",
    "tabular.csv": "d1a4cc9c485df64138329c977d5a9e06da0e72c3725250122ae22a6da6798e7b"
   },
-  "segundos_total": 40.1
+  "segundos_total": 45.2
  }
 }

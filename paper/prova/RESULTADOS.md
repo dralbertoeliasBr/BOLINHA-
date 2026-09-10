@@ -8,11 +8,11 @@ Gerado por `python3 paper/prova/roda_tudo.py`. Nada aqui foi digitado a mao.
 | plataforma | Linux-6.18.44-fc-v24-x86_64-with-glibc2.39 |
 | sha256 tabelas logisticas | `317f8cfbd08ae2a90832a5fb3ab14a44` |
 | sha256 nucleo.py | `221305ad5c99931e107ee1316e75c061` |
-| sha256 experimentos.py | `d48fbd91c339e0a8ca3d7c9fc65032a9` |
+| sha256 experimentos.py | `748923ac8930dcea0106aab0e64d7f52` |
 | sha256 corpus/estruturado.json | `cbae9c24e7e445096db0d441c3699aa1` |
 | sha256 corpus/pt_sounavy.txt | `42c799b15165e8d426d9e594d08cfdce` |
 | sha256 corpus/tabular.csv | `d1a4cc9c485df64138329c977d5a9e06` |
-| tempo total | 40.1 s |
+| tempo total | 45.2 s |
 
 ## E1 — o teto da contagem
 
@@ -149,14 +149,14 @@ comprimir compensa  <=>  e_calc / N  <  (1 - r) * e_rede
 
 `e_calc` = potencia / vazao (J por byte processado) · `r` = 0.383 (razao medida deste codec) · `e_rede` = J por byte no enlace · `N` = quantas vezes o mesmo objeto sera enviado ou lido.
 
-Medido: 3076 bytes em 0.49 s = 6309 B/s (Python puro, um nucleo). xz -9: 1744 bytes; este codec: 1179 bytes.
+Medido: 3076 bytes em 0.53 s = 5802 B/s (Python puro, um nucleo). xz -9: 1744 bytes; este codec: 1179 bytes.
 
 | motor | e_calc (J/byte) | enlace | limiar (1-r)*e_rede | compensa em 1 envio? | envios p/ empatar |
 |---|---|---|---|---|---|
-| este codec, Python puro (MEDIDO) | 0.000793 | fibra / datacenter | 1.23e-08 | nao | 64,255 |
-| este codec, Python puro (MEDIDO) | 0.000793 | 4G movel | 1.23e-06 | nao | 643 |
-| este codec, Python puro (MEDIDO) | 0.000793 | satelite / LoRa | 0.000123 | nao | 6 |
-| este codec, Python puro (MEDIDO) | 0.000793 | espaco profundo | 0.0123 | SIM | 1 |
+| este codec, Python puro (MEDIDO) | 0.000862 | fibra / datacenter | 1.23e-08 | nao | 69,866 |
+| este codec, Python puro (MEDIDO) | 0.000862 | 4G movel | 1.23e-06 | nao | 699 |
+| este codec, Python puro (MEDIDO) | 0.000862 | satelite / LoRa | 0.000123 | nao | 7 |
+| este codec, Python puro (MEDIDO) | 0.000862 | espaco profundo | 0.0123 | SIM | 1 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | fibra / datacenter | 1.23e-08 | nao | 41 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | 4G movel | 1.23e-06 | SIM | 1 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | satelite / LoRa | 0.000123 | SIM | 1 |
@@ -216,9 +216,9 @@ A gemea receptora calcula cada probabilidade com erro de ate +-D (numa escala de
 | bits do alvo | tentativas medias | 2^k | bits medios da semente | bits economizados | segundos |
 |---|---|---|---|---|---|
 | 8 | 280 | 256 | 7.75 | **+0.25** | 0.0002 |
-| 12 | 3,545 | 4,096 | 11.42 | **+0.58** | 0.0026 |
-| 16 | 33,237 | 65,536 | 15.08 | **+0.92** | 0.0242 |
-| 20 | 751,504 | 1,048,576 | 19.33 | **+0.67** | 0.5611 |
+| 12 | 3,545 | 4,096 | 11.42 | **+0.58** | 0.0027 |
+| 16 | 33,237 | 65,536 | 15.08 | **+0.92** | 0.0248 |
+| 20 | 751,504 | 1,048,576 | 19.33 | **+0.67** | 0.5645 |
 
 Tentativas crescem como 2^k. A economia de bits fica **constante** em torno de 0,7 bit. Tempo exponencial, bits de graca: zero.
 
@@ -297,4 +297,72 @@ Um numero a mais no fim vira detector de erro, sem tocar no resto:
 | 31 | 5.0 | 100.00% | 97.75% | 96.77% |
 | 127 | 7.0 | 100.00% | 98.75% | 99.21% |
 | 1021 | 10.0 | 100.00% | 100.00% | 99.90% |
+
+## E13 — a camada que so entra se precisar (e nunca viaja)
+
+Os dois lados rodam as duas camadas sempre; muda so quem assina a probabilidade do bloco. Portao **oraculo**: o emissor escolhe e avisa (1 bit por bloco). Portao **deduzido**: os dois escolhem quem venceu o bloco anterior — **zero bits**.
+
+### prosa — 9228 bytes, passo 45
+
+| portao | bits/byte | vertical ligada em |
+|---|---|---|
+| fixo: so frente (camada desligada) | 3.487 | 0% dos blocos |
+| fixo: vertical sempre ligada | 3.567 | 100% dos blocos |
+| oraculo, bloco de 64 (custa 1 bit/bloco) | 3.499 | 10% |
+| **deduzido, bloco de 64 (custa zero)** | **3.495** | 10% |
+| oraculo, bloco de 256 (custa 1 bit/bloco) | 3.491 | 3% |
+| **deduzido, bloco de 256 (custa zero)** | **3.488** | 3% |
+| oraculo, bloco de 1024 (custa 1 bit/bloco) | 3.488 | 0% |
+| **deduzido, bloco de 1024 (custa zero)** | **3.487** | 0% |
+
+### tabular — 14037 bytes, passo 105
+
+| portao | bits/byte | vertical ligada em |
+|---|---|---|
+| fixo: so frente (camada desligada) | 1.137 | 0% dos blocos |
+| fixo: vertical sempre ligada | 0.700 | 100% dos blocos |
+| oraculo, bloco de 64 (custa 1 bit/bloco) | 0.715 | 98% |
+| **deduzido, bloco de 64 (custa zero)** | **0.709** | 98% |
+| oraculo, bloco de 256 (custa 1 bit/bloco) | 0.704 | 98% |
+| **deduzido, bloco de 256 (custa zero)** | **0.708** | 98% |
+| oraculo, bloco de 1024 (custa 1 bit/bloco) | 0.701 | 93% |
+| **deduzido, bloco de 1024 (custa zero)** | **0.767** | 93% |
+
+## E14 — o vacuo: quanto o espaco custa e quanto ele avisa
+
+9228 bytes de prosa, 3.471 bits/byte no total.
+
+| classe | simbolos | bits/simbolo | %% do fluxo |
+|---|---|---|---|
+| letra | 7136 | 3.590 | 80.0% |
+| pontuacao | 364 | 5.965 | 6.8% |
+| espaco | 1261 | 1.622 | 6.4% |
+| digito | 229 | 5.254 | 3.8% |
+| quebra de linha | 238 | 4.188 | 3.1% |
+
+### O espaco como camada terminal: nao viaja, e remontado no fim
+
+| esquema | bits |
+|---|---|
+| espaco dentro do fluxo | 32034 |
+| texto sem espaco | 31179 |
+| camada de comprimentos de palavra | 5244 |
+| **soma das duas** | **36423** |
+
+Resultado: **-13.70%** — tirar o espaco do fluxo sai MAIS CARO.
+
+### O espaco ja esta dentro do contexto?
+
+| o que a posicao-na-palavra diz sobre a letra | IM | piso | liquida |
+|---|---|---|---|
+| marginal (sozinha) | 0.3282 | 0.0662 | **0.2620** |
+| condicional, sabendo 1 caractere anterior | 0.5409 | 0.4319 | **0.1090** |
+
+| o espaco como mudanca de rota, no codec | bits/byte |
+|---|---|
+| frente 1-4 | 3.487 |
+| controle: frente 1-8 (mesmo numero de modelos) | 3.469 |
+| frente 1-4 + distancia desde o espaco | 3.567 |
+
+Ganho da rota explicita sobre o controle: **-2.81%**.
 

@@ -48,7 +48,9 @@ def main():
              ('E9', 'raiz_mista', E.e9_raiz_mista),
              ('E10', 'dicionario_equacao', E.e10_dicionario_equacao),
              ('E11', 'informacao_mutua', E.e11_informacao_mutua),
-             ('E12', 'crt', E.e12_crt)]
+             ('E12', 'crt', E.e12_crt),
+             ('E13', 'camada_condicional', E.e13_camada_condicional),
+             ('E14', 'vacuo', E.e14_vacuo)]
     for cod, nome, fn in ordem:
         t = time.time()
         sys.stderr.write('%s %s ... ' % (cod, nome))
@@ -380,6 +382,70 @@ def main():
           % (x['primo_extra'], x['bits_de_custo'], pct(x['pego_um_bit_pct']),
              pct(x['pego_qualquer_pct']), pct(x['limite_teorico_pct'])))
     w('')
+
+    # E13
+    w('## E13 — a camada que so entra se precisar (e nunca viaja)\n')
+    w('Os dois lados rodam as duas camadas sempre; muda so quem assina a '
+      'probabilidade do bloco. Portao **oraculo**: o emissor escolhe e avisa '
+      '(1 bit por bloco). Portao **deduzido**: os dois escolhem quem venceu o '
+      'bloco anterior — **zero bits**.\n')
+    for nome in ('prosa', 'tabular'):
+        r = R['camada_condicional'][nome]
+        w('### %s — %d bytes, passo %d\n' % (nome, r['bytes'], r['passo']))
+        w('| portao | bits/byte | vertical ligada em |')
+        w('|---|---|---|')
+        w('| fixo: so frente (camada desligada) | %s | 0%% dos blocos |'
+          % n3(r['bpc_so_frente']))
+        w('| fixo: vertical sempre ligada | %s | 100%% dos blocos |'
+          % n3(r['bpc_sempre_vertical']))
+        for l in r['portoes']:
+            w('| oraculo, bloco de %d (custa 1 bit/bloco) | %s | %.0f%% |'
+              % (l['bloco'], n3(l['bpc_oraculo']), l['blocos_com_vertical_pct']))
+            w('| **deduzido, bloco de %d (custa zero)** | **%s** | %.0f%% |'
+              % (l['bloco'], n3(l['bpc_deduzido']), l['blocos_com_vertical_pct']))
+        w('')
+
+    # E14
+    r = R['vacuo']
+    w('## E14 — o vacuo: quanto o espaco custa e quanto ele avisa\n')
+    w('%d bytes de prosa, %s bits/byte no total.\n' % (r['bytes'], n3(r['bpc'])))
+    w('| classe | simbolos | bits/simbolo | %% do fluxo |')
+    w('|---|---|---|---|')
+    for c in r['classes']:
+        w('| %s | %d | %s | %.1f%% |' % (c['classe'], c['simbolos'],
+          n3(c['bits_por_simbolo']), c['pct_do_fluxo']))
+    w('')
+    t = r['terminal']
+    w('### O espaco como camada terminal: nao viaja, e remontado no fim\n')
+    w('| esquema | bits |')
+    w('|---|---|')
+    w('| espaco dentro do fluxo | %.0f |' % t['bits_com_espaco_no_fluxo'])
+    w('| texto sem espaco | %.0f |' % t['bits_texto_sem_espaco'])
+    w('| camada de comprimentos de palavra | %.0f |'
+      % t['bits_camada_de_comprimentos'])
+    w('| **soma das duas** | **%.0f** |' % t['bits_soma_das_duas'])
+    w('')
+    w('Resultado: **%s** — tirar o espaco do fluxo sai MAIS CARO.\n'
+      % pct(t['ganho_pct']))
+    j = r['ja_esta_no_contexto']
+    w('### O espaco ja esta dentro do contexto?\n')
+    w('| o que a posicao-na-palavra diz sobre a letra | IM | piso | liquida |')
+    w('|---|---|---|---|')
+    w('| marginal (sozinha) | %.4f | %.4f | **%.4f** |'
+      % (j['im_marginal'], j['piso_marginal'], j['im_marginal_liquida']))
+    w('| condicional, sabendo 1 caractere anterior | %.4f | %.4f | **%.4f** |'
+      % (j['im_condicional'], j['piso_condicional'], j['im_condicional_liquida']))
+    w('')
+    o = r['rota']
+    w('| o espaco como mudanca de rota, no codec | bits/byte |')
+    w('|---|---|')
+    w('| frente 1-4 | %s |' % n3(o['bpc_frente4']))
+    w('| controle: frente 1-8 (mesmo numero de modelos) | %s |'
+      % n3(o['bpc_controle_frente6']))
+    w('| frente 1-4 + distancia desde o espaco | %s |' % n3(o['bpc_frente4_mais_rota']))
+    w('')
+    w('Ganho da rota explicita sobre o controle: **%s**.\n'
+      % pct(o['ganho_sobre_controle_pct']))
 
     txt = '\n'.join(L) + '\n'
     with open(os.path.join(AQUI, 'RESULTADOS.md'), 'w', encoding='utf-8') as f:

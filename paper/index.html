@@ -263,7 +263,7 @@ Descreve-se e testa-se uma arquitetura de comunicação em que **duas inteligên
 
 Este trabalho faz três coisas. **Primeira**: separa, com rigor, o que na ideia é teorema, o que é engenharia difícil e o que é impossível — e mede cada parte. **Segunda**: formaliza a intuição das *camadas* e das *ordens de leitura* (para frente, para trás, em laço, vertical, retro-leitura) numa única lei — a **Lei da Admissibilidade** — e mostra experimentalmente quando cada leitura paga e quando cobra. **Terceira**: ancora a arquitetura na literatura de 2023–2026, que já mediu boa parte dela.
 
-**Resultados centrais medidos aqui** (Python puro, sem dependências, 12 experimentos, hashes no Apêndice D):
+**Resultados centrais medidos aqui** (Python puro, sem dependências, 14 experimentos, hashes no Apêndice D):
 
 | | achado | número |
 |---|---|---|
@@ -279,6 +279,8 @@ Este trabalho faz três coisas. **Primeira**: separa, com rigor, o que na ideia 
 | ✅ | Um dicionário pode ser equação em vez de tabela | **40×** menos bits, onde a estrutura existe |
 | ❌ | A paridade da posição informa sobre a letra, em prosa | **0,000 bit** líquido, com controle |
 | ❌ | Raiz mista como grande ganho sobre campos em bits | **4,17%** — é 1 bit em 24 |
+| ✅ | Camada condicional: a camada errada passa a custar zero | portão deduzido, **zero bits**, prosa volta a 3,487 |
+| ❌ | O espaço rende mais fora do fluxo | **−13,70%** — ele já é o símbolo mais barato |
 | ⚠️ | Folga numérica entre as gêmeas | **nenhuma**: erro de ±1 em 4096 quebra no **1º byte** |
 
 **Veredito.** A arquitetura é real e boa parte dela já foi medida por terceiros: com LLM + adaptador de domínio chega-se a razão **0,09** (91% de redução) sem perda, e com protocolo interativo de perguntas binárias a **0,0006–0,004** (>99,9%) com perda semântica controlada [7]. O gargalo não é a ideia: é o **determinismo**. Duas LLMs em máquinas diferentes **não** são gêmeas por padrão — e este trabalho mede, em código próprio, o quanto isso é implacável.
@@ -439,6 +441,8 @@ Um contexto que olha para algo que o receptor ainda não tem não é um modelo m
 1. **A camada vertical é real — e é específica.** Em dado tabular ela ganha **37,71%** contra um controle com o mesmo número de modelos. Em prosa ela **perde 2,81%**: gasta capacidade e atrapalha a mistura. *"O número de baixo com o número de cima"* é uma ideia certa para dados que têm em cima e embaixo. Prosa não tem.
    Note também que em tabular a leitura **só vertical** (0,881) bate a **só horizontal** (1,137). Há dados em que a coluna sabe mais que a linha.
 2. **O controle importa.** Frente 1–8 melhora sobre frente 1–4 sem nenhuma ideia nova, só por ter mais modelos. Qualquer ganho de camada precisa ser medido *contra um controle do mesmo tamanho*, ou você está medindo o tamanho, não a ideia. Foi assim que a queda do "CLX R22 comprimindo" aconteceu no projeto — e é assim que ela não se repete.
+*Estes números medem cada leitura **ligada à força**. A §4.4 mostra que uma camada opcional não precisa ficar ligada — e que, com portão, a que perde passa a custar zero.*
+
 3. **A língua tem direção.** Ler de trás para frente custa **2,25% mais** em prosa e **7,77% mais** em tabular. Não é simétrico. A intuição de "ler de trás para frente" é legítima (basta codificar o fluxo invertido, e aí o "futuro" vira passado legalmente), mas em português ela **cobra**, não paga. Uma leitura invertida sozinha é sempre pior; ela só serve dentro de uma mistura.
 
 ### 4.2 A retro-leitura legal: ler o futuro que já viajou
@@ -473,6 +477,116 @@ O projeto define o CLX como três canais numa cor: **vermelho = emoção, verde 
 2. **Custo de fatiamento:** separar em três canais destrói o contexto conjunto.
 
 O CLX vale se e somente se (1) > (2). Isso é uma conta, não uma opinião, e o §4.2 mostra que ela pode dar negativo. A correção do arquiteto já registrada no site — *"o ganho não está nos bytes em trânsito, está no armazenamento e na nomenclatura"* — é **consistente** com o que se mede aqui, e este paper a sustenta em vez de contradizê-la.
+
+### 4.4 A camada que fica de sobreaviso — e nunca viaja
+
+Correção registrada, e ela muda a arquitetura sem mudar a medida: **a camada vertical não é descartada por ter perdido em prosa. Ela fica de sobreaviso.** Só entra se precisar — e **nunca viaja**.
+
+Isso é possível porque uma camada não é um dado, é um cálculo. Os dois lados a computam a partir do que já têm. O que precisa ser decidido não é *o que mandar*, é **quem assina a probabilidade de cada bloco**. Três portões:
+
+| portão | quem decide | custo em bits |
+|---|---|---|
+| fixo | ninguém: sempre ligada, ou sempre desligada | zero |
+| oráculo | o emissor olha o bloco e avisa | 1 bit por bloco |
+| **deduzido** | os dois olham quem venceu o bloco **anterior** | **zero** |
+
+O portão deduzido é admissível pela lei da §4: ele depende só do que já foi decodificado. E as duas camadas continuam se atualizando com o bit verdadeiro — quem assinou não muda o que se aprende —, então as gêmeas seguem idênticas.
+
+**Medido** (E13):
+
+| prosa — 9.228 bytes | bits/byte | vertical ligada em |
+|---|---|---|
+| camada desligada (só frente) | 3,487 | 0% dos blocos |
+| vertical sempre ligada | 3,567 | 100% |
+| oráculo, bloco de 64 | 3,499 | 10% |
+| **deduzido, bloco de 64** | **3,495** | 10% |
+| **deduzido, bloco de 1024** | **3,487** | **0%** |
+
+| tabular — 14.037 bytes | bits/byte | vertical ligada em |
+|---|---|---|
+| camada desligada (só frente) | 1,137 | 0% |
+| vertical sempre ligada | 0,700 | 100% |
+| oráculo, bloco de 256 | 0,704 | 98% |
+| **deduzido, bloco de 256** | **0,708** | 98% |
+
+**Três leituras, e a terceira é a melhor:**
+
+1. **O prejuízo desapareceu.** Em prosa, com bloco de 1024, o portão deduzido dá **3,487** — exatamente o custo de não ter a camada. A camada ficou de sobreaviso, nunca foi chamada, e não cobrou nada. Os −2,81% de §4.1 eram o preço de deixá-la ligada à força.
+2. **O ganho ficou.** Em tabular, o mesmo portão entrega 0,708 contra 0,700 da camada sempre ligada: guarda praticamente todos os 37,71%, ligando-a em 98% dos blocos. **Um só codec, sem ajuste manual, se comporta certo nos dois tipos de dado.**
+3. **O portão que não viaja ganha do portão que viaja.** Em prosa com bloco de 64, o oráculo custa **3,499** — pior que não ter camada nenhuma —, porque 1 bit por bloco são 0,0125 bits/byte, mais do que a escolha perfeita economiza. O deduzido, a **zero bits**, dá 3,495. **Avisar custou mais do que acertar rendeu.**
+
+Isto não reabilita A7: a camada vertical continua perdendo em prosa. Mas muda o que isso significa para o projeto — **com portão, a camada errada custa zero; sem portão, custa 2,81%.** E generaliza: toda camada opcional deve nascer com portão, inclusive as três do CLX (§4.3) e as duas de §4.2. O pedágio do fatiamento só se paga onde ele rende.
+
+### 4.5 O vácuo: o espaço carrega informação?
+
+A proposta: o espaço não é vazio. Ele carrega — talvez semântica, talvez a indicação de uma operação, talvez uma mudança de rota — e o outro lado, sendo uma inteligência, sabe disso.
+
+São três perguntas diferentes disfarçadas de uma. Cada uma tem uma medida, e elas não dão a mesma resposta.
+
+**(a) Quanto o espaço custa hoje?**
+
+**Medido** (E14), sobre a prosa do projeto:
+
+| classe | símbolos | bits por símbolo | % do fluxo |
+|---|---|---|---|
+| letra | 7.136 | 3,590 | 80,0% |
+| pontuação | 364 | **5,965** | 6,8% |
+| **espaço** | 1.261 | **1,622** | 6,4% |
+| dígito | 229 | 5,254 | 3,8% |
+| quebra de linha | 238 | 4,188 | 3,1% |
+
+**O espaço já é o símbolo mais barato do fluxo** — custa menos da metade de uma letra. O modelo o prevê muito bem, porque as letras anteriores já dizem quase tudo sobre onde a palavra acaba. Não há reserva escondida ali: mesmo que o espaço passasse a ser literalmente grátis, o teto do ganho seria 6,4%.
+
+E a tabela aponta para outro lugar, que ninguém tinha olhado: **a pontuação é o símbolo mais caro do texto**, 5,965 bits — mais que a letra, mais que o dígito. Trezentos e sessenta e quatro símbolos consomem 6,8% do fluxo. Se há folga em algum lugar deste corpus, está na pontuação, não no espaço.
+
+**(b) E se o espaço não viajasse, e fosse remontado no fim?**
+
+É a forma mais forte da ideia: tira-se o espaço, manda-se só as letras, e a inteligência do outro lado repõe as separações. Testável.
+
+| esquema | bits |
+|---|---|
+| espaço dentro do fluxo | 32.034 |
+| texto sem espaço | 31.179 |
+| camada de comprimentos de palavra | 5.244 |
+| **soma das duas** | **36.423** |
+
+**REFUTADO: −13,70%.** Tirar o espaço do fluxo sai **mais caro**, e o prejuízo é duplo. O espaço, dentro do fluxo, custava só 2.045 bits. Tirá-lo não devolveu esses 2.045 (o texto sem espaço custa 31.179, não 29.989): sem as separações, **as letras ficam mais difíceis de prever**. E a camada de comprimentos, sozinha, custa 5.244 — mais que o dobro do que o espaço custava embutido.
+
+A lição é a mesma de §4.2, agora com outro rosto: **a informação do espaço e a informação das letras são a mesma informação.** Separar as duas paga duas vezes pela mesma coisa.
+
+**(c) O espaço como mudança de rota**
+
+Esta parte da proposta está certa — e é a mais interessante das três, porque **já está acontecendo**.
+
+| o que a posição dentro da palavra diz sobre a letra | IM líquida |
+|---|---|
+| **marginal** — o sinal sozinho | **0,2620** |
+| **condicional** — sabendo apenas **1** caractere anterior | **0,1090** |
+| condicional — sabendo 4 (o que o codec já usa) | nada mensurável |
+
+E no codec, com controle de mesmo tamanho:
+
+| leitura | bits/byte |
+|---|---|
+| frente 1–4 | 3,487 |
+| controle: frente 1–8 | 3,469 |
+| frente 1–4 + distância desde o espaço | 3,567 |
+
+Ganho da rota explícita sobre o controle: **−2,81%**. Nenhum.
+
+**O espaço já é a mudança de rota, e o modelo lê isso sozinho.** Ele está dentro da janela de contexto: ver os quatro caracteres anteriores é ver o espaço, se ele estiver lá. A informação é real — 0,262 bit, medida com controle. Ela só já estava sendo usada.
+
+**E aqui está a armadilha que este experimento documenta, que vale mais que o resultado:**
+
+> A informação mútua **marginal** mede o que um sinal diz **sozinho**. Ela não mede o que ele **acrescenta**. A posição dentro da palavra diz 0,262 bit sozinha; sabendo um único caractere anterior, já cai para 0,109; sabendo quatro, não sobra nada que se possa medir. Empilhar sinais pela IM marginal é somar por inteiro a conta de três pessoas que dividiram a mesma refeição.
+
+É a mesma armadilha da paridade em §6-bis.3, um andar acima: lá o controle separou sinal de ruído; aqui ele separa sinal **novo** de sinal **repetido**. Toda camada candidata precisa passar pelos dois.
+
+**O que sobra da ideia do vácuo, e não é pouco.** A medida diz que o espaço *deste* corpus já está aproveitado. Mas há uma versão da proposta que este experimento **não** testa e que continua de pé: o **vácuo não-semântico** — espaço duplo, espaço no fim da linha, recuo, onde a linha quebra. Isso é diagramação, não conteúdo, e o fluxo paga por reproduzi-lo exatamente. Neste corpus, as quebras de linha custam **3,1% do fluxo**, a 4,188 bits cada — mais caro, por símbolo, que o próprio espaço. Normalizar a diagramação libera isso inteiro.
+
+A forma honesta da ideia é, portanto, invertida: **o vácuo não-semântico não é um lugar para guardar informação. É desperdício — e desperdício se corta, não se enriquece.** O que é diagramação vira camada terminal de verdade (calculada no fim, nunca transmitida); o que é conteúdo já está pago.
+
+Uma nota sobre a transmissão quaternária, que o projeto mantém como conceito: o vácuo **como estado intencional de canal** é eletrônica real e nada aqui contradiz isso. O que a §2.1 proíbe é a outra leitura — a de que um quarto estado carregaria mais que log₂(4) = 2 bits. Essa conta o projeto já derrubou sozinho, e ela continua derrubada.
 
 ---
 
@@ -887,6 +1001,11 @@ Esta é a seção anti-esquecimento. Cada linha é falsificável e diz **qual te
 | A30 | A paridade da posição informa sobre a letra, em prosa | **REFUTADO** | E11: **0,000** líquido, com controle | um corpus com métrica ou verso |
 | A31 | O Teorema Chinês do Resto comprime mais que a raiz mista | **REFUTADO** | E12: 25 bits contra 23 | cardinalidades já coprimas |
 | A32 | Um módulo extra detecta corrupção por quase nada | **MEDIDO** | E12: 10 bits pegam ~100% | — |
+| A33 | Um portão condicional zera o custo de uma camada inútil | **MEDIDO** | E13: prosa 3,487 deduzido = só-frente | uma camada que atrapalhe mesmo desligada |
+| A34 | O portão deduzido (zero bits) bate o portão avisado | **MEDIDO** | E13: 3,495 contra 3,499, bloco de 64 | blocos grandes, onde o aviso dilui |
+| A35 | O espaço é o símbolo mais barato do fluxo | **MEDIDO** | E14: 1,622 bits contra 3,590 da letra | um corpus sem separação por espaço |
+| A36 | Tirar o espaço do fluxo e remontá-lo no fim compensa | **REFUTADO** | E14: **−13,70%** | — |
+| A37 | A posição-na-palavra ainda informa depois do contexto | **REFUTADO** | E14: 0,262 → 0,109 com 1 caractere → nada com 4 | — |
 
 ---
 
@@ -1000,7 +1119,7 @@ Saem dois arquivos: `paper/prova/RESULTADOS.md` (legível) e `paper/prova/result
 | arquivo | o que é |
 |---|---|
 | `paper/prova/nucleo.py` | codificador aritmético binário, contadores, misturador. Inteiros puros, zero float no caminho crítico |
-| `paper/prova/experimentos.py` | os doze experimentos. Cada função é uma asserção da §9 |
+| `paper/prova/experimentos.py` | os catorze experimentos. Cada função é uma asserção da §9 |
 | `paper/prova/roda_tudo.py` | executa tudo e escreve o relatório |
 | `paper/prova/corpus/pt_sounavy.txt` | 9.228 B de português real do projeto |
 | `paper/prova/corpus/tabular.csv` | 14.037 B sintéticos, semente 33 |
@@ -1025,6 +1144,10 @@ Da língua do arquiteto para a língua da literatura. Nenhuma das colunas é sup
 | o tempo não é a nossa preocupação | fronteira compressão–computação | §7, [7] |
 | bit fatorial que aproveita a informação | base fatorial / código de Lehmer | §6.1 |
 | vetor de primos local | numeração de Gödel (refutado) / impressão por resíduos (útil) | §6.2, §6.3 |
+| só entra se precisar, e nunca viaja | portão condicional deduzido | §4.4 |
+| processada no último ponto, no final | camada terminal | §4.4, §4.5 |
+| o vácuo carrega informação | custo por classe de símbolo; IM condicional | §4.5 |
+| o espaço é uma mudança de rota | troca de contexto — já embutida no modelo | §4.5 |
 | uma localidade determina 2 ou 3 informações | numeração de raiz mista; informação mútua | §6-bis.1, §6-bis.3 |
 | dicionário que multiplica, soma e subtrai | dicionário generativo afim-modular | §6-bis.2 |
 | uma graduação para o ímpar | informação mútua com a paridade da posição (refutado) | §6-bis.3 |
@@ -1036,7 +1159,7 @@ Da língua do arquiteto para a língua da literatura. Nenhuma das colunas é sup
 
 Este documento acompanha `paper/prova/RESULTADOS.md`, que carrega os SHA-256 de cada peça de código e de corpus usada. A tabela de asserções (§9) é a unidade de registro: cada linha tem status, evidência e critério de queda.
 
-**Compromisso de registro**, herdado do projeto e mantido aqui: quando uma asserção cair, ela **não sai** deste documento. Muda de status para REFUTADO, ganha a data e a medição que a derrubou, e fica. Nove já nasceram assim — A7, A9, A11, A13, A20, A22, A26, A30 e A31 — e é por isso que se sabe que o registro está funcionando.
+**Compromisso de registro**, herdado do projeto e mantido aqui: quando uma asserção cair, ela **não sai** deste documento. Muda de status para REFUTADO, ganha a data e a medição que a derrubou, e fica. Onze já nasceram assim — A7, A9, A11, A13, A20, A22, A26, A30, A31, A36 e A37 — e é por isso que se sabe que o registro está funcionando.
 
 ---
 
