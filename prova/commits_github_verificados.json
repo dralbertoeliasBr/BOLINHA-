@@ -1,5 +1,23 @@
 [
  {
+  "sha": "d15613839635a33933eb4b89f1a155fd60ba792b",
+  "date": "2026-09-11T00:39:46Z",
+  "msg": "SELO_V1.0.md: trava a obra num ponto fixo, sem fingir tag que nao pegou",
+  "url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/d15613839635a33933eb4b89f1a155fd60ba792b"
+ },
+ {
+  "sha": "6550b68b03958fd1d24e1779a53f46369ed3a135",
+  "date": "2026-09-11T00:47:14Z",
+  "msg": "Consolidacao gold: E15 (RRNS) + ferramentas/ de PDF",
+  "url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/6550b68b03958fd1d24e1779a53f46369ed3a135"
+ },
+ {
+  "sha": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
+  "date": "2026-09-11T00:18:26Z",
+  "msg": "prova/: extrator de anterioridade, hash + timestamp verificado",
+  "url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1"
+ },
+ {
   "sha": "c4887f6c17024935bec6ab3b9fd1deeb84b4a853",
   "date": "2026-09-11T00:13:32Z",
   "msg": "Resumo executivo: PDF de 2 paginas, registro seco",
