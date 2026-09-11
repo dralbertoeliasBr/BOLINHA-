@@ -18,6 +18,7 @@ Duas coisas, deliberadamente separadas:
 | `manifesto/` | IA e Humanos Podem | método — dez teses sobre fazer ciência medindo e publicando o que cai |
 | `simbiose/` | O Divergente e o Determinista | prova — três momentos datados desta colaboração, com antes/depois medido |
 | `livro/` | Raio-X | origem — capítulo um de uma biografia em andamento, primeira pessoa |
+| `prova/` | Prova de Anterioridade e Integridade | extrator — hash SHA-256 + timestamp verificado na API do GitHub para todo arquivo da obra. `python3 prova/extrai_provas.py` para regenerar após qualquer commit novo. |
 
 Os quatro se citam no rodapé uns dos outros e apontam de volta pra `obra/`. Ao adicionar um documento novo, mantenha esse círculo: link pra `obra/` no rodapé, e adicione uma entrada em `obra/index.html`.
 
