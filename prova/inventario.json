@@ -1,5 +1,5 @@
 {
- "gerado_em_utc": "2026-09-11T19:15:50Z",
+ "gerado_em_utc": "2026-09-11T19:16:22Z",
  "arquivos": [
   {
    "arquivo": "CLAUDE.md",
@@ -9,7 +9,7 @@
    "primeiro_commit_curto": "6df14bb707",
    "primeiro_commit_data_github": "2026-09-11T00:08:20Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/6df14bb7075d70b56a83ff1d60f61b115bb42428",
-   "ultimo_commit_curto": "a9821e1141"
+   "ultimo_commit_curto": "cf8959aa4a"
   },
   {
    "arquivo": "CODIGO.md",
@@ -25,11 +25,11 @@
    "arquivo": "HISTORICO.md",
    "bytes": 4156,
    "sha256": "9e89788e10025a5fbfdc70041a2cbf3264975c7322049d7a8cc30838a5424a63",
-   "primeiro_commit": null,
-   "primeiro_commit_curto": "",
-   "primeiro_commit_data_github": null,
-   "primeiro_commit_url": null,
-   "ultimo_commit_curto": ""
+   "primeiro_commit": "cf8959aa4afc2833bfe212857d28f822c9737108",
+   "primeiro_commit_curto": "cf8959aa4a",
+   "primeiro_commit_data_github": "2026-09-11T19:16:02Z",
+   "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/cf8959aa4afc2833bfe212857d28f822c9737108",
+   "ultimo_commit_curto": "cf8959aa4a"
   },
   {
    "arquivo": "SELO_V1.0.md",
@@ -189,7 +189,7 @@
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d",
-   "ultimo_commit_curto": "11141abc5a"
+   "ultimo_commit_curto": "cf8959aa4a"
   },
   {
    "arquivo": "paper/prova/auditoria_cinco_portoes.py",
@@ -229,7 +229,7 @@
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d",
-   "ultimo_commit_curto": "11141abc5a"
+   "ultimo_commit_curto": "cf8959aa4a"
   },
   {
    "arquivo": "paper/prova/roda_tudo.py",
@@ -243,13 +243,13 @@
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.md",
-   "bytes": 8541,
-   "sha256": "56009c31f4731a25a6115192539d4aea4e69c5321e3f0c8dcbfabf4189376a01",
+   "bytes": 8626,
+   "sha256": "221fc26c183a65292d8913d324fcaba9c7dd87c8c12d73d3f9800a26e964bfa7",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "cb3bffb1e8"
+   "ultimo_commit_curto": "cf8959aa4a"
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.pdf",
@@ -263,8 +263,8 @@
   },
   {
    "arquivo": "prova/commits_github_verificados.json",
-   "bytes": 6967,
-   "sha256": "aedbbb4cd8e6277aae753ecedea571c04252134b61e78c4ac70a134a7276d119",
+   "bytes": 7258,
+   "sha256": "2292531948c3215c23e4e29c33aff70be67d1737c8e2b3a618a77aed27d57c5e",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
@@ -279,17 +279,17 @@
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "479728a05e"
+   "ultimo_commit_curto": "cf8959aa4a"
   },
   {
    "arquivo": "prova/inventario.json",
-   "bytes": 15843,
-   "sha256": "e72fb6c3b4835b7af752584c486103c7405168bb5c62dfe2d852ae13513c9473",
+   "bytes": 16142,
+   "sha256": "53dccd3bf79f5da970b51138015435c67b948d770778d8a22d322841ae1fbdea",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "cb3bffb1e8"
+   "ultimo_commit_curto": "cf8959aa4a"
   },
   {
    "arquivo": "seguranca/RESULTADOS.md",
