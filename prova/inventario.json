@@ -1,10 +1,10 @@
 {
- "gerado_em_utc": "2026-09-11T01:57:13Z",
+ "gerado_em_utc": "2026-09-11T19:15:50Z",
  "arquivos": [
   {
    "arquivo": "CLAUDE.md",
-   "bytes": 5798,
-   "sha256": "8cbec9b27d393095988eda7ae3d38b86657c8b68a34b74388ad745254a58ed12",
+   "bytes": 6351,
+   "sha256": "6e9eb6753906a50c0bd42c37a18ed15fde19d0d6aa5a48099026431520667d60",
    "primeiro_commit": "6df14bb7075d70b56a83ff1d60f61b115bb42428",
    "primeiro_commit_curto": "6df14bb707",
    "primeiro_commit_data_github": "2026-09-11T00:08:20Z",
@@ -20,6 +20,16 @@
    "primeiro_commit_data_github": "2026-09-11T01:20:29Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/479728a05ef8874cd28cd166aca5ffa0ab9771f4",
    "ultimo_commit_curto": "479728a05e"
+  },
+  {
+   "arquivo": "HISTORICO.md",
+   "bytes": 4156,
+   "sha256": "9e89788e10025a5fbfdc70041a2cbf3264975c7322049d7a8cc30838a5424a63",
+   "primeiro_commit": null,
+   "primeiro_commit_curto": "",
+   "primeiro_commit_data_github": null,
+   "primeiro_commit_url": null,
+   "ultimo_commit_curto": ""
   },
   {
    "arquivo": "SELO_V1.0.md",
@@ -174,7 +184,7 @@
   {
    "arquivo": "paper/prova/RESULTADOS.md",
    "bytes": 15135,
-   "sha256": "a35004da5f8008dd59a2c3fa4ccf8304468ed577706d161b296ea2c95820dfd0",
+   "sha256": "dfe6340baf3c5aebcf2135e82cfaeade87dcad612a68ca210da3b3b1c15bab38",
    "primeiro_commit": "944660f201ef1097523b28688bf8a1d14157426d",
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
@@ -213,8 +223,8 @@
   },
   {
    "arquivo": "paper/prova/resultados.json",
-   "bytes": 24883,
-   "sha256": "abc366be8285f9a308d98f8137960bcc2ed24f401052e14147bd0d75f3830dc2",
+   "bytes": 24880,
+   "sha256": "1b7026bccde9e6317fb2b2582f937d0fd8db2bd0e95403f22faa22886362a6a7",
    "primeiro_commit": "944660f201ef1097523b28688bf8a1d14157426d",
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
@@ -234,12 +244,12 @@
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.md",
    "bytes": 8541,
-   "sha256": "134b9a435080a4529fd0712f549b04e97f9716fbad049470806d1dc05d03c538",
+   "sha256": "56009c31f4731a25a6115192539d4aea4e69c5321e3f0c8dcbfabf4189376a01",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "11141abc5a"
+   "ultimo_commit_curto": "cb3bffb1e8"
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.pdf",
@@ -259,12 +269,12 @@
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "1663af5c4c"
+   "ultimo_commit_curto": "cb3bffb1e8"
   },
   {
    "arquivo": "prova/extrai_provas.py",
-   "bytes": 8727,
-   "sha256": "8a9697866d7667dbe40fd64c38460a30353a00561d83a846ee58d18e1117e3a7",
+   "bytes": 8743,
+   "sha256": "cefda478098fb24502217ab73398c14884dc9c5745e7ef1047b6fca7048716f8",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
@@ -274,12 +284,12 @@
   {
    "arquivo": "prova/inventario.json",
    "bytes": 15843,
-   "sha256": "e8a261f2354353aa3f2dc4a2e14e871dbe9605e9407e768558696401be2958ed",
+   "sha256": "e72fb6c3b4835b7af752584c486103c7405168bb5c62dfe2d852ae13513c9473",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "11141abc5a"
+   "ultimo_commit_curto": "cb3bffb1e8"
   },
   {
    "arquivo": "seguranca/RESULTADOS.md",

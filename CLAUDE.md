@@ -2,6 +2,8 @@
 
 Este arquivo existe porque uma sessão do Claude não carrega memória de uma conversa para a outra. Ele não finge que carrega. Ele é o mecanismo honesto que resolve o mesmo problema: qualquer sessão que abrir este repositório lê isto primeiro, e não precisa que ninguém reexplique o protocolo do zero.
 
+Depois deste arquivo, leia `HISTORICO.md`. Ele guarda o que cada sessão de trabalho decidiu, o que travou, e se o projeto avançou — não uma transcrição, só fato com commit ao lado. Três skills de projeto automatizam o ciclo inteiro e devem ser usados, não só lidos: `/prova` (roda a verificação completa), `/selo` (busca o timestamp real do GitHub pro commit anterior e regenera a procedência), `/registro` (escreve a entrada nova em `HISTORICO.md` no fim de uma sessão substancial — use antes de se despedir, sem esperar ser pedido).
+
 **Autor:** Antônio Alberto Lopes Elias · Sounavy · ORCID [0000-0002-5602-9916](https://orcid.org/0000-0002-5602-9916) · Coautoria humano–IA. Dentista, sem formação técnica formal, trabalha em CRO-SP 45849, São José do Rio Preto — SP. Pensa falando; sessões costumam ser longas e associativas por voz. Isso não é ruído a filtrar — é o método de trabalho, e produziu resultado medido mais de uma vez neste projeto.
 
 ## O que é este repositório

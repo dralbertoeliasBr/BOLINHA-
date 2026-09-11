@@ -12,7 +12,7 @@ Gerado por `python3 paper/prova/roda_tudo.py`. Nada aqui foi digitado a mao.
 | sha256 corpus/estruturado.json | `cbae9c24e7e445096db0d441c3699aa1` |
 | sha256 corpus/pt_sounavy.txt | `42c799b15165e8d426d9e594d08cfdce` |
 | sha256 corpus/tabular.csv | `d1a4cc9c485df64138329c977d5a9e06` |
-| tempo total | 43.9 s |
+| tempo total | 46.4 s |
 
 ## E1 — o teto da contagem
 
@@ -149,14 +149,14 @@ comprimir compensa  <=>  e_calc / N  <  (1 - r) * e_rede
 
 `e_calc` = potencia / vazao (J por byte processado) · `r` = 0.383 (razao medida deste codec) · `e_rede` = J por byte no enlace · `N` = quantas vezes o mesmo objeto sera enviado ou lido.
 
-Medido: 3076 bytes em 0.48 s = 6435 B/s (Python puro, um nucleo). xz -9: 1744 bytes; este codec: 1179 bytes.
+Medido: 3076 bytes em 0.51 s = 5987 B/s (Python puro, um nucleo). xz -9: 1744 bytes; este codec: 1179 bytes.
 
 | motor | e_calc (J/byte) | enlace | limiar (1-r)*e_rede | compensa em 1 envio? | envios p/ empatar |
 |---|---|---|---|---|---|
-| este codec, Python puro (MEDIDO) | 0.000777 | fibra / datacenter | 1.23e-08 | nao | 62,998 |
-| este codec, Python puro (MEDIDO) | 0.000777 | 4G movel | 1.23e-06 | nao | 630 |
-| este codec, Python puro (MEDIDO) | 0.000777 | satelite / LoRa | 0.000123 | nao | 6 |
-| este codec, Python puro (MEDIDO) | 0.000777 | espaco profundo | 0.0123 | SIM | 1 |
+| este codec, Python puro (MEDIDO) | 0.000835 | fibra / datacenter | 1.23e-08 | nao | 67,705 |
+| este codec, Python puro (MEDIDO) | 0.000835 | 4G movel | 1.23e-06 | nao | 677 |
+| este codec, Python puro (MEDIDO) | 0.000835 | satelite / LoRa | 0.000123 | nao | 7 |
+| este codec, Python puro (MEDIDO) | 0.000835 | espaco profundo | 0.0123 | SIM | 1 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | fibra / datacenter | 1.23e-08 | nao | 41 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | 4G movel | 1.23e-06 | SIM | 1 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | satelite / LoRa | 0.000123 | SIM | 1 |
@@ -216,9 +216,9 @@ A gemea receptora calcula cada probabilidade com erro de ate +-D (numa escala de
 | bits do alvo | tentativas medias | 2^k | bits medios da semente | bits economizados | segundos |
 |---|---|---|---|---|---|
 | 8 | 280 | 256 | 7.75 | **+0.25** | 0.0002 |
-| 12 | 3,545 | 4,096 | 11.42 | **+0.58** | 0.0026 |
-| 16 | 33,237 | 65,536 | 15.08 | **+0.92** | 0.0236 |
-| 20 | 751,504 | 1,048,576 | 19.33 | **+0.67** | 0.5286 |
+| 12 | 3,545 | 4,096 | 11.42 | **+0.58** | 0.0027 |
+| 16 | 33,237 | 65,536 | 15.08 | **+0.92** | 0.0259 |
+| 20 | 751,504 | 1,048,576 | 19.33 | **+0.67** | 0.6001 |
 
 Tentativas crescem como 2^k. A economia de bits fica **constante** em torno de 0,7 bit. Tempo exponencial, bits de graca: zero.
 
