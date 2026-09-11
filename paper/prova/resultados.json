@@ -47,8 +47,8 @@
   "ok_frio": true,
   "ok_quente": true,
   "sha": "eb092b8fda4b51185628455a0f3279fc2d85f73c5f1eb70a04f9a76d98279733",
-  "seg_frio": 0.3374781608581543,
-  "seg_quente": 0.9366545677185059,
+  "seg_frio": 0.3348710536956787,
+  "seg_quente": 0.9374856948852539,
   "bytes_frio": 1475,
   "bytes_quente": 1179
  },
@@ -176,55 +176,55 @@
  },
  "energia": {
   "r": 0.38328998699609884,
-  "seg": 0.4810912609100342,
-  "vazao_medida": 6393.797289481888,
+  "seg": 0.4358193874359131,
+  "vazao_medida": 7057.969628421644,
   "msg_bytes": 3076,
   "nosso_bytes": 1179,
   "xz_bytes": 1744,
   "linhas": [
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6393.797289481888,
+    "vazao_B_por_s": 7057.969628421644,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007820079013492103,
+    "e_calc_J_por_byte": 0.0007084190302924465,
     "enlace": "fibra / datacenter",
     "e_rede_J_por_byte": 2e-08,
     "limiar_J_por_byte": 1.2334200260078023e-08,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 63401.58947153851
+    "envios_para_compensar": 57435.34362624052
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6393.797289481888,
+    "vazao_B_por_s": 7057.969628421644,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007820079013492103,
+    "e_calc_J_por_byte": 0.0007084190302924465,
     "enlace": "4G movel",
     "e_rede_J_por_byte": 2e-06,
     "limiar_J_por_byte": 1.2334200260078022e-06,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 634.0158947153851
+    "envios_para_compensar": 574.3534362624052
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6393.797289481888,
+    "vazao_B_por_s": 7057.969628421644,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007820079013492103,
+    "e_calc_J_por_byte": 0.0007084190302924465,
     "enlace": "satelite / LoRa",
     "e_rede_J_por_byte": 0.0002,
     "limiar_J_por_byte": 0.00012334200260078024,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 6.34015894715385
+    "envios_para_compensar": 5.743534362624052
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6393.797289481888,
+    "vazao_B_por_s": 7057.969628421644,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007820079013492103,
+    "e_calc_J_por_byte": 0.0007084190302924465,
     "enlace": "espaco profundo",
     "e_rede_J_por_byte": 0.02,
     "limiar_J_por_byte": 0.012334200260078023,
     "compensa_em_1_envio": true,
-    "envios_para_compensar": 0.0634015894715385
+    "envios_para_compensar": 0.05743534362624052
    },
    {
     "motor": "mesmo codec em C, estimado 10 MB/s",
@@ -492,7 +492,7 @@
     "esperado_2_elevado_k": 256,
     "bits_medios_da_semente": 7.75,
     "bits_economizados_medios": 0.25,
-    "segundos_medios": 0.00019154946009318033
+    "segundos_medios": 0.00018425782521565756
    },
    {
     "bits_do_alvo": 12,
@@ -501,7 +501,7 @@
     "esperado_2_elevado_k": 4096,
     "bits_medios_da_semente": 11.416666666666666,
     "bits_economizados_medios": 0.5833333333333339,
-    "segundos_medios": 0.0024788777033487954
+    "segundos_medios": 0.0023637215296427407
    },
    {
     "bits_do_alvo": 16,
@@ -510,7 +510,7 @@
     "esperado_2_elevado_k": 65536,
     "bits_medios_da_semente": 15.083333333333334,
     "bits_economizados_medios": 0.9166666666666661,
-    "segundos_medios": 0.02429684003194173
+    "segundos_medios": 0.021555105845133465
    },
    {
     "bits_do_alvo": 20,
@@ -519,7 +519,7 @@
     "esperado_2_elevado_k": 1048576,
     "bits_medios_da_semente": 19.333333333333332,
     "bits_economizados_medios": 0.6666666666666679,
-    "segundos_medios": 0.5283294121424357
+    "segundos_medios": 0.49422764778137207
    }
   ]
  },
@@ -1024,6 +1024,6 @@
    "pt_sounavy.txt": "42c799b15165e8d426d9e594d08cfdce5a83731a196076d3d6756b26e827e353",
    "tabular.csv": "d1a4cc9c485df64138329c977d5a9e06da0e72c3725250122ae22a6da6798e7b"
   },
-  "segundos_total": 43.5
+  "segundos_total": 41.2
  }
 }

@@ -1,10 +1,10 @@
 {
- "gerado_em_utc": "2026-09-11T00:48:17Z",
+ "gerado_em_utc": "2026-09-11T01:09:57Z",
  "arquivos": [
   {
    "arquivo": "CLAUDE.md",
-   "bytes": 5087,
-   "sha256": "611e9089e304317946d13fe8b9ee79fcab9efb712c6407624853a0224aeb537b",
+   "bytes": 5797,
+   "sha256": "a4d4049265bc04f2e881edaafd1bea27d3871de312c68e5f7c3a4ad96fac4b26",
    "primeiro_commit": "6df14bb7075d70b56a83ff1d60f61b115bb42428",
    "primeiro_commit_curto": "6df14bb707",
    "primeiro_commit_data_github": "2026-09-11T00:08:20Z",
@@ -94,7 +94,7 @@
   {
    "arquivo": "obra/index.html",
    "bytes": 9653,
-   "sha256": "d06b40533fa0641f83e9b1786bbb9931a5bac84a579bb2b6f98eed4ded79c5d9",
+   "sha256": "50354f329974fb69b7e13f02ff3bc2327930cd04d120d84371e115042c3b0629",
    "primeiro_commit": "f5830b5ffe6644fa1a3110d717542725651763ea",
    "primeiro_commit_curto": "f5830b5ffe",
    "primeiro_commit_data_github": "2026-09-10T22:12:15Z",
@@ -103,8 +103,8 @@
   },
   {
    "arquivo": "paper/AS_GEMEAS_E_O_NUMERO.md",
-   "bytes": 70685,
-   "sha256": "c6fc2d5d850aa2ec16d4ab4ad8ee9dd7c3f98f6d6d8d6081b6755c35f6b0f87b",
+   "bytes": 73381,
+   "sha256": "82544fe9fae92e115c2406e4000c59e9fb9b63407bf31a90735bdd152292defd",
    "primeiro_commit": "944660f201ef1097523b28688bf8a1d14157426d",
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
@@ -113,8 +113,8 @@
   },
   {
    "arquivo": "paper/README.md",
-   "bytes": 3277,
-   "sha256": "28e902c468b4dd3c6f30ccb34705343a8c7203f1bc9519f85814a0d7284ad5b6",
+   "bytes": 3409,
+   "sha256": "6bcbfef261dcdcfef90113588bb67ebac3f93864004c6870cb03087101d93ed3",
    "primeiro_commit": "944660f201ef1097523b28688bf8a1d14157426d",
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
@@ -143,13 +143,23 @@
   },
   {
    "arquivo": "paper/index.html",
-   "bytes": 90896,
-   "sha256": "4d6d958df6a707279f5ef3ff281288d97aeb70c2755895776fc2e640754a1a54",
+   "bytes": 93592,
+   "sha256": "2e2bdd85e39896f0c7a194cbf2d496ceea3e2df275ec344a5d3586a6c7270afe",
    "primeiro_commit": "944660f201ef1097523b28688bf8a1d14157426d",
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d",
    "ultimo_commit_curto": "f5830b5ffe"
+  },
+  {
+   "arquivo": "paper/prova/AUDITORIA_CINCO_PORTOES.md",
+   "bytes": 2832,
+   "sha256": "08d73e18ce5333931b424a18f132d4cd234efab1952c2d0bb62b00cb9c065143",
+   "primeiro_commit": null,
+   "primeiro_commit_curto": "",
+   "primeiro_commit_data_github": null,
+   "primeiro_commit_url": null,
+   "ultimo_commit_curto": ""
   },
   {
    "arquivo": "paper/prova/RESULTADOS.md",
@@ -160,6 +170,16 @@
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d",
    "ultimo_commit_curto": "6550b68b03"
+  },
+  {
+   "arquivo": "paper/prova/auditoria_cinco_portoes.py",
+   "bytes": 10363,
+   "sha256": "81a83d6ba97af6714172fc9cb8f5385e645f2bf0e360326bb05343b523e803f1",
+   "primeiro_commit": null,
+   "primeiro_commit_curto": "",
+   "primeiro_commit_data_github": null,
+   "primeiro_commit_url": null,
+   "ultimo_commit_curto": ""
   },
   {
    "arquivo": "paper/prova/experimentos.py",
@@ -203,23 +223,23 @@
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.md",
-   "bytes": 7387,
-   "sha256": "d1fe4ecaff0414a8aa5bb15b0a6d5eea4e1e6b14966af017e1f5ee08bdaeccaa",
+   "bytes": 7337,
+   "sha256": "e5a45503d4228abbf9cbefc93381afd5bd15787534f2e6a91dada80c84da3bbf",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "ab9b4b25e4"
+   "ultimo_commit_curto": "f2ab2a8888"
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.pdf",
-   "bytes": 119203,
-   "sha256": "3a8e7b05e6801289b9ee117f1aa9e1cb40532a5b4efbd99589b6b5ec32a7750c",
+   "bytes": 128482,
+   "sha256": "39e8d730b8c818192a7e6090451955aac4000fad760b6af3c1ceaa30d01b1358",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "ab9b4b25e4"
+   "ultimo_commit_curto": "f2ab2a8888"
   },
   {
    "arquivo": "prova/commits_github_verificados.json",
@@ -229,12 +249,12 @@
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "ab9b4b25e4"
+   "ultimo_commit_curto": "f2ab2a8888"
   },
   {
    "arquivo": "prova/extrai_provas.py",
-   "bytes": 8701,
-   "sha256": "8f986214cd89424a9fab880634959bad990dfaae3d48e00732de6d72f744bcd3",
+   "bytes": 8714,
+   "sha256": "5099ed59e110ce9bf7f634025dac48d64a2282ab0dc5644a4bad5839fe3a6262",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
@@ -243,13 +263,33 @@
   },
   {
    "arquivo": "prova/inventario.json",
-   "bytes": 12394,
-   "sha256": "1586388d58a0d5ae8a4e4519087cad15f266cdb1fc03ae8d89c7bf45c293add0",
+   "bytes": 12935,
+   "sha256": "5960c163eebe45f05bdcfd61e8e30196ec20fa539b3444d39f720502df273ace",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "ab9b4b25e4"
+   "ultimo_commit_curto": "f2ab2a8888"
+  },
+  {
+   "arquivo": "seguranca/RESULTADOS.md",
+   "bytes": 3303,
+   "sha256": "2e34d66d7c56fff9e3b3723368786f8cc9b4dc508adb5c77f0dadf33ef521795",
+   "primeiro_commit": null,
+   "primeiro_commit_curto": "",
+   "primeiro_commit_data_github": null,
+   "primeiro_commit_url": null,
+   "ultimo_commit_curto": ""
+  },
+  {
+   "arquivo": "seguranca/simulacao_sobrevivencia.py",
+   "bytes": 8557,
+   "sha256": "faf1ac5f48782d66c8b8051e5651d5c942f0ac6c21c96391d8792c4ced5f73e5",
+   "primeiro_commit": null,
+   "primeiro_commit_curto": "",
+   "primeiro_commit_data_github": null,
+   "primeiro_commit_url": null,
+   "ultimo_commit_curto": ""
   },
   {
    "arquivo": "simbiose/O_DIVERGENTE_E_O_DETERMINISTA.md",

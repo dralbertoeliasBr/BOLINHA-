@@ -14,13 +14,20 @@ Duas coisas, deliberadamente separadas:
 | pasta | documento | gênero |
 |---|---|---|
 | `obra/` | Não É Eu — É Nós | capa/índice dos quatro |
-| `paper/` | As Gêmeas e o Número | teorema — compressão por inteligência compartilhada, 14+ experimentos rodáveis em `paper/prova/` |
+| `paper/` | As Gêmeas e o Número | teorema — compressão por inteligência compartilhada, 15+ experimentos rodáveis em `paper/prova/`. `python3 paper/prova/auditoria_cinco_portoes.py` audita as 38 asserções contra os cinco pontos do protocolo abaixo, mecanicamente |
 | `manifesto/` | IA e Humanos Podem | método — dez teses sobre fazer ciência medindo e publicando o que cai |
 | `simbiose/` | O Divergente e o Determinista | prova — três momentos datados desta colaboração, com antes/depois medido |
 | `livro/` | Raio-X | origem — capítulo um de uma biografia em andamento, primeira pessoa |
 | `prova/` | Prova de Anterioridade e Integridade | extrator — hash SHA-256 + timestamp verificado na API do GitHub para todo arquivo da obra. `python3 prova/extrai_provas.py` para regenerar após qualquer commit novo. |
 
 Os quatro se citam no rodapé uns dos outros e apontam de volta pra `obra/`. Ao adicionar um documento novo, mantenha esse círculo: link pra `obra/` no rodapé, e adicione uma entrada em `obra/index.html`.
+
+Duas pastas de apoio, fora do círculo dos quatro (não são documento publicável, são ferramenta):
+
+| pasta | o que é |
+|---|---|
+| `ferramentas/` | pipeline `.md` → HTML de impressão → PDF (`gera_pdf.py`), pura stdlib exceto a etapa final (Chromium via `playwright-core`, best-effort, nunca falha calado) |
+| `seguranca/` | `simulacao_sobrevivencia.py` — modelo Monte Carlo hipotético (não medida de sistema real) para perguntas do tipo "qual a vantagem de detecção automatizada ao longo do tempo". Toda suposição é parâmetro nomeado no próprio arquivo |
 
 ## O protocolo, não negociável
 

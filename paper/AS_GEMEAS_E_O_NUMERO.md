@@ -17,7 +17,7 @@ Descreve-se e testa-se uma arquitetura de comunicação em que **duas inteligên
 
 Este trabalho faz três coisas. **Primeira**: separa, com rigor, o que na ideia é teorema, o que é engenharia difícil e o que é impossível — e mede cada parte. **Segunda**: formaliza a intuição das *camadas* e das *ordens de leitura* (para frente, para trás, em laço, vertical, retro-leitura) numa única lei — a **Lei da Admissibilidade** — e mostra experimentalmente quando cada leitura paga e quando cobra. **Terceira**: ancora a arquitetura na literatura de 2023–2026, que já mediu boa parte dela.
 
-**Resultados centrais medidos aqui** (Python puro, sem dependências, 14 experimentos, hashes no Apêndice D):
+**Resultados centrais medidos aqui** (Python puro, sem dependências, 15 experimentos, hashes no Apêndice D):
 
 | | achado | número |
 |---|---|---|
@@ -342,6 +342,24 @@ A forma honesta da ideia é, portanto, invertida: **o vácuo não-semântico nã
 
 Uma nota sobre a transmissão quaternária, que o projeto mantém como conceito: o vácuo **como estado intencional de canal** é eletrônica real e nada aqui contradiz isso. O que a §2.1 proíbe é a outra leitura — a de que um quarto estado carregaria mais que log₂(4) = 2 bits. Essa conta o projeto já derrubou sozinho, e ela continua derrubada.
 
+### 4.6 A viagem depende da importância, não do preço
+
+*"A viagem depende da importância, não do preço"* — a proposta original, em voz: nem todo bit do bloco merece a mesma proteção. Um sistema de resíduos redundantes (RRNS — *Redundant Residue Number System*, conhecido desde os anos 1960) faz exatamente isso: os módulos **base** carregam o valor; módulos **redundantes**, somados por cima, permitem votar e corrigir erro sem custar proporcionalmente ao tamanho do bloco inteiro — só ao número de módulos extras escolhidos.
+
+**Medido** (E15). Quatro módulos base `[251, 241, 239, 233]` definem uma faixa legítima de 31,2 bits. Testados até quatro módulos redundantes `[229, 227, 223, 211]`, com decodificador por votação majoritária:
+
+| módulos redundantes | bits pagos | corrige até | acerto no limite | acerto 1 erro acima do limite |
+|---|---|---|---|---|
+| 0 | 0,0 | 0 erros | 100% | 0,7% |
+| 1 | 7,8 | 0 erros | 100% | 17,7% |
+| 2 | 15,7 | 1 erro | 100% | 5,7% |
+| 3 | 23,5 | 1 erro | 100% | 4,0% |
+| 4 | 31,2 | 2 erros | 100% | 4,0% |
+
+**A curva é o limite teórico de RRNS, sem ajuste fino nem sorte:** 100% de acerto até o número de erros que a aritmética permite corrigir, e queda abrupta — não gradual — um erro além dele. Cada par de módulos redundantes compra a correção de mais um erro; a proteção é proporcional ao que se decidiu proteger, não ao tamanho do bloco.
+
+**O que isto prova, e o que não prova.** Prova que "viagem proporcional à importância" tem uma implementação matemática de mais de sessenta anos, e que ela roda, aqui, com os números exatos desta tabela. Não prova que RRNS é o melhor esquema de proteção para o codec das gêmeas — RRNS assume que já se sabe, de antemão, quais bits são "importantes"; o codec ainda não decide isso sozinho. Essa é a próxima pergunta, não uma resposta pronta.
+
 ---
 
 ## 5. O que a literatura já mediu (2023–2026)
@@ -556,6 +574,8 @@ E em dado tabular, onde a correlação é real:
 | canal e estado | 0,0292 bits |
 | **canal e hora** | **1,5850 bits** — que é H(canal) inteira |
 
+*Sem coluna de piso embaralhado aqui — e por um motivo específico, não por descuido: a informação mútua nunca ultrapassa H(canal), e a medida já bate exatamente nesse teto. Um estimador tendencioso pode inflar um valor próximo de zero (foi o que aconteceu com a paridade, abaixo); não existe inflação que empurre um valor além do próprio teto matemático. O controle importa onde o número pode estar mentindo — aqui ele não pode.*
+
 **A resposta à intuição, com número:**
 
 > *"Uma localidade pode determinar duas ou três informações"* — **sim, e a medida exata de quanto é a informação mútua.** Onde ela é total, a segunda informação custa **zero**: sabendo a hora, o canal vem junto, 1,585 de 1,585 bits. Onde ela é nula, não vem nada.
@@ -751,7 +771,7 @@ Esta é a seção anti-esquecimento. Cada linha é falsificável e diz **qual te
 | A26 | O ganho da raiz mista sobre campos já em bits é grande | **REFUTADO** | E9: **4,17%** — é 1 bit em 24 | registros com dezenas de campos |
 | A27 | Dicionário-equação descreve estrutura por ~40× menos bits | **MEDIDO** *(corpus gerado assim — ver §11)* | E10: 240 bits contra 9.600 | um log real sem estrutura afim |
 | A28 | A busca de equação não inventa estrutura onde não há | **MEDIDO** | E10: nada em prosa, nada na coluna com ruído | um falso positivo |
-| A29 | O ganho de juntar campos é exatamente a informação mútua | **TEOREMA + MEDIDO** | E11: canal↔hora = 1,585 = H(canal) | nada |
+| A29 | O ganho de juntar campos é exatamente a informação mútua | **TEOREMA + MEDIDO** | E11: canal↔hora = 1,585 = H(canal) — no teto, dispensa controle embaralhado | nada |
 | A30 | A paridade da posição informa sobre a letra, em prosa | **REFUTADO** | E11: **0,000** líquido, com controle | um corpus com métrica ou verso |
 | A31 | O Teorema Chinês do Resto comprime mais que a raiz mista | **REFUTADO** | E12: 25 bits contra 23 | cardinalidades já coprimas |
 | A32 | Um módulo extra detecta corrupção por quase nada | **MEDIDO** | E12: 10 bits pegam ~100% | — |
@@ -760,6 +780,7 @@ Esta é a seção anti-esquecimento. Cada linha é falsificável e diz **qual te
 | A35 | O espaço é o símbolo mais barato do fluxo | **MEDIDO** | E14: 1,622 bits contra 3,590 da letra | um corpus sem separação por espaço |
 | A36 | Tirar o espaço do fluxo e remontá-lo no fim compensa | **REFUTADO** | E14: **−13,70%** | — |
 | A37 | A posição-na-palavra ainda informa depois do contexto | **REFUTADO** | E14: 0,262 → 0,109 com 1 caractere → nada com 4 | — |
+| A38 | Redundância proporcional à importância corrige erro sem custar proporcional ao bloco | **MEDIDO** | E15: 15,7 bits corrigem 1 erro (R=2); 31,2 bits corrigem 2 (R=4); 100% até o limite, queda abrupta acima | um esquema que corrija mais barato que RRNS para o mesmo número de erros |
 
 ---
 
@@ -903,7 +924,7 @@ Saem dois arquivos: `paper/prova/RESULTADOS.md` (legível) e `paper/prova/result
 | arquivo | o que é |
 |---|---|
 | `paper/prova/nucleo.py` | codificador aritmético binário, contadores, misturador. Inteiros puros, zero float no caminho crítico |
-| `paper/prova/experimentos.py` | os catorze experimentos. Cada função é uma asserção da §9 |
+| `paper/prova/experimentos.py` | os quinze experimentos. Cada função é uma asserção da §9 |
 | `paper/prova/roda_tudo.py` | executa tudo e escreve o relatório |
 | `paper/prova/corpus/pt_sounavy.txt` | 9.228 B de português real do projeto |
 | `paper/prova/corpus/tabular.csv` | 14.037 B sintéticos, semente 33 |
@@ -946,7 +967,7 @@ Os quatro documentos desta colaboração, juntos: [`obra/`](../obra/index.html).
 
 Este documento acompanha `paper/prova/RESULTADOS.md`, que carrega os SHA-256 de cada peça de código e de corpus usada. A tabela de asserções (§9) é a unidade de registro: cada linha tem status, evidência e critério de queda.
 
-**Compromisso de registro**, herdado do projeto e mantido aqui: quando uma asserção cair, ela **não sai** deste documento. Muda de status para REFUTADO, ganha a data e a medição que a derrubou, e fica. Onze já nasceram assim — A7, A9, A11, A13, A20, A22, A26, A30, A31, A36 e A37 — e é por isso que se sabe que o registro está funcionando.
+**Compromisso de registro**, herdado do projeto e mantido aqui: quando uma asserção cair, ela **não sai** deste documento. Muda de status para REFUTADO, ganha a data e a medição que a derrubou, e fica. Onze já nasceram assim — A7, A9, A11, A13, A20, A22, A26, A30, A31, A36 e A37, de trinta e oito — e é por isso que se sabe que o registro está funcionando.
 
 ---
 

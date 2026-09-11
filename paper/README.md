@@ -21,7 +21,7 @@ python3 paper/prova/roda_tudo.py
 O cabeçalho traz o SHA-256 de cada peça de código e de corpus: se um número
 do paper não bater com a sua máquina, o paper está errado.
 
-## Os catorze experimentos
+## Os quinze experimentos
 
 | # | pergunta | resposta medida |
 |---|---|---|
@@ -41,6 +41,7 @@ do paper não bater com a sua máquina, o paper está errado.
 | E12 | Um número responde a várias perguntas? | responde — e 10 bits extras pegam ~**100%** da corrupção |
 | E13 | A camada que só entra se precisar | portão deduzido, **zero bits**: a errada custa nada |
 | E14 | O espaço carrega informação? | é o símbolo **mais barato** (1,622 bits) — já aproveitado |
+| E15 | A viagem depende da importância, não do preço? | RRNS: 15,7 bits corrigem 1 erro, 31,2 corrigem 2 — 100% até o limite |
 
 ## Arquivos
 
@@ -48,7 +49,7 @@ do paper não bater com a sua máquina, o paper está errado.
 |---|---|
 | `AS_GEMEAS_E_O_NUMERO.md` | o paper |
 | `prova/nucleo.py` | codificador aritmético binário. Inteiros puros, zero float no caminho crítico |
-| `prova/experimentos.py` | os catorze experimentos — cada função é uma asserção do paper |
+| `prova/experimentos.py` | os quinze experimentos — cada função é uma asserção do paper |
 | `prova/roda_tudo.py` | executa tudo e escreve o relatório |
 | `prova/corpus/` | 9 KB de português real do projeto + 14 KB tabular sintético |
 | `prova/RESULTADOS.md` | a saída, com hashes. Nenhum número digitado à mão |
