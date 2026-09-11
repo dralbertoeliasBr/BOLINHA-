@@ -1,5 +1,5 @@
 {
- "gerado_em_utc": "2026-09-11T01:17:13Z",
+ "gerado_em_utc": "2026-09-11T01:17:40Z",
  "arquivos": [
   {
    "arquivo": "CLAUDE.md",
@@ -9,7 +9,7 @@
    "primeiro_commit_curto": "6df14bb707",
    "primeiro_commit_data_github": "2026-09-11T00:08:20Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/6df14bb7075d70b56a83ff1d60f61b115bb42428",
-   "ultimo_commit_curto": "29a061488a"
+   "ultimo_commit_curto": "a9821e1141"
   },
   {
    "arquivo": "SELO_V1.0.md",
@@ -79,7 +79,7 @@
    "primeiro_commit_curto": "8684fd69dc",
    "primeiro_commit_data_github": "2026-09-10T20:54:42Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/8684fd69dcaa9cc532ff89b43ab993ce451b3dbc",
-   "ultimo_commit_curto": "f5830b5ffe"
+   "ultimo_commit_curto": "a9821e1141"
   },
   {
    "arquivo": "manifesto/index.html",
@@ -89,7 +89,7 @@
    "primeiro_commit_curto": "8684fd69dc",
    "primeiro_commit_data_github": "2026-09-10T20:54:42Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/8684fd69dcaa9cc532ff89b43ab993ce451b3dbc",
-   "ultimo_commit_curto": "f5830b5ffe"
+   "ultimo_commit_curto": "a9821e1141"
   },
   {
    "arquivo": "obra/index.html",
@@ -99,7 +99,7 @@
    "primeiro_commit_curto": "f5830b5ffe",
    "primeiro_commit_data_github": "2026-09-10T22:12:15Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/f5830b5ffe6644fa1a3110d717542725651763ea",
-   "ultimo_commit_curto": "29a061488a"
+   "ultimo_commit_curto": "a9821e1141"
   },
   {
    "arquivo": "paper/AS_GEMEAS_E_O_NUMERO.md",
@@ -223,13 +223,13 @@
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.md",
-   "bytes": 8149,
-   "sha256": "68379c17e80a4d671bb371067d11b7d0deed93e7beb84bf135b349bf27ab4dc4",
+   "bytes": 8267,
+   "sha256": "fae5135d1fa4e2012f91692a269635f4cbda3a2c1d42f1974e1a7941040dfb2c",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "4f003bdc8c"
+   "ultimo_commit_curto": "a9821e1141"
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.pdf",
@@ -243,8 +243,8 @@
   },
   {
    "arquivo": "prova/commits_github_verificados.json",
-   "bytes": 6135,
-   "sha256": "2fd6fabe33d1f79e608bda14a1dde5c15468a50ff1ce215a41020b13b2823e04",
+   "bytes": 6411,
+   "sha256": "48f2b03413f53b6247be42928d42aa9a81a17905195234c43f3dda3e4091c5de",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
@@ -263,13 +263,13 @@
   },
   {
    "arquivo": "prova/inventario.json",
-   "bytes": 14883,
-   "sha256": "80eb0faa3d47f7d4b5d1ba25dc31cd3deb9f52c8c65cd3fff1a14bfd9a71b03e",
+   "bytes": 15215,
+   "sha256": "69902518d0058a07fe7b9b34dc688bf782cf3d07f628dadad3ca1215eaf1aa2d",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "4f003bdc8c"
+   "ultimo_commit_curto": "a9821e1141"
   },
   {
    "arquivo": "seguranca/RESULTADOS.md",
@@ -299,17 +299,17 @@
    "primeiro_commit_curto": "65543c255d",
    "primeiro_commit_data_github": "2026-09-10T21:55:37Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/65543c255de78865ec4abdf857de8ae19258abec",
-   "ultimo_commit_curto": "f5830b5ffe"
+   "ultimo_commit_curto": "a9821e1141"
   },
   {
    "arquivo": "simbiose/O_DIVERGENTE_E_O_DETERMINISTA.pdf",
    "bytes": 133147,
    "sha256": "11a010041d0a41b489f1bb12ada13e82ca6d5fc0099ad4be0a51755f1c53054c",
-   "primeiro_commit": null,
-   "primeiro_commit_curto": "",
-   "primeiro_commit_data_github": null,
-   "primeiro_commit_url": null,
-   "ultimo_commit_curto": ""
+   "primeiro_commit": "a9821e1141dbe9bd6f93b8b4a743021af3390802",
+   "primeiro_commit_curto": "a9821e1141",
+   "primeiro_commit_data_github": "2026-09-11T01:17:28Z",
+   "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/a9821e1141dbe9bd6f93b8b4a743021af3390802",
+   "ultimo_commit_curto": "a9821e1141"
   },
   {
    "arquivo": "simbiose/index.html",
@@ -319,7 +319,7 @@
    "primeiro_commit_curto": "65543c255d",
    "primeiro_commit_data_github": "2026-09-10T21:55:37Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/65543c255de78865ec4abdf857de8ae19258abec",
-   "ultimo_commit_curto": "f5830b5ffe"
+   "ultimo_commit_curto": "a9821e1141"
   }
  ]
 }

@@ -1,6 +1,6 @@
 # Prova de Anterioridade e Integridade
 
-Gerado por `python3 prova/extrai_provas.py` em `2026-09-11T01:17:13Z` (UTC). Este relatorio nao pede confianca — ensina a verificacao.
+Gerado por `python3 prova/extrai_provas.py` em `2026-09-11T01:17:40Z` (UTC). Este relatorio nao pede confianca — ensina a verificacao.
 
 ## Como verificar, em três passos
 
@@ -42,15 +42,15 @@ sha256sum <arquivo>
 | `paper/prova/nucleo.py` | 9136 | `221305ad5c99931e` | [`944660f201`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d) | 2026-09-10T20:33:29Z |
 | `paper/prova/resultados.json` | 24882 | `8f4328f5e8c1e9b0` | [`944660f201`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d) | 2026-09-10T20:33:29Z |
 | `paper/prova/roda_tudo.py` | 21168 | `aab1e58196b65961` | [`944660f201`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d) | 2026-09-10T20:33:29Z |
-| `prova/PROVA_DE_ANTERIORIDADE.md` | 8149 | `68379c17e80a4d67` | [`ab9b4b25e4`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1) | 2026-09-11T00:18:26Z |
+| `prova/PROVA_DE_ANTERIORIDADE.md` | 8267 | `fae5135d1fa4e201` | [`ab9b4b25e4`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1) | 2026-09-11T00:18:26Z |
 | `prova/PROVA_DE_ANTERIORIDADE.pdf` | 128482 | `39e8d730b8c81819` | [`ab9b4b25e4`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1) | 2026-09-11T00:18:26Z |
-| `prova/commits_github_verificados.json` | 6135 | `2fd6fabe33d1f79e` | [`ab9b4b25e4`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1) | 2026-09-11T00:18:26Z |
+| `prova/commits_github_verificados.json` | 6411 | `48f2b03413f53b62` | [`ab9b4b25e4`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1) | 2026-09-11T00:18:26Z |
 | `prova/extrai_provas.py` | 8714 | `5099ed59e110ce9b` | [`ab9b4b25e4`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1) | 2026-09-11T00:18:26Z |
-| `prova/inventario.json` | 14883 | `80eb0faa3d47f7d4` | [`ab9b4b25e4`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1) | 2026-09-11T00:18:26Z |
+| `prova/inventario.json` | 15215 | `69902518d0058a07` | [`ab9b4b25e4`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1) | 2026-09-11T00:18:26Z |
 | `seguranca/RESULTADOS.md` | 3303 | `2e34d66d7c56fff9` | [`29a061488a`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/29a061488aca3f560af3c4d1207a77d57d93af58) | 2026-09-11T01:11:03Z |
 | `seguranca/simulacao_sobrevivencia.py` | 8557 | `faf1ac5f48782d66` | [`29a061488a`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/29a061488aca3f560af3c4d1207a77d57d93af58) | 2026-09-11T01:11:03Z |
 | `simbiose/O_DIVERGENTE_E_O_DETERMINISTA.md` | 11743 | `a17a4f169e22d518` | [`65543c255d`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/65543c255de78865ec4abdf857de8ae19258abec) | 2026-09-10T21:55:37Z |
-| `simbiose/O_DIVERGENTE_E_O_DETERMINISTA.pdf` | 133147 | `11a010041d0a41b4` | — | *(fora da tabela verificada)* |
+| `simbiose/O_DIVERGENTE_E_O_DETERMINISTA.pdf` | 133147 | `11a010041d0a41b4` | [`a9821e1141`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/a9821e1141dbe9bd6f93b8b4a743021af3390802) | 2026-09-11T01:17:28Z |
 | `simbiose/index.html` | 20258 | `57c13fd9d3d82903` | [`65543c255d`](https://github.com/dralbertoeliasBr/BOLINHA-/commit/65543c255de78865ec4abdf857de8ae19258abec) | 2026-09-10T21:55:37Z |
 
 ## O que isto prova, e o que não prova
