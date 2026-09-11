@@ -1,5 +1,5 @@
 {
- "gerado_em_utc": "2026-09-11T01:44:00Z",
+ "gerado_em_utc": "2026-09-11T01:57:13Z",
  "arquivos": [
   {
    "arquivo": "CLAUDE.md",
@@ -179,7 +179,7 @@
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d",
-   "ultimo_commit_curto": "479728a05e"
+   "ultimo_commit_curto": "11141abc5a"
   },
   {
    "arquivo": "paper/prova/auditoria_cinco_portoes.py",
@@ -219,7 +219,7 @@
    "primeiro_commit_curto": "944660f201",
    "primeiro_commit_data_github": "2026-09-10T20:33:29Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/944660f201ef1097523b28688bf8a1d14157426d",
-   "ultimo_commit_curto": "479728a05e"
+   "ultimo_commit_curto": "11141abc5a"
   },
   {
    "arquivo": "paper/prova/roda_tudo.py",
@@ -234,12 +234,12 @@
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.md",
    "bytes": 8541,
-   "sha256": "8d8ec6c0b98dc099aaa1b6a304dcf88e83d137a785e120783f13468e1acf1558",
+   "sha256": "134b9a435080a4529fd0712f549b04e97f9716fbad049470806d1dc05d03c538",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "1663af5c4c"
+   "ultimo_commit_curto": "11141abc5a"
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.pdf",
@@ -253,8 +253,8 @@
   },
   {
    "arquivo": "prova/commits_github_verificados.json",
-   "bytes": 6682,
-   "sha256": "259e8ef7349c66090b6e01a41605462ba94920470b0af32c7c292edde39ebcc4",
+   "bytes": 6967,
+   "sha256": "aedbbb4cd8e6277aae753ecedea571c04252134b61e78c4ac70a134a7276d119",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
@@ -274,12 +274,12 @@
   {
    "arquivo": "prova/inventario.json",
    "bytes": 15843,
-   "sha256": "03c3f4ee0d417c0b9463fe13dd36087a5c2028d559c7921e1a35f3a079c57741",
+   "sha256": "e8a261f2354353aa3f2dc4a2e14e871dbe9605e9407e768558696401be2958ed",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "1663af5c4c"
+   "ultimo_commit_curto": "11141abc5a"
   },
   {
    "arquivo": "seguranca/RESULTADOS.md",
