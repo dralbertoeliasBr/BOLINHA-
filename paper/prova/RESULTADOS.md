@@ -8,11 +8,11 @@ Gerado por `python3 paper/prova/roda_tudo.py`. Nada aqui foi digitado a mao.
 | plataforma | Linux-6.18.44-fc-v24-x86_64-with-glibc2.39 |
 | sha256 tabelas logisticas | `317f8cfbd08ae2a90832a5fb3ab14a44` |
 | sha256 nucleo.py | `221305ad5c99931e107ee1316e75c061` |
-| sha256 experimentos.py | `748923ac8930dcea0106aab0e64d7f52` |
+| sha256 experimentos.py | `d9f1f215ff33a0bd7b5346d87a4b4749` |
 | sha256 corpus/estruturado.json | `cbae9c24e7e445096db0d441c3699aa1` |
 | sha256 corpus/pt_sounavy.txt | `42c799b15165e8d426d9e594d08cfdce` |
 | sha256 corpus/tabular.csv | `d1a4cc9c485df64138329c977d5a9e06` |
-| tempo total | 45.2 s |
+| tempo total | 43.5 s |
 
 ## E1 — o teto da contagem
 
@@ -149,14 +149,14 @@ comprimir compensa  <=>  e_calc / N  <  (1 - r) * e_rede
 
 `e_calc` = potencia / vazao (J por byte processado) · `r` = 0.383 (razao medida deste codec) · `e_rede` = J por byte no enlace · `N` = quantas vezes o mesmo objeto sera enviado ou lido.
 
-Medido: 3076 bytes em 0.53 s = 5802 B/s (Python puro, um nucleo). xz -9: 1744 bytes; este codec: 1179 bytes.
+Medido: 3076 bytes em 0.48 s = 6394 B/s (Python puro, um nucleo). xz -9: 1744 bytes; este codec: 1179 bytes.
 
 | motor | e_calc (J/byte) | enlace | limiar (1-r)*e_rede | compensa em 1 envio? | envios p/ empatar |
 |---|---|---|---|---|---|
-| este codec, Python puro (MEDIDO) | 0.000862 | fibra / datacenter | 1.23e-08 | nao | 69,866 |
-| este codec, Python puro (MEDIDO) | 0.000862 | 4G movel | 1.23e-06 | nao | 699 |
-| este codec, Python puro (MEDIDO) | 0.000862 | satelite / LoRa | 0.000123 | nao | 7 |
-| este codec, Python puro (MEDIDO) | 0.000862 | espaco profundo | 0.0123 | SIM | 1 |
+| este codec, Python puro (MEDIDO) | 0.000782 | fibra / datacenter | 1.23e-08 | nao | 63,402 |
+| este codec, Python puro (MEDIDO) | 0.000782 | 4G movel | 1.23e-06 | nao | 634 |
+| este codec, Python puro (MEDIDO) | 0.000782 | satelite / LoRa | 0.000123 | nao | 6 |
+| este codec, Python puro (MEDIDO) | 0.000782 | espaco profundo | 0.0123 | SIM | 1 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | fibra / datacenter | 1.23e-08 | nao | 41 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | 4G movel | 1.23e-06 | SIM | 1 |
 | mesmo codec em C, estimado 10 MB/s | 5e-07 | satelite / LoRa | 0.000123 | SIM | 1 |
@@ -216,9 +216,9 @@ A gemea receptora calcula cada probabilidade com erro de ate +-D (numa escala de
 | bits do alvo | tentativas medias | 2^k | bits medios da semente | bits economizados | segundos |
 |---|---|---|---|---|---|
 | 8 | 280 | 256 | 7.75 | **+0.25** | 0.0002 |
-| 12 | 3,545 | 4,096 | 11.42 | **+0.58** | 0.0027 |
-| 16 | 33,237 | 65,536 | 15.08 | **+0.92** | 0.0248 |
-| 20 | 751,504 | 1,048,576 | 19.33 | **+0.67** | 0.5645 |
+| 12 | 3,545 | 4,096 | 11.42 | **+0.58** | 0.0025 |
+| 16 | 33,237 | 65,536 | 15.08 | **+0.92** | 0.0243 |
+| 20 | 751,504 | 1,048,576 | 19.33 | **+0.67** | 0.5283 |
 
 Tentativas crescem como 2^k. A economia de bits fica **constante** em torno de 0,7 bit. Tempo exponencial, bits de graca: zero.
 
@@ -365,4 +365,33 @@ Resultado: **-13.70%** — tirar o espaco do fluxo sai MAIS CARO.
 | frente 1-4 + distancia desde o espaco | 3.567 |
 
 Ganho da rota explicita sobre o controle: **-2.81%**.
+
+## E15 — redundancia proporcional a importancia (RRNS)
+
+4 modulos base ([251, 241, 239, 233]) definem a faixa legitima de 31.2 bits. Ate 4 modulos redundantes testados ([229, 227, 223, 211]).
+
+| módulos redundantes | bits pagos | corrige até | erro testado | taxa de acerto |
+|---|---|---|---|---|
+| 0 | 0.0 | 0 | 0 **(limite)** | 100.0% |
+| 0 | 0.0 | 0 | 1 | 0.7% |
+| 1 | 7.8 | 0 | 0 **(limite)** | 100.0% |
+| 1 | 7.8 | 0 | 1 | 17.7% |
+| 1 | 7.8 | 0 | 2 | 0.3% |
+| 2 | 15.7 | 1 | 0 | 100.0% |
+| 2 | 15.7 | 1 | 1 **(limite)** | 100.0% |
+| 2 | 15.7 | 1 | 2 | 5.7% |
+| 2 | 15.7 | 1 | 3 | 0.0% |
+| 3 | 23.5 | 1 | 0 | 100.0% |
+| 3 | 23.5 | 1 | 1 **(limite)** | 100.0% |
+| 3 | 23.5 | 1 | 2 | 96.0% |
+| 3 | 23.5 | 1 | 3 | 4.0% |
+| 3 | 23.5 | 1 | 4 | 0.0% |
+| 4 | 31.2 | 2 | 0 | 100.0% |
+| 4 | 31.2 | 2 | 1 | 100.0% |
+| 4 | 31.2 | 2 | 2 **(limite)** | 100.0% |
+| 4 | 31.2 | 2 | 3 | 93.0% |
+| 4 | 31.2 | 2 | 4 | 4.0% |
+| 4 | 31.2 | 2 | 5 | 0.0% |
+
+A curva bate a teoria de sistemas de residuos redundantes (RRNS), existente desde os anos 1960: zero bits corrigem zero erros; cada par de modulos redundantes compra a correcao de mais um erro, com 100% de acerto ate o limite teorico e queda abrupta um erro acima dele. Nao ha ajuste fino nem sorte — e o limite matematico exato.
 

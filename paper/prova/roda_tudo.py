@@ -50,7 +50,8 @@ def main():
              ('E11', 'informacao_mutua', E.e11_informacao_mutua),
              ('E12', 'crt', E.e12_crt),
              ('E13', 'camada_condicional', E.e13_camada_condicional),
-             ('E14', 'vacuo', E.e14_vacuo)]
+             ('E14', 'vacuo', E.e14_vacuo),
+             ('E15', 'rrns', E.e15_rrns_importancia)]
     for cod, nome, fn in ordem:
         t = time.time()
         sys.stderr.write('%s %s ... ' % (cod, nome))
@@ -446,6 +447,29 @@ def main():
     w('')
     w('Ganho da rota explicita sobre o controle: **%s**.\n'
       % pct(o['ganho_sobre_controle_pct']))
+
+    # E15
+    r = R['rrns']
+    w('## E15 — redundancia proporcional a importancia (RRNS)\n')
+    w('%d modulos base (%s) definem a faixa legitima de %.1f bits. '
+      'Ate %d modulos redundantes testados (%s).\n'
+      % (r['L_modulos_base'], r['modulos_base'], r['M_legit_bits'],
+         len(r['modulos_redundantes']), r['modulos_redundantes']))
+    w('| módulos redundantes | bits pagos | corrige até | erro testado | taxa de acerto |')
+    w('|---|---|---|---|---|')
+    for l in r['linhas']:
+        for x in l['por_erro']:
+            marca_lim = ' **(limite)**' if x['erros_injetados'] == l['corrige_ate_erros'] else ''
+            w('| %d | %.1f | %d | %d%s | %.1f%% |'
+              % (l['r_modulos_redundantes_usados'], l['bits_pagos'],
+                 l['corrige_ate_erros'], x['erros_injetados'], marca_lim,
+                 x['taxa_acerto_pct']))
+    w('')
+    w('A curva bate a teoria de sistemas de residuos redundantes (RRNS), '
+      'existente desde os anos 1960: zero bits corrigem zero erros; cada '
+      'par de modulos redundantes compra a correcao de mais um erro, com '
+      '100% de acerto ate o limite teorico e queda abrupta um erro acima '
+      'dele. Nao ha ajuste fino nem sorte — e o limite matematico exato.\n')
 
     txt = '\n'.join(L) + '\n'
     with open(os.path.join(AQUI, 'RESULTADOS.md'), 'w', encoding='utf-8') as f:

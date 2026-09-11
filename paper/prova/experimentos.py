@@ -14,6 +14,7 @@ import lzma
 import random
 import hashlib
 from math import log, factorial, ceil
+from itertools import combinations
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from nucleo import (Preditor, Enc, Dec, impressao_digital_das_tabelas)
@@ -1095,3 +1096,83 @@ def e14_vacuo():
             'ganho_sobre_controle_pct': (bpc_ctrl - bpc_rota) * 100.0 / bpc_ctrl,
         },
     }
+
+
+# ==================== E15 — redundancia proporcional a importancia (RRNS)
+
+def _crt_par(residuos, mods):
+    M = 1
+    for m in mods:
+        M *= m
+    x = 0
+    for r, m in zip(residuos, mods):
+        Mi = M // m
+        x = (x + r * Mi * pow(Mi, -1, m)) % M
+    return x, M
+
+
+def _decodifica_rrns(residuos, mods, L):
+    """Vota entre todas as reconstrucoes CRT de L modulos dentre L+R.
+    Corrige ate floor(R/2) residuos corrompidos, por consistencia."""
+    M_legit = 1
+    for m in sorted(mods)[:L]:
+        M_legit *= m
+    votos = {}
+    for combo in combinations(range(len(mods)), L):
+        rs = [residuos[i] for i in combo]
+        ms = [mods[i] for i in combo]
+        x, _ = _crt_par(rs, ms)
+        if x < M_legit:
+            votos[x] = votos.get(x, 0) + 1
+    if not votos:
+        return None
+    return max(votos, key=votos.get)
+
+
+def e15_rrns_importancia():
+    """'A viagem depende da importancia, nao do preco' — testado.
+
+    O E12 mostrou que UM modulo extra DETECTA corrupcao. Aqui, quantos
+    modulos extras para CORRIGIR, nao so detectar? E' Redundant Residue
+    Number System (RRNS): L modulos base (definem a faixa) + R modulos
+    redundantes. Ate floor(R/2) residuos corrompidos sao corrigiveis por
+    votacao entre reconstrucoes parciais.
+
+    Zero bits extras para quem nao precisa. Mais bits, proporcionalmente,
+    para quem precisa sobreviver a dano real — nunca importancia decidida
+    por adivinhacao, sempre medida.
+    """
+    from math import log2
+    BASE = [251, 241, 239, 233]
+    REDUN = [229, 227, 223, 211]
+    TODOS = BASE + REDUN
+    L = len(BASE)
+    M_legit = 1
+    for m in sorted(TODOS)[:L]:
+        M_legit *= m
+
+    rnd = random.Random(33)
+    linhas = []
+    for r_usados in range(0, len(REDUN) + 1):
+        mods = BASE + REDUN[:r_usados]
+        bits_pagos = sum(log2(m) for m in REDUN[:r_usados])
+        corrige_ate = r_usados // 2
+        por_erro = []
+        for e in range(0, r_usados + 2):
+            reps = 300
+            acertos = 0
+            for _ in range(reps):
+                x = rnd.randrange(M_legit)
+                residuos = [x % m for m in mods]
+                idx_corrompidos = rnd.sample(range(len(mods)), min(e, len(mods)))
+                for i in idx_corrompidos:
+                    residuos[i] = rnd.randrange(mods[i])
+                dec = _decodifica_rrns(residuos, mods, L)
+                acertos += (dec == x)
+            por_erro.append({'erros_injetados': e, 'repeticoes': reps,
+                             'taxa_acerto_pct': acertos * 100.0 / reps})
+        linhas.append({'r_modulos_redundantes_usados': r_usados,
+                       'bits_pagos': bits_pagos, 'corrige_ate_erros': corrige_ate,
+                       'por_erro': por_erro})
+    return {'L_modulos_base': L, 'M_legit_bits': log2(M_legit),
+            'modulos_base': BASE, 'modulos_redundantes': REDUN, 'linhas': linhas}

@@ -31,8 +31,8 @@ from datetime import datetime, timezone
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 
-PASTAS = ['paper', 'manifesto', 'simbiose', 'livro', 'obra']
-ARQUIVOS_SOLTOS = ['CLAUDE.md']
+PASTAS = ['paper', 'manifesto', 'simbiose', 'livro', 'obra', 'prova', 'ferramentas']
+ARQUIVOS_SOLTOS = ['CLAUDE.md', 'SELO_V1.0.md']
 
 # extensoes que contam como "conteudo" da obra — nao gera hash de cache,
 # artefato binario grande ou lixo temporario
