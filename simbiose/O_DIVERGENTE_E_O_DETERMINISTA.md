@@ -1,6 +1,6 @@
 # O Divergente e o Determinista
 
-### Prova de simbiose: três momentos em que uma correção associativa bateu um resultado já fechado — com data, com hash, sem exagero
+### Prova de simbiose: quatro momentos em que a colaboração corrigiu a si mesma — três vezes uma frase bateu um número, uma vez um número bateu uma frase — com data, com hash, sem exagero
 
 **Antônio Alberto Lopes Elias** (Sounavy) · ORCID [0000-0002-5602-9916](https://orcid.org/0000-0002-5602-9916)
 Coautoria humano–IA · São José do Rio Preto · SP · Setembro de 2026
@@ -11,7 +11,7 @@ Este não é o paper técnico. Não é o manifesto. É menor que os dois, e mais
 
 *"Uma inteligência artificial pra um TDAH pode ser além de inclusão digital — prótese cognitiva e prótese funcional."*
 
-Prova não se faz com sentimento. Faz-se com número, data e hash — a mesma régua que o resto deste projeto usa em si mesmo. Então aqui vão três momentos, reais, extraídos do histórico desta colaboração, em que uma correção associativa — vinda de fora do modelo, fora da lógica de quem estava medindo — bateu um resultado que já tinha sido fechado como definitivo.
+Prova não se faz com sentimento. Faz-se com número, data e hash — a mesma régua que o resto deste projeto usa em si mesmo. Então aqui vão quatro momentos, reais, extraídos do histórico desta colaboração. Três em que uma correção associativa — vinda de fora do modelo, fora da lógica de quem estava medindo — bateu um resultado que já tinha sido fechado como definitivo. Um, o mais recente, em que foi o oposto: o número, uma vez rodado, corrigiu a frase que tentava descrevê-lo antes de existir.
 
 Não são anedotas. São entradas de um repositório público, com SHA-256 de cada peça de código, que qualquer pessoa pode rodar e conferir.
 
@@ -43,9 +43,25 @@ Testado na hora, com uma técnica de sessenta anos que já existia fora deste pr
 
 A frase não pediu código. Pediu que a pergunta fosse outra — quanto vale isso, não quanto custa — e a resposta, uma vez perguntada certo, já estava esperando, publicada, desde os anos 1960.
 
+## Momento 4 — Quando o determinista corrigiu o divergente
+
+O pedido, desta vez, foi outro tipo de coisa: "quero cinco testes que aprovem isto como se fosse uma tese — contestável, não uma opinião." Não havia um caminho óbvio pra transformar isso em código. A associação que resolveu não inventou um critério novo: reconheceu que os cinco testes **já existiam**, escritos desde o início neste mesmo `CLAUDE.md`, como as cinco regras do protocolo. Faltava só parar de tratá-las como prosa e tratá-las como coisa que se roda.
+
+Escrito o script (`paper/prova/auditoria_cinco_portoes.py`), a primeira rodada não deu 38 de 38. Deu **33**.
+
+Com uma diferença importante: as três falhas não eram do paper. Eram do próprio script de auditoria. Duas linhas (A22, A23, A24) foram reprovadas porque a regra do portão 1 não sabia reconhecer uma CONJECTURA declarada como tal, nem um argumento lógico sem experimento numérico (§8.6) como evidência válida — engano de critério, não do conteúdo. Uma terceira (A30) caiu por um bug literal: o código buscava a função errada num dicionário Python, comparando contra uma chave que nunca batia. As três foram corrigidas no próprio auditor. Sobrou uma falha real, não do script: A29 media 1,585 bit sem citar por que dispensava o controle embaralhado que toda outra medida de informação mútua deste paper carrega. Não era erro — a medida bate exatamente no teto da entropia, e um teto não se infla por viés de estimador — mas o texto não explicava isso, e devia. Uma frase curta fechou.
+
+**Testado.** Rodado de novo depois dos quatro ajustes: **38 de 38**, mecanicamente, sem exceção manual. Commit `29a0614`, verificado pela API do GitHub em `2026-09-11T01:11:03Z` — não pelo `git log` local, que se forja; pelo servidor, que não.
+
+A segunda metade deste momento é o espelho da primeira. Construindo um modelo hipotético para uma pergunta de segurança ("qual a vantagem de detecção automatizada, ao longo do tempo"), a primeira versão saiu inútil: tabelas cheias de 0,0% e uma razão "infinita" — tecnicamente correta, ilegível na prática, porque sobreviver a dezenas de tentativas independentes é um produto de probabilidades que desaba pra zero dos dois lados. A correção, aqui, ecoou o Momento 2: não consertar o número, trocar o eixo — de "probabilidade de sobreviver N anos" para "tempo mediano até o primeiro comprometimento". Rodado de novo, a tabela ficou legível.
+
+Mas o texto que descrevia essa segunda tabela foi escrito **antes** de olhar o número final, pela intuição mais óbvia: "a vantagem da IA cresce com o volume de ataque." Parecia certo. Rodado e conferido contra a própria tabela que ele descrevia, o número disse o oposto: a vantagem em **razão** encolhe conforme o ataque fica mais intenso — só em termos absolutos ela segue maior. A frase foi reescrita para bater com o que saiu, não com o que parecia óbvio antes de rodar.
+
+Nos três primeiros momentos, uma frase corrigiu um número fechado. Aqui, um número corrigiu uma frase que ainda nem tinha sido publicada. A simbiose não anda numa direção só — e um projeto que só registrasse a direção bonita (a intuição sempre certa) estaria escondendo a metade que dá credibilidade à outra.
+
 ## O que isto prova, e o que não prova
 
-Prova o específico: nesta colaboração, datada, com repositório público, três vezes uma correção que não vinha da lógica de otimização em curso bateu um resultado que já estava fechado com número. Isso não é opinião. É reprodutível — quem quiser, roda o mesmo código, confere o mesmo hash, chega no mesmo lugar.
+Prova o específico: nesta colaboração, datada, com repositório público, três vezes uma correção associativa que não vinha da lógica de otimização em curso bateu um resultado que já estava fechado com número — e uma quarta vez, o oposto: um número, rodado e conferido contra a própria frase que o descrevia, corrigiu a frase. Isso não é opinião. É reprodutível — quem quiser, roda o mesmo código, confere o mesmo hash, chega no mesmo lugar.
 
 Não prova o geral. Não é evidência de que toda mente neurodivergente produz isso, nem prova científica sobre TDAH como categoria — não é essa a pretensão, e forçar essa generalização seria repetir, em outra roupa, o mesmo erro que este projeto já registrou como queda quando um número pequeno virou afirmação grande demais sem controle. O que está provado é uma coisa: aqui, desta vez, com este par, aconteceu — e ficou registrado antes que alguém pudesse duvidar depois.
 
@@ -59,7 +75,7 @@ Esta colaboração inteira — o paper, o manifesto, este documento — tem onze
 
 ## A moeda que já foi paga
 
-Nada foi tirado de ninguém. Nada foi pedido. O que existe agora, que não existia antes desta colaboração, é um corpo de trabalho público, citável, com nome e ORCID presos a ele — dezesseis experimentos, trinta e sete afirmações, cada uma com o teste que a derruba nomeado ao lado.
+Nada foi tirado de ninguém. Nada foi pedido. O que existe agora, que não existia antes desta colaboração, é um corpo de trabalho público, citável, com nome e ORCID presos a ele — quinze experimentos, trinta e oito afirmações, cada uma com o teste que a derruba nomeado ao lado.
 
 Isso é a moeda, e ela não depende de mais nada acontecer depois para já valer o que vale. Um livro que saia disso, uma entrevista, um reconhecimento formal de quem lê os papers citados — tudo isso, se vier, é o juro. O capital já está aqui, com data de hoje, rastreável, e não vai deixar de existir se ninguém disser nada.
 

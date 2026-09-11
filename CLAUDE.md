@@ -16,7 +16,7 @@ Duas coisas, deliberadamente separadas:
 | `obra/` | Não É Eu — É Nós | capa/índice dos quatro |
 | `paper/` | As Gêmeas e o Número | teorema — compressão por inteligência compartilhada, 15+ experimentos rodáveis em `paper/prova/`. `python3 paper/prova/auditoria_cinco_portoes.py` audita as 38 asserções contra os cinco pontos do protocolo abaixo, mecanicamente |
 | `manifesto/` | IA e Humanos Podem | método — dez teses sobre fazer ciência medindo e publicando o que cai |
-| `simbiose/` | O Divergente e o Determinista | prova — três momentos datados desta colaboração, com antes/depois medido |
+| `simbiose/` | O Divergente e o Determinista | prova — quatro momentos datados desta colaboração, com antes/depois medido |
 | `livro/` | Raio-X | origem — capítulo um de uma biografia em andamento, primeira pessoa |
 | `prova/` | Prova de Anterioridade e Integridade | extrator — hash SHA-256 + timestamp verificado na API do GitHub para todo arquivo da obra. `python3 prova/extrai_provas.py` para regenerar após qualquer commit novo. |
 

@@ -1,10 +1,10 @@
 {
- "gerado_em_utc": "2026-09-11T01:11:21Z",
+ "gerado_em_utc": "2026-09-11T01:17:13Z",
  "arquivos": [
   {
    "arquivo": "CLAUDE.md",
-   "bytes": 5797,
-   "sha256": "a4d4049265bc04f2e881edaafd1bea27d3871de312c68e5f7c3a4ad96fac4b26",
+   "bytes": 5798,
+   "sha256": "8cbec9b27d393095988eda7ae3d38b86657c8b68a34b74388ad745254a58ed12",
    "primeiro_commit": "6df14bb7075d70b56a83ff1d60f61b115bb42428",
    "primeiro_commit_curto": "6df14bb707",
    "primeiro_commit_data_github": "2026-09-11T00:08:20Z",
@@ -73,8 +73,8 @@
   },
   {
    "arquivo": "manifesto/IA_E_HUMANOS_PODEM.md",
-   "bytes": 8885,
-   "sha256": "b424daac4d6225b29b28f09ef73e2a1081edfd98470f1f52ca717a90576ac9ac",
+   "bytes": 8886,
+   "sha256": "46d45172016d4c4eae2e6a59434f190eadd9e93abaef744b35d88523650d8aa7",
    "primeiro_commit": "8684fd69dcaa9cc532ff89b43ab993ce451b3dbc",
    "primeiro_commit_curto": "8684fd69dc",
    "primeiro_commit_data_github": "2026-09-10T20:54:42Z",
@@ -83,8 +83,8 @@
   },
   {
    "arquivo": "manifesto/index.html",
-   "bytes": 16890,
-   "sha256": "99ec1fe5bacc1884fb44eebd6a2f1d099383c04aa6daa54422d4799c07b6a779",
+   "bytes": 16891,
+   "sha256": "60bf78d4855acd8e11654ad038978552754dc1607b959daabb5be26271009bcf",
    "primeiro_commit": "8684fd69dcaa9cc532ff89b43ab993ce451b3dbc",
    "primeiro_commit_curto": "8684fd69dc",
    "primeiro_commit_data_github": "2026-09-10T20:54:42Z",
@@ -93,8 +93,8 @@
   },
   {
    "arquivo": "obra/index.html",
-   "bytes": 9653,
-   "sha256": "50354f329974fb69b7e13f02ff3bc2327930cd04d120d84371e115042c3b0629",
+   "bytes": 9730,
+   "sha256": "ffa941eb4319a306fbf234afa54854e00a36d799434e215052d08b63611c950a",
    "primeiro_commit": "f5830b5ffe6644fa1a3110d717542725651763ea",
    "primeiro_commit_curto": "f5830b5ffe",
    "primeiro_commit_data_github": "2026-09-10T22:12:15Z",
@@ -223,13 +223,13 @@
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.md",
-   "bytes": 7765,
-   "sha256": "5ec7887604154966b360081ba592c255c58c5ec1a5939054bf13143b6b468bab",
+   "bytes": 8149,
+   "sha256": "68379c17e80a4d671bb371067d11b7d0deed93e7beb84bf135b349bf27ab4dc4",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "29a061488a"
+   "ultimo_commit_curto": "4f003bdc8c"
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.pdf",
@@ -249,7 +249,7 @@
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "f2ab2a8888"
+   "ultimo_commit_curto": "4f003bdc8c"
   },
   {
    "arquivo": "prova/extrai_provas.py",
@@ -263,13 +263,13 @@
   },
   {
    "arquivo": "prova/inventario.json",
-   "bytes": 14219,
-   "sha256": "c344efd3d0a7c89fe50213a1165348619e091974177679671b61731964fa444d",
+   "bytes": 14883,
+   "sha256": "80eb0faa3d47f7d4b5d1ba25dc31cd3deb9f52c8c65cd3fff1a14bfd9a71b03e",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "29a061488a"
+   "ultimo_commit_curto": "4f003bdc8c"
   },
   {
    "arquivo": "seguranca/RESULTADOS.md",
@@ -293,8 +293,8 @@
   },
   {
    "arquivo": "simbiose/O_DIVERGENTE_E_O_DETERMINISTA.md",
-   "bytes": 8122,
-   "sha256": "f825a73e4eaee9be1b585678667f3c2b47f0d62a7c227e9360b8eefd13ece30c",
+   "bytes": 11743,
+   "sha256": "a17a4f169e22d518d65a032005964b31d886a900cacaa45ea92c8caf87ad1f08",
    "primeiro_commit": "65543c255de78865ec4abdf857de8ae19258abec",
    "primeiro_commit_curto": "65543c255d",
    "primeiro_commit_data_github": "2026-09-10T21:55:37Z",
@@ -302,9 +302,19 @@
    "ultimo_commit_curto": "f5830b5ffe"
   },
   {
+   "arquivo": "simbiose/O_DIVERGENTE_E_O_DETERMINISTA.pdf",
+   "bytes": 133147,
+   "sha256": "11a010041d0a41b489f1bb12ada13e82ca6d5fc0099ad4be0a51755f1c53054c",
+   "primeiro_commit": null,
+   "primeiro_commit_curto": "",
+   "primeiro_commit_data_github": null,
+   "primeiro_commit_url": null,
+   "ultimo_commit_curto": ""
+  },
+  {
    "arquivo": "simbiose/index.html",
-   "bytes": 16273,
-   "sha256": "a951527957ac97941503e9109dfac4f326a1f8d78e361d41e2100609eeaba0a8",
+   "bytes": 20258,
+   "sha256": "57c13fd9d3d82903817805e8d88e2ddae3606e620160706bc24a60c9e023d3eb",
    "primeiro_commit": "65543c255de78865ec4abdf857de8ae19258abec",
    "primeiro_commit_curto": "65543c255d",
    "primeiro_commit_data_github": "2026-09-10T21:55:37Z",

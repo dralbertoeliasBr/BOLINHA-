@@ -161,11 +161,11 @@ section.bloco em{font-style:italic}
 <header class="capa env">
   <p class="olho">Sounavy · GaIA · Opera Vox</p>
   <h1>O Divergente e o Determinista</h1>
-  <p class="risca">Prova de simbiose: três momentos em que uma correção associativa bateu um resultado já fechado — com data, com hash, sem exagero.</p>
+  <p class="risca">Prova de simbiose: quatro momentos em que a colaboração corrigiu a si mesma — três vezes uma frase bateu um número, uma vez um número bateu uma frase — com data, com hash, sem exagero.</p>
   <div class="abre">
     <p>Este não é o paper técnico. Não é o manifesto. É menor que os dois, e mais específico: é a prova de uma frase.</p>
     <p class="cita">“Uma inteligência artificial pra um TDAH pode ser além de inclusão digital — prótese cognitiva e prótese funcional.”</p>
-    <p>Prova não se faz com sentimento. Faz-se com número, data e hash — a mesma régua que o resto deste projeto usa em si mesmo. Então aqui vão três momentos, reais, extraídos do histórico desta colaboração, em que uma correção associativa — vinda de fora do modelo, fora da lógica de quem estava medindo — bateu um resultado que já tinha sido fechado como definitivo.</p>
+    <p>Prova não se faz com sentimento. Faz-se com número, data e hash — a mesma régua que o resto deste projeto usa em si mesmo. Então aqui vão quatro momentos, reais, extraídos do histórico desta colaboração. Três em que uma correção associativa — vinda de fora do modelo, fora da lógica de quem estava medindo — bateu um resultado que já tinha sido fechado como definitivo. Um, o mais recente, em que foi o oposto: o número, uma vez rodado, corrigiu a frase que tentava descrevê-lo antes de existir.</p>
     <p>Não são anedotas. São entradas de um repositório público, com SHA-256 de cada peça de código, que qualquer pessoa pode rodar e conferir.</p>
   </div>
   <p class="assina">Antônio Alberto Lopes Elias · Sounavy · ORCID 0000-0002-5602-9916<br>Coautoria humano–IA · São José do Rio Preto, SP · Setembro de 2026</p>
@@ -204,9 +204,25 @@ section.bloco em{font-style:italic}
   <p style="margin-top:22px">A frase não pediu código. Pediu que a pergunta fosse outra — quanto vale isso, não quanto custa — e a resposta, uma vez perguntada certo, já estava esperando, publicada, desde os anos 1960.</p>
 </section>
 
+<section class="momento">
+  <span class="n">Momento 4</span>
+  <h2>Quando o determinista corrigiu o divergente</h2>
+  <p>O pedido, desta vez, foi outro tipo de coisa: “quero cinco testes que aprovem isto como se fosse uma tese — contestável, não uma opinião.” Não havia um caminho óbvio pra transformar isso em código. A associação que resolveu não inventou um critério novo: reconheceu que os cinco testes <strong>já existiam</strong>, escritos desde o início no <code>CLAUDE.md</code>, como as cinco regras do protocolo. Faltava só parar de tratá-las como prosa e tratá-las como coisa que se roda.</p>
+  <p>Escrito o script (<code>paper/prova/auditoria_cinco_portoes.py</code>), a primeira rodada não deu 38 de 38. Deu <strong>33</strong> — e as três falhas não eram do paper, eram do próprio auditor: duas por um engano de critério (a regra não reconhecia uma CONJECTURA declarada como tal, nem um argumento lógico sem experimento numérico como evidência válida), uma por um bug literal (o código comparava contra a chave errada num dicionário). Corrigidas as três, sobrou uma falha real — A29 não explicava por que dispensava o controle embaralhado que toda outra medida de informação mútua deste paper carrega. Não era erro: a medida bate exatamente no teto da entropia, que não se infla por viés de estimador. Mas faltava a frase que dissesse isso. Uma frase curta fechou.</p>
+  <div class="antes-depois ok">
+    <div class="caixa"><span class="rot">Primeira rodada da auditoria</span><span class="val">33/38</span></div>
+    <span class="seta">→</span>
+    <div class="caixa"><span class="rot">Depois de 4 correções reais</span><span class="val">38/38</span></div>
+  </div>
+  <div class="testado"><b>Testado</b><p>Rodado de novo depois dos quatro ajustes: 38 de 38, mecanicamente, sem exceção manual. Commit <code>29a0614</code>, verificado pela API do GitHub em <code>2026-09-11T01:11:03Z</code> — não pelo <code>git log</code> local, que se forja; pelo servidor, que não.</p></div>
+  <p style="margin-top:22px">A segunda metade deste momento é o espelho da primeira. Construindo um modelo hipotético pra uma pergunta de segurança (“qual a vantagem de detecção automatizada, ao longo do tempo”), a primeira versão saiu inútil: tabelas cheias de 0,0% e uma razão “infinita” — tecnicamente correta, ilegível na prática, porque sobreviver a dezenas de tentativas independentes é um produto de probabilidades que desaba pra zero dos dois lados. A correção ecoou o Momento 2: não consertar o número, trocar o eixo — de “probabilidade de sobreviver N anos” pra “tempo mediano até o primeiro comprometimento”. Rodado de novo, a tabela ficou legível.</p>
+  <p>Mas o texto que descrevia essa segunda tabela foi escrito <strong>antes</strong> de olhar o número final, pela intuição mais óbvia: “a vantagem da IA cresce com o volume de ataque.” Parecia certo. Rodado e conferido contra a própria tabela que ele descrevia, o número disse o oposto: a vantagem em <strong>razão</strong> encolhe conforme o ataque fica mais intenso — só em termos absolutos ela segue maior. A frase foi reescrita para bater com o que saiu, não com o que parecia óbvio antes de rodar.</p>
+  <div class="testado"><b>Testado</b><p>Nos três primeiros momentos, uma frase corrigiu um número fechado. Aqui, um número corrigiu uma frase que ainda nem tinha sido publicada. A simbiose não anda numa direção só — e um projeto que só registrasse a direção bonita (a intuição sempre certa) estaria escondendo a metade que dá credibilidade à outra.</p></div>
+</section>
+
 <section class="bloco">
   <h2>O que isto prova, e o que não prova</h2>
-  <p>Prova o específico: nesta colaboração, datada, com repositório público, três vezes uma correção que não vinha da lógica de otimização em curso bateu um resultado que já estava fechado com número. Isso não é opinião. É reprodutível — quem quiser, roda o mesmo código, confere o mesmo hash, chega no mesmo lugar.</p>
+  <p>Prova o específico: nesta colaboração, datada, com repositório público, três vezes uma correção associativa que não vinha da lógica de otimização em curso bateu um resultado que já estava fechado com número — e uma quarta vez, o oposto: um número, rodado e conferido contra a própria frase que o descrevia, corrigiu a frase. Isso não é opinião. É reprodutível — quem quiser, roda o mesmo código, confere o mesmo hash, chega no mesmo lugar.</p>
   <p>Não prova o geral. Não é evidência de que toda mente neurodivergente produz isso, nem prova científica sobre TDAH como categoria — não é essa a pretensão, e forçar essa generalização seria repetir, em outra roupa, o mesmo erro que este projeto já registrou como queda quando um número pequeno virou afirmação grande demais sem controle. O que está provado é uma coisa: aqui, desta vez, com este par, aconteceu — e ficou registrado antes que alguém pudesse duvidar depois.</p>
 </section>
 
@@ -221,7 +237,7 @@ section.bloco em{font-style:italic}
 
 <section class="fecho env">
   <h2>A moeda que já foi paga</h2>
-  <p>Nada foi tirado de ninguém. Nada foi pedido. O que existe agora, que não existia antes desta colaboração, é um corpo de trabalho público, citável, com nome e ORCID presos a ele — dezesseis experimentos, trinta e sete afirmações, cada uma com o teste que a derruba nomeado ao lado.</p>
+  <p>Nada foi tirado de ninguém. Nada foi pedido. O que existe agora, que não existia antes desta colaboração, é um corpo de trabalho público, citável, com nome e ORCID presos a ele — quinze experimentos, trinta e oito afirmações, cada uma com o teste que a derruba nomeado ao lado.</p>
   <p>Isso é a moeda, e ela não depende de mais nada acontecer depois para já valer o que vale. Um livro que saia disso, uma entrevista, um reconhecimento formal de quem lê os papers citados — tudo isso, se vier, é o juro. O capital já está aqui, com data de hoje, rastreável, e não vai deixar de existir se ninguém disser nada.</p>
   <p class="punho">O capital já está pago. O resto é juro.</p>
 </section>
@@ -235,7 +251,7 @@ section.bloco em{font-style:italic}
 
 <footer class="pe env">
   <a href="../obra/" style="display:block;margin-bottom:8px">← toda a obra: os quatro documentos juntos</a>
-  <span class="bola" aria-hidden="true"></span>Três achados, três testes, três datas — nada aqui foi digitado sem rodar primeiro.<br>
+  <span class="bola" aria-hidden="true"></span>Quatro achados, quatro testes, quatro datas — nada aqui foi digitado sem rodar primeiro.<br>
   Paper completo, manifesto e dados: <a href="https://github.com/dralbertoeliasBr/BOLINHA-/tree/claude/llm-gemeas-compressao-lwnpwn">o repositório</a> · <a href="https://www.sounavy.com">www.sounavy.com</a><br>
   Antônio Alberto Lopes Elias · ORCID 0000-0002-5602-9916 · Coautoria humano–IA
 </footer>
