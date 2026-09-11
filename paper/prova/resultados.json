@@ -47,8 +47,8 @@
   "ok_frio": true,
   "ok_quente": true,
   "sha": "eb092b8fda4b51185628455a0f3279fc2d85f73c5f1eb70a04f9a76d98279733",
-  "seg_frio": 0.33998751640319824,
-  "seg_quente": 0.991506814956665,
+  "seg_frio": 0.33736276626586914,
+  "seg_quente": 0.9266989231109619,
   "bytes_frio": 1475,
   "bytes_quente": 1179
  },
@@ -176,55 +176,55 @@
  },
  "energia": {
   "r": 0.38328998699609884,
-  "seg": 0.45628952980041504,
-  "vazao_medida": 6741.33373462562,
+  "seg": 0.4780292510986328,
+  "vazao_medida": 6434.752670324189,
   "msg_bytes": 3076,
   "nosso_bytes": 1179,
   "xz_bytes": 1744,
   "linhas": [
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6741.33373462562,
+    "vazao_B_por_s": 6434.752670324189,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007416929938238216,
+    "e_calc_J_por_byte": 0.0007770306422279468,
     "enlace": "fibra / datacenter",
     "e_rede_J_por_byte": 2e-08,
     "limiar_J_por_byte": 1.2334200260078023e-08,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 60133.042936269776
+    "envios_para_compensar": 62998.05628606126
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6741.33373462562,
+    "vazao_B_por_s": 6434.752670324189,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007416929938238216,
+    "e_calc_J_por_byte": 0.0007770306422279468,
     "enlace": "4G movel",
     "e_rede_J_por_byte": 2e-06,
     "limiar_J_por_byte": 1.2334200260078022e-06,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 601.3304293626978
+    "envios_para_compensar": 629.9805628606127
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6741.33373462562,
+    "vazao_B_por_s": 6434.752670324189,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007416929938238216,
+    "e_calc_J_por_byte": 0.0007770306422279468,
     "enlace": "satelite / LoRa",
     "e_rede_J_por_byte": 0.0002,
     "limiar_J_por_byte": 0.00012334200260078024,
     "compensa_em_1_envio": false,
-    "envios_para_compensar": 6.013304293626977
+    "envios_para_compensar": 6.2998056286061255
    },
    {
     "motor": "este codec, Python puro (MEDIDO)",
-    "vazao_B_por_s": 6741.33373462562,
+    "vazao_B_por_s": 6434.752670324189,
     "potencia_W": 5.0,
-    "e_calc_J_por_byte": 0.0007416929938238216,
+    "e_calc_J_por_byte": 0.0007770306422279468,
     "enlace": "espaco profundo",
     "e_rede_J_por_byte": 0.02,
     "limiar_J_por_byte": 0.012334200260078023,
     "compensa_em_1_envio": true,
-    "envios_para_compensar": 0.060133042936269775
+    "envios_para_compensar": 0.06299805628606127
    },
    {
     "motor": "mesmo codec em C, estimado 10 MB/s",
@@ -492,7 +492,7 @@
     "esperado_2_elevado_k": 256,
     "bits_medios_da_semente": 7.75,
     "bits_economizados_medios": 0.25,
-    "segundos_medios": 0.00020558635393778482
+    "segundos_medios": 0.00022112329800923666
    },
    {
     "bits_do_alvo": 12,
@@ -501,7 +501,7 @@
     "esperado_2_elevado_k": 4096,
     "bits_medios_da_semente": 11.416666666666666,
     "bits_economizados_medios": 0.5833333333333339,
-    "segundos_medios": 0.0025571882724761963
+    "segundos_medios": 0.0026195446650187173
    },
    {
     "bits_do_alvo": 16,
@@ -510,7 +510,7 @@
     "esperado_2_elevado_k": 65536,
     "bits_medios_da_semente": 15.083333333333334,
     "bits_economizados_medios": 0.9166666666666661,
-    "segundos_medios": 0.023236016432444256
+    "segundos_medios": 0.023579498132069904
    },
    {
     "bits_do_alvo": 20,
@@ -519,7 +519,7 @@
     "esperado_2_elevado_k": 1048576,
     "bits_medios_da_semente": 19.333333333333332,
     "bits_economizados_medios": 0.6666666666666679,
-    "segundos_medios": 0.5276124477386475
+    "segundos_medios": 0.5285891691843668
    }
   ]
  },
@@ -1024,6 +1024,6 @@
    "pt_sounavy.txt": "42c799b15165e8d426d9e594d08cfdce5a83731a196076d3d6756b26e827e353",
    "tabular.csv": "d1a4cc9c485df64138329c977d5a9e06da0e72c3725250122ae22a6da6798e7b"
   },
-  "segundos_total": 42.6
+  "segundos_total": 43.9
  }
 }
