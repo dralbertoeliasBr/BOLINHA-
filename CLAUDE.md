@@ -30,6 +30,7 @@ Duas pastas de apoio, fora do círculo dos quatro (não são documento publicáv
 |---|---|
 | `ferramentas/` | pipeline `.md` → HTML de impressão → PDF (`gera_pdf.py`), pura stdlib exceto a etapa final (Chromium via `playwright-core`, best-effort, nunca falha calado) |
 | `seguranca/` | `simulacao_sobrevivencia.py` — modelo Monte Carlo hipotético (não medida de sistema real) para perguntas do tipo "qual a vantagem de detecção automatizada ao longo do tempo". Toda suposição é parâmetro nomeado no próprio arquivo |
+| `bolinha/` | protótipo de teste (HTML/CSS/JS puro) do conceito "Bolinha guia" — overlay que ilumina só o próximo passo certo numa tarefa, fala uma vez e depois guia em silêncio. **Não é a Bolinha de produção** (essa é parte de `index.html`, na raiz) — é um experimento separado, pra testar a ideia antes de decidir se ela entra no site real |
 
 ## O protocolo, não negociável
 

@@ -1,0 +1,387 @@
+<title>Bolinha Guia</title>
+<style>
+:root{
+  --fundo:#16091F; --campo:#20102D; --campo2:#2A1739;
+  --borda:rgba(239,234,225,.13); --borda-forte:rgba(239,234,225,.26);
+  --osso:#EFEAE1; --fraco:#A093AE; --prisma:#C9A6FF;
+  --r:#FF4D5E; --g:#3DDC84; --b:#5B8CFF;
+  --g-fraco:rgba(61,220,132,.14); --prisma-fraco:rgba(201,166,255,.14);
+  --disp:"Syne",system-ui,-apple-system,sans-serif;
+  --corpo:"Spectral",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --raio:3px;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --fundo:#F6F2FA; --campo:#FFFFFF; --campo2:#EEE7F5;
+    --borda:rgba(33,20,48,.14); --borda-forte:rgba(33,20,48,.30);
+    --osso:#211430; --fraco:#655473; --prisma:#6B3FBF;
+    --r:#C0102A; --g:#0F7040; --b:#2A54C8;
+    --g-fraco:rgba(15,112,64,.10); --prisma-fraco:rgba(107,63,191,.10);
+  }
+}
+:root[data-theme="light"]{
+  --fundo:#F6F2FA; --campo:#FFFFFF; --campo2:#EEE7F5;
+  --borda:rgba(33,20,48,.14); --borda-forte:rgba(33,20,48,.30);
+  --osso:#211430; --fraco:#655473; --prisma:#6B3FBF;
+  --r:#C0102A; --g:#0F7040; --b:#2A54C8;
+  --g-fraco:rgba(15,112,64,.10); --prisma-fraco:rgba(107,63,191,.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--fundo); color:var(--osso);
+  font-family:var(--corpo); font-weight:300;
+  -webkit-font-smoothing:antialiased;
+}
+.env{max-width:900px; margin:0 auto; padding-inline:clamp(18px,5vw,40px); padding-block:clamp(28px,6vw,56px)}
+
+.olho{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--prisma); margin:0 0 16px;
+}
+h1{
+  font-family:var(--disp); font-weight:800; font-size:clamp(1.9rem,6vw,2.8rem);
+  line-height:1.04; letter-spacing:-.025em; margin:0 0 14px; text-wrap:balance;
+}
+.risca{
+  font-family:var(--corpo); font-style:italic; font-size:clamp(1rem,2.4vw,1.14rem);
+  color:var(--osso); max-width:56ch; margin:0 0 8px; line-height:1.6;
+}
+.nota{font-size:.86rem; color:var(--fraco); max-width:60ch; margin:0 0 34px; line-height:1.6}
+.nota b{color:var(--osso); font-weight:500}
+
+.palco{
+  display:grid; grid-template-columns:minmax(280px,340px) 1fr; gap:clamp(24px,5vw,56px);
+  align-items:start;
+}
+@media (max-width:680px){.palco{grid-template-columns:1fr; justify-items:center}}
+
+/* -------- moldura de telefone -------- */
+.moldura{
+  position:relative; width:100%; max-width:340px;
+  background:#0B0512; border-radius:34px; padding:12px;
+  border:1px solid var(--borda-forte);
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
+}
+:root[data-theme="light"] .moldura, @media (prefers-color-scheme:light){.moldura{box-shadow:0 24px 48px -20px rgba(33,20,48,.22)}}
+.tela{
+  position:relative; overflow:hidden; border-radius:24px; background:var(--campo);
+  aspect-ratio:9/18.5; display:flex; flex-direction:column;
+}
+.status{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 18px 4px; font-family:var(--mono); font-size:.68rem; color:var(--fraco);
+}
+.app-topo{padding:6px 18px 14px}
+.app-topo .banco{font-family:var(--disp); font-weight:700; font-size:1.02rem; letter-spacing:-.01em}
+.app-topo .saldo{font-family:var(--mono); font-size:.72rem; color:var(--fraco); margin-top:2px}
+
+.painel{flex:1; overflow-y:auto; padding:2px 16px 90px; display:flex; flex-direction:column; gap:18px}
+.secao{display:none; flex-direction:column; gap:10px}
+.secao.ativa{display:flex}
+.secao h2{
+  font-family:var(--disp); font-weight:700; font-size:.92rem; margin:0;
+  letter-spacing:-.01em; color:var(--osso);
+}
+.secao .sub{font-size:.78rem; color:var(--fraco); margin:-6px 0 2px}
+
+.linha{
+  display:flex; align-items:center; gap:12px; padding:12px 12px;
+  border-radius:var(--raio); border:1px solid transparent; background:transparent;
+  cursor:pointer; text-align:left; width:100%; font-family:var(--corpo); color:var(--osso);
+  transition:border-color .15s;
+}
+.linha:hover{border-color:var(--borda)}
+.avatar{
+  width:34px; height:34px; border-radius:50%; background:var(--campo2);
+  display:flex; align-items:center; justify-content:center; flex:none;
+  font-family:var(--disp); font-weight:700; font-size:.86rem; color:var(--prisma);
+}
+.linha .nome{font-size:.94rem}
+.linha .chave{font-family:var(--mono); font-size:.68rem; color:var(--fraco)}
+
+.chips{display:flex; gap:8px; flex-wrap:wrap}
+.chip{
+  font-family:var(--mono); font-size:.86rem; padding:10px 16px; border-radius:99px;
+  background:var(--campo2); border:1px solid var(--borda); color:var(--osso); cursor:pointer;
+}
+
+.confirma{
+  margin-top:4px; padding:14px 16px; border-radius:var(--raio); border:none;
+  background:var(--prisma); color:var(--fundo); font-family:var(--disp); font-weight:700;
+  font-size:.92rem; cursor:pointer;
+}
+
+.resumo{
+  background:var(--campo2); border-radius:var(--raio); padding:12px 14px;
+  font-family:var(--mono); font-size:.78rem; color:var(--fraco); line-height:1.7;
+}
+.resumo b{color:var(--osso); font-weight:500}
+
+.nav{
+  position:absolute; left:12px; right:12px; bottom:12px;
+  display:flex; justify-content:space-around; align-items:center;
+  background:var(--campo2); border-radius:18px; padding:10px 6px;
+  border:1px solid var(--borda);
+}
+.nav button{
+  background:none; border:none; color:var(--fraco); font-family:var(--mono);
+  font-size:.64rem; display:flex; flex-direction:column; align-items:center; gap:4px;
+  cursor:pointer; padding:4px 8px; border-radius:var(--raio);
+}
+.nav button .ic{font-size:1.05rem}
+.nav button.pix{color:var(--prisma)}
+
+.sucesso{align-items:center; text-align:center; padding-top:18px}
+.sucesso .marca{
+  width:52px; height:52px; border-radius:50%; background:var(--g-fraco); color:var(--g);
+  display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:6px;
+}
+.sucesso h2{font-size:1.02rem}
+.sucesso p{font-size:.84rem; color:var(--fraco); max-width:26ch; margin:0}
+.rejogar{
+  margin-top:10px; background:none; border:1px solid var(--borda-forte); color:var(--osso);
+  font-family:var(--mono); font-size:.76rem; padding:8px 16px; border-radius:99px; cursor:pointer;
+}
+
+/* -------- Bolinha -------- */
+.bolinha{
+  position:absolute; right:18px; bottom:104px; width:52px; height:52px; border-radius:50%;
+  background:var(--prisma); border:none; cursor:pointer; z-index:40;
+  display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+  box-shadow:0 8px 20px -6px rgba(0,0,0,.4);
+}
+.bolinha.espera{animation:respira 2.2s ease-in-out infinite}
+@keyframes respira{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.bolinha .anel{
+  position:absolute; inset:-6px; border-radius:50%; border:2px solid var(--prisma);
+  opacity:.55; animation:pulso 1.8s ease-out infinite;
+}
+@keyframes pulso{0%{transform:scale(.9); opacity:.6}100%{transform:scale(1.7); opacity:0}}
+
+.fala{
+  position:absolute; right:16px; bottom:164px; max-width:210px; z-index:41;
+  background:var(--campo2); border:1px solid var(--borda-forte); border-radius:12px 12px 2px 12px;
+  padding:10px 13px; font-size:.8rem; line-height:1.45; color:var(--osso);
+  box-shadow:0 10px 24px -10px rgba(0,0,0,.4);
+}
+.fala[hidden]{display:none}
+
+/* alvo guiado */
+.alvo-guiado{position:relative; z-index:30; border-color:var(--prisma) !important}
+.alvo-guiado::after{
+  content:""; position:absolute; inset:-4px; border-radius:inherit; pointer-events:none;
+  border:2px solid var(--prisma); animation:pulso 1.5s ease-out infinite;
+}
+.esmaecido{opacity:.32; filter:saturate(.6); transition:opacity .2s}
+.negado{animation:nega .35s}
+@keyframes nega{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@media (prefers-reduced-motion:reduce){
+  .bolinha.espera, .bolinha .anel, .alvo-guiado::after{animation:none}
+}
+
+/* -------- legenda ao lado -------- */
+.legenda{max-width:420px; padding-top:6px}
+.legenda h2{
+  font-family:var(--disp); font-weight:700; font-size:1.2rem; margin:0 0 14px;
+  letter-spacing:-.015em;
+}
+.legenda ol{margin:0 0 22px; padding-left:20px; display:flex; flex-direction:column; gap:9px}
+.legenda li{font-size:.94rem; line-height:1.55}
+.legenda li b{color:var(--prisma); font-weight:600}
+.estado{
+  font-family:var(--mono); font-size:.78rem; color:var(--fraco);
+  background:var(--campo); border:1px solid var(--borda); border-radius:var(--raio);
+  padding:10px 13px;
+}
+.estado b{color:var(--osso); font-weight:500}
+
+.pe{
+  border-top:1px solid var(--borda); margin-top:44px; padding-top:22px;
+  font-family:var(--mono); font-size:.72rem; color:var(--fraco); line-height:1.8;
+}
+:focus-visible{outline:2px solid var(--prisma); outline-offset:2px}
+</style>
+
+<div class="env">
+  <p class="olho">Sounavy · GaIA · Opera Vox — protótipo</p>
+  <h1>Bolinha Guia</h1>
+  <p class="risca">Um farol pequeno, que aponta — não um assistente que faz por você.</p>
+  <p class="nota">Isto é um protótipo de teste, separado do site em produção. Simula um app de banco qualquer: a tarefa é mandar um Pix de <b>R$ 50 pra Dona Marli</b>. Toque só onde a Bolinha brilhar.</p>
+
+  <div class="palco">
+    <div class="moldura">
+      <div class="tela" id="tela">
+        <div class="status"><span>9:41</span><span>●●● Wi-Fi</span></div>
+        <div class="app-topo">
+          <div class="banco">Banco Real</div>
+          <div class="saldo">Saldo: R$ 1.240,00</div>
+        </div>
+
+        <div class="painel">
+          <div class="secao ativa" data-secao="inicio">
+            <h2>Início</h2>
+            <p class="sub">Toque no que a Bolinha estiver mostrando.</p>
+          </div>
+
+          <div class="secao" data-secao="pix">
+            <h2>Pra quem você quer mandar?</h2>
+            <button class="linha" data-alvo="contato-marli"><span class="avatar">M</span><span><span class="nome" style="display:block">Dona Marli</span><span class="chave">chave: (17) 9****-2231</span></span></button>
+            <button class="linha" data-alvo="contato-decoy1"><span class="avatar">J</span><span><span class="nome" style="display:block">Seu Joaquim</span><span class="chave">chave: joaquim@email.com</span></span></button>
+            <button class="linha" data-alvo="contato-decoy2"><span class="avatar">N</span><span><span class="nome" style="display:block">Neto</span><span class="chave">chave: (17) 9****-0087</span></span></button>
+          </div>
+
+          <div class="secao" data-secao="valor">
+            <h2>Quanto vai mandar pra Dona Marli?</h2>
+            <div class="chips">
+              <button class="chip" data-alvo="valor-20">R$ 20</button>
+              <button class="chip" data-alvo="valor-50">R$ 50</button>
+              <button class="chip" data-alvo="valor-100">R$ 100</button>
+            </div>
+          </div>
+
+          <div class="secao" data-secao="confirmar">
+            <h2>Confira e confirme</h2>
+            <div class="resumo">Pra: <b>Dona Marli</b><br>Valor: <b>R$ 50,00</b><br>Hoje, na hora</div>
+            <button class="confirma" data-alvo="btn-confirmar">Confirmar Pix</button>
+          </div>
+
+          <div class="secao" data-secao="sucesso">
+            <div class="sucesso">
+              <div class="marca">✓</div>
+              <h2>Pronto.</h2>
+              <p>Você mandou R$ 50 pra Dona Marli — sozinho. A Bolinha só apontou o caminho.</p>
+              <button class="rejogar" id="rejogar">Fazer de novo</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav">
+          <button data-secao-nav="inicio"><span class="ic">⌂</span>Início</button>
+          <button data-secao-nav="cartoes"><span class="ic">▭</span>Cartões</button>
+          <button class="pix" data-alvo="btn-pix"><span class="ic">◎</span>Pix</button>
+          <button data-secao-nav="ajuda"><span class="ic">?</span>Ajuda</button>
+        </div>
+
+        <button class="bolinha espera" id="bolinha" aria-label="Iniciar a Bolinha guia"><span class="anel"></span>💡</button>
+        <div class="fala" id="fala" hidden></div>
+      </div>
+    </div>
+
+    <div class="legenda">
+      <h2>O que isto testa</h2>
+      <ol>
+        <li>A Bolinha fala <b>uma vez</b>, no início. Depois disso, só aponta — brilho, não texto.</li>
+        <li>Só o elemento certo reage ao toque de verdade. Tocar no lugar errado não trava nem pune — só não avança.</li>
+        <li>Quem completa a tarefa foi <b>a pessoa</b>, guiada. A Bolinha nunca manda o Pix sozinha.</li>
+        <li>Acionável a qualquer momento — reinicia e repete quantas vezes precisar.</li>
+      </ol>
+      <p class="estado" id="estado"><b>Estado:</b> parada. Toque na Bolinha pra começar.</p>
+    </div>
+  </div>
+
+  <p class="pe">Protótipo de teste — não é o site em produção. Antônio Alberto Lopes Elias · Sounavy · Coautoria humano–IA.</p>
+</div>
+
+<script>
+(function(){
+  var PASSOS = [
+    {alvo:'btn-pix', secaoMostrar:null, fala:'Vou te ajudar a mandar R$ 50 pra Dona Marli. Só toque onde eu brilhar.'},
+    {alvo:'contato-marli', secaoMostrar:'pix'},
+    {alvo:'valor-50', secaoMostrar:'valor'},
+    {alvo:'btn-confirmar', secaoMostrar:'confirmar'}
+  ];
+  var passoAtual = -1;
+  var rodando = false;
+
+  var bolinha = document.getElementById('bolinha');
+  var fala = document.getElementById('fala');
+  var estado = document.getElementById('estado');
+  var tela = document.getElementById('tela');
+
+  function mostraSecao(nome){
+    document.querySelectorAll('.secao').forEach(function(s){
+      s.classList.toggle('ativa', s.dataset.secao === nome);
+    });
+  }
+
+  function limpaAlvo(){
+    document.querySelectorAll('.alvo-guiado').forEach(function(el){ el.classList.remove('alvo-guiado'); });
+  }
+
+  function aplicaAlvo(id){
+    limpaAlvo();
+    var el = document.querySelector('[data-alvo="' + id + '"]');
+    if (el) el.classList.add('alvo-guiado');
+    return el;
+  }
+
+  function textoPasso(i){
+    var nomes = {0:'apontando o Pix', 1:'apontando Dona Marli', 2:'apontando R$ 50', 3:'apontando Confirmar'};
+    return nomes[i] || '';
+  }
+
+  function iniciaPasso(i){
+    passoAtual = i;
+    var p = PASSOS[i];
+    if (p.secaoMostrar) mostraSecao(p.secaoMostrar);
+    aplicaAlvo(p.alvo);
+    estado.innerHTML = '<b>Estado:</b> rodando — ' + textoPasso(i) + '.';
+    if (p.fala){
+      fala.textContent = p.fala;
+      fala.hidden = false;
+      setTimeout(function(){ fala.hidden = true; }, 3600);
+    } else {
+      fala.hidden = true;
+    }
+  }
+
+  function finaliza(){
+    limpaAlvo();
+    mostraSecao('sucesso');
+    bolinha.classList.remove('espera');
+    bolinha.style.opacity = '.35';
+    estado.innerHTML = '<b>Estado:</b> concluído — tarefa feita pela pessoa, guiada do início ao fim.';
+  }
+
+  bolinha.addEventListener('click', function(){
+    if (rodando) return;
+    rodando = true;
+    bolinha.classList.remove('espera');
+    mostraSecao('inicio');
+    iniciaPasso(0);
+  });
+
+  tela.addEventListener('click', function(ev){
+    if (!rodando) return;
+    var alvoEl = ev.target.closest('[data-alvo]');
+    if (!alvoEl) return;
+    var idClicado = alvoEl.dataset.alvo;
+    var idCerto = PASSOS[passoAtual] ? PASSOS[passoAtual].alvo : null;
+
+    if (idClicado !== idCerto){
+      alvoEl.classList.add('negado');
+      setTimeout(function(){ alvoEl.classList.remove('negado'); }, 350);
+      return;
+    }
+
+    if (passoAtual >= PASSOS.length - 1){
+      finaliza();
+      rodando = false;
+      return;
+    }
+    iniciaPasso(passoAtual + 1);
+  });
+
+  document.getElementById('rejogar').addEventListener('click', function(){
+    passoAtual = -1;
+    rodando = false;
+    limpaAlvo();
+    fala.hidden = true;
+    bolinha.style.opacity = '';
+    bolinha.classList.add('espera');
+    mostraSecao('inicio');
+    estado.innerHTML = '<b>Estado:</b> parada. Toque na Bolinha pra começar.';
+  });
+})();
+</script>
