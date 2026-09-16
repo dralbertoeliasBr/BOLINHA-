@@ -1,5 +1,5 @@
 {
- "gerado_em_utc": "2026-09-16T18:09:43Z",
+ "gerado_em_utc": "2026-09-16T18:10:10Z",
  "arquivos": [
   {
    "arquivo": "CLAUDE.md",
@@ -9,7 +9,7 @@
    "primeiro_commit_curto": "6df14bb707",
    "primeiro_commit_data_github": "2026-09-11T00:08:20Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/6df14bb7075d70b56a83ff1d60f61b115bb42428",
-   "ultimo_commit_curto": "cf8959aa4a"
+   "ultimo_commit_curto": "a533d9c61a"
   },
   {
    "arquivo": "CODIGO.md",
@@ -45,21 +45,21 @@
    "arquivo": "bolinha/README.md",
    "bytes": 1806,
    "sha256": "63fba6ecfdbb20d31ac151426a17409ecaa7f0f635213e54e3430c66c3ca22d8",
-   "primeiro_commit": null,
-   "primeiro_commit_curto": "",
-   "primeiro_commit_data_github": null,
-   "primeiro_commit_url": null,
-   "ultimo_commit_curto": ""
+   "primeiro_commit": "a533d9c61a554b66dcf80674fe2560acae7b2717",
+   "primeiro_commit_curto": "a533d9c61a",
+   "primeiro_commit_data_github": "2026-09-16T18:09:58Z",
+   "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/a533d9c61a554b66dcf80674fe2560acae7b2717",
+   "ultimo_commit_curto": "a533d9c61a"
   },
   {
    "arquivo": "bolinha/poc_farol_inclusao.html",
    "bytes": 15677,
    "sha256": "51eeeb7acf8b907b0383423b15bac9dee2e02168d2569a7c76649228240d6385",
-   "primeiro_commit": null,
-   "primeiro_commit_curto": "",
-   "primeiro_commit_data_github": null,
-   "primeiro_commit_url": null,
-   "ultimo_commit_curto": ""
+   "primeiro_commit": "a533d9c61a554b66dcf80674fe2560acae7b2717",
+   "primeiro_commit_curto": "a533d9c61a",
+   "primeiro_commit_data_github": "2026-09-16T18:09:58Z",
+   "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/a533d9c61a554b66dcf80674fe2560acae7b2717",
+   "ultimo_commit_curto": "a533d9c61a"
   },
   {
    "arquivo": "ferramentas/gera_pdf.py",
@@ -273,13 +273,13 @@
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.md",
-   "bytes": 9328,
-   "sha256": "df2d30c270566a9d3a8500aa561cd60eba53cafeb97f567aca2148147fd88f0d",
+   "bytes": 9119,
+   "sha256": "fb57e1c55092275d4f249ab2340f0e4c473e42147e6c8055c742092d98c1637f",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "f400cc65e1"
+   "ultimo_commit_curto": "a533d9c61a"
   },
   {
    "arquivo": "prova/PROVA_DE_ANTERIORIDADE.pdf",
@@ -293,13 +293,13 @@
   },
   {
    "arquivo": "prova/commits_github_verificados.json",
-   "bytes": 7547,
-   "sha256": "135036eb51a137e028748279920d8b1a2f2edde17be7596867babb44b651f256",
+   "bytes": 7845,
+   "sha256": "60b1b55b6595af150b7b3f1dc3488345bd865fd6964f1e465a60e6453c0ce30a",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "f400cc65e1"
+   "ultimo_commit_curto": "a533d9c61a"
   },
   {
    "arquivo": "prova/extrai_provas.py",
@@ -309,17 +309,17 @@
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "cf8959aa4a"
+   "ultimo_commit_curto": "a533d9c61a"
   },
   {
    "arquivo": "prova/inventario.json",
-   "bytes": 17309,
-   "sha256": "b88e4a056f3ba7bbd80f7a9be6eb52184f3ac57e101b9202410e6ca44abd4fd1",
+   "bytes": 17417,
+   "sha256": "1e118e7c70878f6878e87dd1f65492cdaf0ab238505139940555bacbe1dab49c",
    "primeiro_commit": "ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
    "primeiro_commit_curto": "ab9b4b25e4",
    "primeiro_commit_data_github": "2026-09-11T00:18:26Z",
    "primeiro_commit_url": "https://github.com/dralbertoeliasBr/BOLINHA-/commit/ab9b4b25e43cf7deed5f84b99567a3c1aa435cd1",
-   "ultimo_commit_curto": "f400cc65e1"
+   "ultimo_commit_curto": "a533d9c61a"
   },
   {
    "arquivo": "seguranca/RESULTADOS.md",
