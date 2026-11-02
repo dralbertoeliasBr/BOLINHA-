@@ -250,6 +250,9 @@ footer .trinta{
     <button class="aba" id="t-opera" role="tab" aria-selected="false" aria-controls="p-opera">Projeto Opera Vox</button>
     <button class="aba" id="t-livro" role="tab" aria-selected="false" aria-controls="p-livro">O Livro</button>
     <button class="aba" id="t-clinica" role="tab" aria-selected="false" aria-controls="p-clinica">Clínica</button>
+    <button class="aba" id="t-lab" role="tab" aria-selected="false" aria-controls="p-lab">Laboratório</button>
+    <button class="aba" id="t-arte" role="tab" aria-selected="false" aria-controls="p-arte">Arte</button>
+    <button class="aba" id="t-radio" role="tab" aria-selected="false" aria-controls="p-radio">Rádio</button>
     <button class="aba" id="t-cofre" role="tab" aria-selected="false" aria-controls="p-cofre">Cofre</button>
   </div>
 </header>
@@ -456,6 +459,67 @@ footer .trinta{
   </div>
 </main>
 
+<!-- ===================== LABORATÓRIO ===================== -->
+<main id="p-lab" role="tabpanel" aria-labelledby="t-lab" tabindex="0" hidden>
+  <p class="tese">Laboratório de <em>borda</em>.</p>
+  <p class="sob">Onde as peças são testadas antes de virar site. Cada uma com o selo honesto: roda, protótipo ou conceito.</p>
+
+  <h2>Em bancada</h2>
+  <div class="peca roda">
+    <div class="cab"><h3>Bolinha 33</h3><span class="selo roda">Roda</span></div>
+    <p>Botão flutuante em arquivo único, com consentimento LGPD e cadeia SHA-256.</p>
+  </div>
+  <div class="peca proto">
+    <div class="cab"><h3>Bolinha 34 — Tutor de inclusão</h3><span class="selo proto">Protótipo</span></div>
+    <p>Tutor digital no Safari do iPhone para quem nunca usou um celular sozinho.</p>
+  </div>
+  <div class="peca proto">
+    <div class="cab"><h3>Arquivista</h3><span class="selo proto">Protótipo</span></div>
+    <p>Guarda em três partes: quaisquer duas reconstroem o todo. Chama por voz, grava, arquiva, devolve.</p>
+  </div>
+  <div class="peca conc">
+    <div class="cab"><h3>DABT + Penta</h3><span class="selo conc">Conceito</span></div>
+    <p>Motor de decisão por nós primos — Delta decide, Alfa soma, Beta pesa o contra, Teta desconfia do eco.</p>
+  </div>
+  <p class="ressalva">O código de cada peça fica no GitHub. Peça sem número medido não sobe de selo.</p>
+</main>
+
+<!-- ===================== ARTE ===================== -->
+<main id="p-arte" role="tabpanel" aria-labelledby="t-arte" tabindex="0" hidden>
+  <p class="tese">O que também é <em>autoria</em>.</p>
+  <p class="sob">Desenho, quadrinho e livro. A mesma mão que faz o código.</p>
+
+  <h2>Em produção</h2>
+  <div class="peca proto">
+    <div class="cab"><h3>Astolfinho</h3><span class="selo proto">Em criação</span></div>
+    <p>Personagem de quadrinhos, de traço simples e cara de cavalo.</p>
+  </div>
+  <div class="peca proto">
+    <div class="cab"><h3>O Legado de Dieguito</h3><span class="selo proto">Em criação</span></div>
+    <p>Graphic novel infantojuvenil sobre Nossa Senhora de Guadalupe e Juan Diego.</p>
+  </div>
+  <div class="peca proto">
+    <div class="cab"><h3>Livro-homenagem a Sebastião</h3><span class="selo proto">Em criação</span></div>
+    <p>Romance, mistério e fantástico, com depoimentos de quem o conheceu.</p>
+  </div>
+  <p class="ressalva">A galeria abre aqui quando as primeiras páginas estiverem prontas.</p>
+</main>
+
+<!-- ===================== RÁDIO ===================== -->
+<main id="p-radio" role="tabpanel" aria-labelledby="t-radio" tabindex="0" hidden>
+  <p class="tese">A voz que <em>fica</em>.</p>
+  <p class="sob">Conversas, áudios e vídeos — o projeto contado em voz, do jeito que foi construído.</p>
+
+  <h2>No ar em breve</h2>
+  <div class="peca conc">
+    <div class="cab"><h3>Canal Dr. Alberto Elias</h3><span class="selo conc">Começando</span></div>
+    <p>Odontologia, IA de borda e inclusão digital, falado sem roteiro de estúdio.</p>
+  </div>
+  <div class="linha" style="margin-top:16px">
+    <a class="lk" href="https://instagram.com/sounavy">Acompanhe <s>@sounavy</s></a>
+  </div>
+</main>
+
 <!-- ===================== COFRE ===================== -->
 <main id="p-cofre" role="tabpanel" aria-labelledby="t-cofre" tabindex="0" hidden>
 
@@ -635,8 +699,16 @@ footer .trinta{
       document.getElementById(b.getAttribute('aria-controls')).hidden = !sel;
     });
     document.body.dataset.aba = (aba.id === 't-opera') ? 'opera' : (aba.id === 't-livro') ? 'livro' : 'gaia';
+    try{ history.replaceState(null,'','#'+aba.id.slice(2)); }catch(e){}
+    try{ aba.scrollIntoView({block:'nearest',inline:'center'}); }catch(e){}
     window.scrollTo({top:0});
   }
+
+  function pelaUrl(){
+    var alvo = document.getElementById('t-' + (location.hash||'').replace('#',''));
+    if(alvo && alvo.classList.contains('aba')) trocar(alvo);
+  }
+  window.addEventListener('hashchange', pelaUrl);
 
   abas.forEach(function(b, i){
     b.tabIndex = (b.getAttribute('aria-selected') === 'true') ? 0 : -1;
@@ -651,6 +723,7 @@ footer .trinta{
       }
     });
   });
+  pelaUrl();
 })();
 </script>
 <script>

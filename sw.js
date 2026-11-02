@@ -2,7 +2,7 @@
    Estratégia: cache-first com atualização em segundo plano.
    O site funciona offline depois da primeira visita. */
 
-const CACHE = 'sounavy-v1';
+const CACHE = 'sounavy-v2';
 const ARQUIVOS = [
   './',
   './index.html',
