@@ -347,6 +347,14 @@ footer .trinta{
   <p>Prefixo de soberania 7 + número da caixa + data invertida. Assinatura DNA ID em cada fragmento. Combinações numéricas por caixa para acesso e autenticidade.</p></div>
   <p class="ressalva">Numeração a decidir: o memorial usa 71 Violeta, 72 Vermelho, 73 Preto; esta bancada usa 05 Red, 06 Violeta, 07 Black.</p>
 
+  <h2>Índice do Arquivista · mais novo em cima</h2>
+  <div class="caixa" id="cx-indice">
+    <p class="o">Tudo que está em todas as caixas, numa lista só, pela hora. O nome de cada item já diz caixa, data e selo.</p>
+    <input type="search" placeholder="Buscar (a Black nunca aparece no texto)" id="busca-ind">
+    <div class="bts" id="filtro-ind"><button class="p" data-f="">Todas</button><button data-f="00">Inox</button><button data-f="05">Red</button><button data-f="06">Violeta</button><button data-f="07">Black</button></div>
+    <div class="lista" id="lista-ind"></div>
+  </div>
+
   <h2>O nome já é informação</h2>
   <div class="peca roda"><div class="cab"><h3>707-20261102-2117-a636a9af-p2</h3><span class="selo roda">Roda</span></div>
   <p><b>7</b> soberania · <b>07</b> caixa · <b>data e hora</b> invertidas · <b>selo</b> do conteúdo · <b>p2</b> pedaço. O Arquivista sabe para onde vai sem abrir o arquivo, e recusa se o nome não bater com o selo de dentro. O nome nunca carrega o texto.</p></div>
@@ -549,6 +557,31 @@ finp.onchange=function(){
   .catch(function(e){llog.textContent='✗ Não reconstituiu: '+(typeof e==='string'?e:'senha errada ou pedaço adulterado');});
   finp.value='';bpw.value='';
 };
+
+
+/* ---------- Índice do Arquivista ---------- */
+var filtroInd='', listaInd=document.getElementById('lista-ind'), buscaInd=document.getElementById('busca-ind');
+function indice(){
+  var it=[];
+  ler('gaia_t_inox').forEach(function(r){it.push({b:'00',ts:r.ts,t:r.t,h:'aguardando'});});
+  ler('gaia_t_red').forEach(function(r){it.push({b:'05',ts:r.ts,t:r.t,h:r.h});});
+  ler('gaia_t_vio').forEach(function(r){it.push({b:'06',ts:r.ts,t:r.t,h:r.h});});
+  ler('gaia_t_blk').forEach(function(r){it.push({b:'07',ts:r.ts,t:'🔒 trancado',h:hex(deb(r.c).slice(0,8))});});
+  var p1=ler('gaia_t_peca1'); if(p1&&p1.gaia) it.push({b:'07',ts:p1.ts,t:'🔒 pedaço 1 de 3 (Black iPhone)',h:p1.selo});
+  it.sort(function(a,b){return a.ts<b.ts?1:a.ts>b.ts?-1:0;});
+  var q=(buscaInd.value||'').toLowerCase();
+  it=it.filter(function(x){return (!filtroInd||x.b===filtroInd)&&(!q||(x.b!=='07'&&x.t.toLowerCase().indexOf(q)>=0));});
+  var cor={'00':'#B8C4CC','05':'#FF4D5E','06':'#C9A6FF','07':'#EFEAE1'};
+  listaInd.innerHTML=it.length?it.map(function(x,i){
+    var nome=x.h==='aguardando'?'Inox · aguardando Arquivista':nomeGaia(x.b,x.ts,(x.h.match(/^[0-9a-f]+$/)?x.h:'00000000')).replace('.json','');
+    return '<div class="it"><span style="font-family:var(--mono);font-size:11px;color:'+cor[x.b]+'">'+(i+1)+'. '+esc(nome)+'</span><br>'+esc(x.t.length>120?x.t.slice(0,120)+'…':x.t)+'</div>';
+  }).join(''):'<div class="it" style="color:var(--fraco)">Nada aqui ainda.</div>';
+}
+document.getElementById('filtro-ind').onclick=function(e){var b=e.target.closest('button');if(!b)return;filtroInd=b.dataset.f;
+  Array.prototype.forEach.call(this.children,function(x){x.className=(x===b)?'p':'';});indice();};
+buscaInd.oninput=indice;
+document.addEventListener('click',function(){setTimeout(indice,1200);});
+indice();
 
 /* ---------- prova de integridade ---------- */
 document.getElementById('bt-teste').onclick=function(){
