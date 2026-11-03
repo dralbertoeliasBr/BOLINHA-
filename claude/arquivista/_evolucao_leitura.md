@@ -16,6 +16,7 @@ Data só onde o próprio arquivo tem data. As outras estão na ordem que o códi
 | 4 | `a4_recuperacao_sem_exclusao.py` | sem data | Promessa explícita de nunca apagar; Stop/Go | testada |
 | 3 | `a3_prisma_v1.0_7dourados_1preto.py` | sem data | 7 caixas + Box 00 Preto | testada; "sig" é só a palavra ARQUITETO |
 | 2 | `a2_V11_2026-08-07_fila_lote.py` | 07/08/2026 16:40 | Vocabulário nativo, fila de lote (uma chamada de API só), auditoria de "confirmados" | testada |
+| 0 | `a0_doca_bridge_mvp.py` | sem data | Ponte Pythonista ↔ Enclave (Qwen/Toca); fila append-only em `projeto_gaia_vault.jsonl` | testada; sincronizar não faz nada |
 | 1 | `a1_camadas_3_lexico_llm_nuvem.py` | antes de 07/08 | Escada léxico → LLM local → nuvem | testada; camada 2 é simulada |
 | — | Maestria (`MAESTRIA_AGENT_CORE_18jun2026.docx`) | 18/06/2026 | Orquestra os 7 boxes, rastro JSON | não incluída aqui (outro documento) |
 | — | Memorial 7 Box v1.2 | 09/04/2026 | Prefixo 7 + caixa + data invertida | referência |
@@ -46,6 +47,7 @@ Achado: existe uma DOCA com 14 caixas (08 Impressão Claude, 09 Relação, 10 De
 O que nenhuma versão faz: não apaga arquivo, não manda nada para a internet (exceto o Enclave SSRD + Llama, que fala com o Llama no próprio aparelho, em 127.0.0.1).
 
 ## Particularidades
+- Doca Bridge: grava cada envio numa fila que só cresce (bom: nunca apaga). Mas não tem selo, deixa o mesmo dado entrar duas vezes, e `sincronizar` só imprime "próxima semana" e devolve "pronto". Status "pendente" nunca muda.
 - O nome do arquivo vaza o texto em duas versões: SSRD v1.2 (15 letras), Recuperação (10 letras). Core e bancada corrigem isso.
 - Prisma: a "assinatura" é fixa, não prova nada.
 - Core: sem chave própria, a chave é o DNA, que está no código. Cifra de verdade só com chave sua.
