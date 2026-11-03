@@ -347,6 +347,10 @@ footer .trinta{
   <p>Prefixo de soberania 7 + número da caixa + data invertida. Assinatura DNA ID em cada fragmento. Combinações numéricas por caixa para acesso e autenticidade.</p></div>
   <p class="ressalva">Numeração a decidir: o memorial usa 71 Violeta, 72 Vermelho, 73 Preto; esta bancada usa 05 Red, 06 Violeta, 07 Black.</p>
 
+  <h2>O nome já é informação</h2>
+  <div class="peca roda"><div class="cab"><h3>707-20261102-2117-a636a9af-p2</h3><span class="selo roda">Roda</span></div>
+  <p><b>7</b> soberania · <b>07</b> caixa · <b>data e hora</b> invertidas · <b>selo</b> do conteúdo · <b>p2</b> pedaço. O Arquivista sabe para onde vai sem abrir o arquivo, e recusa se o nome não bater com o selo de dentro. O nome nunca carrega o texto.</p></div>
+
   <h2>Prova de integridade</h2>
   <div class="bts"><button class="p" id="bt-teste">Rodar os testes</button></div>
   <div class="res" id="res"></div>
@@ -426,7 +430,7 @@ vio.querySelector('[data-a=exportar]').onclick=function(){
     var pac={gaia:'violeta',versao:1,criado:new Date().toISOString(),selo:h,registros:c};
     var a=document.createElement('a');
     a.href=URL.createObjectURL(new Blob([JSON.stringify(pac,null,1)],{type:'application/json'}));
-    a.download='violeta_backup_'+pac.criado.slice(0,10)+'.json';a.click();
+    a.download=nomeGaia('06',pac.criado,h,'backup');a.click();
   });
 };
 vio.querySelector('[data-a=importar]').onclick=function(){arq.click();};
@@ -524,14 +528,15 @@ function reconstituir(pw,pecas){
   });
 }
 var llog=document.getElementById('log-blk'), finp=document.getElementById('pecas');
+function nomeGaia(box,ts,selo,extra){var t=new Date(ts),z=function(n){return String(n).padStart(2,'0');},d=t.getFullYear()+z(t.getMonth()+1)+z(t.getDate())+'-'+z(t.getHours())+z(t.getMinutes());return '7'+box+'-'+d+'-'+selo.slice(0,8)+(extra?'-'+extra:'')+'.json';}
 function baixar(obj,nome){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(obj)],{type:'application/json'}));a.download=nome;a.click();}
 blk.querySelector('[data-a=dividir]').onclick=function(){
   var t=bta.value.trim(), pw=bpw.value; if(!t){llog.textContent='Escreva o documento no campo da Black.';return;}
   if(pw.length<8){llog.textContent='Senha curta: mínimo 8.';return;}
   fazerPecas(pw,t).then(function(ps){
     por('gaia_t_peca1',ps[0]);
-    baixar(ps[1],'black_'+ps[1].id+'_peca2_site-google.json');
-    setTimeout(function(){baixar(ps[2],'black_'+ps[2].id+'_peca3_github.json');},400);
+    baixar(ps[1],nomeGaia('07',ps[1].ts,ps[1].selo,'p2'));
+    setTimeout(function(){baixar(ps[2],nomeGaia('07',ps[2].ts,ps[2].selo,'p3'));},400);
     bta.value='';
     llog.innerHTML='✓ Pedaço 1 ficou neste aparelho (Black iPhone).<br>✓ Pedaços 2 e 3 baixados: guarde um no Google/iCloud e outro no GitHub.<br>Selo '+ps[0].id;
   });
@@ -539,7 +544,7 @@ blk.querySelector('[data-a=dividir]').onclick=function(){
 blk.querySelector('[data-a=reconstituir]').onclick=function(){if(bpw.value.length<8){llog.textContent='Digite a senha antes.';return;}finp.click();};
 finp.onchange=function(){
   var pw=bpw.value, local=ler('gaia_t_peca1');
-  Promise.all(Array.from(finp.files).map(function(f){return f.text().then(function(t){try{return JSON.parse(t);}catch(e){return null;}});}))
+  Promise.all(Array.from(finp.files).map(function(f){return f.text().then(function(t){try{var x=JSON.parse(t);var m=f.name.match(/^7(0\d)-\d{8}-\d{4}-([0-9a-f]{8})/);if(m&&(m[1]!=='07'||m[2]!==x.selo.slice(0,8)))return null;return x;}catch(e){return null;}});}))
   .then(function(ps){if(local&&local.gaia)ps.push(local);return reconstituir(pw,ps).then(function(t){llog.innerHTML='✓ Reconstituído com 2 de 3 e selo conferido:<br>'+esc(t);});})
   .catch(function(e){llog.textContent='✗ Não reconstituiu: '+(typeof e==='string'?e:'senha errada ou pedaço adulterado');});
   finp.value='';bpw.value='';
