@@ -11,6 +11,8 @@ Data só onde o próprio arquivo tem data. As outras estão na ordem que o códi
 | 9 | `codigos/ARQUIVISTA_LISTA_RECENTES_v2.py` | 02/11/2026 | Lista tudo que as versões gravaram, mais novo em cima; só lê | testada |
 | 8 | bancada `gaia-ip-teste.html` (Inox + Arquivista) | 02/11/2026 | Inox na porta, cadeia SHA-256, Black 2/3, nome-informação | testada 15/15 |
 | 7 | `codigos/GaIA_all_in_2026-11-01.py` | 01/11/2026 | Arquivista 2/3: quaisquer 2 de 3 pedaços reconstroem | testada |
+| 6c | `a8_prova_de_conceito_2026-07-21.py` | 21/07/2026 12:26–12:27 (3 PROVA no iPhone) | Roda os 5 agentes sozinho e grava PROVA_*.json com hash do log, para filmar | testada |
+| 6b | `a7_casca_leve_2026-07-21.py` | 21/07/2026 12:08 (GAIA_BOX4_teste no iPhone) | 5 agentes num motor com tempo: Arquivista com nome semântico, Faxina sem apagar, Tradutor regional, Vigia, Contador | testada com motor substituto |
 | 6 | `a6_core_v1_real_hmac.py` | 06/07/2026 01:09 (1º uso no manifesto do iPhone) | HMAC real, nome = data + hash, índice, manifesto, verificar e recuperar | testada; chave padrão é pública |
 | 5 | `a5_ssrd_v1.2_enclave_TEXTO-DO-DOCX.txt` | sem data | Stop/Go por hash, níveis L1–L4, zlib, Fernet na Violeta L4 | não rodou: o .docx perdeu a indentação |
 | 4 | `a4_recuperacao_sem_exclusao.py` | sem data | Promessa explícita de nunca apagar; Stop/Go | testada |
@@ -47,6 +49,8 @@ Achado: existe uma DOCA com 14 caixas (08 Impressão Claude, 09 Relação, 10 De
 O que nenhuma versão faz: não apaga arquivo, não manda nada para a internet (exceto o Enclave SSRD + Llama, que fala com o Llama no próprio aparelho, em 127.0.0.1).
 
 ## Particularidades
+- Casca Leve: o nome é semântico (primeira palavra do texto). É a primeira versão do "nome já é informação", mas vaza o texto: "Contrato secreto…" vira `GAIA_BOX4_contrato_…`. Depende de `MOTOR_TIMER.py`, que não veio; testei com um substituto que só chama as funções.
+- Prova de Conceito: o hash vai dentro do próprio arquivo; para conferir, tira-se o campo `hash_integridade` e recalcula.
 - Doca Bridge: grava cada envio numa fila que só cresce (bom: nunca apaga). Mas não tem selo, deixa o mesmo dado entrar duas vezes, e `sincronizar` só imprime "próxima semana" e devolve "pronto". Status "pendente" nunca muda.
 - O nome do arquivo vaza o texto em duas versões: SSRD v1.2 (15 letras), Recuperação (10 letras). Core e bancada corrigem isso.
 - Prisma: a "assinatura" é fixa, não prova nada.
