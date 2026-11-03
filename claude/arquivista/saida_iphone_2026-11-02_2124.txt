@@ -1,0 +1,167 @@
+Enclave ON - SSRD + Llama local
+==============================================
+ ARQUIVISTA  -  o mais novo em cima
+ 02/11/2026 21:24
+==============================================
+Pastas lidas:
+  - Documents/.gaia
+  - Documents/A1_Replit_test.py/ReplitExport-dralbertoelias (1)/GaIA-Translator
+  - Documents/A1_Replit_test.py/ReplitExport-dralbertoelias (1)/GaIA-Translator 2
+  - Documents/ARQUIVISTA_CORE
+  - Documents/Arquivos_Gaia
+  - Documents/Arquivos_Gaia_Soberana
+  - Documents/Auto_Gaia_Claude.py
+  - Documents/DOCA/BOX_01_VERDE
+  - Documents/DOCA/BOX_02_CONTEXTO
+  - Documents/DOCA/BOX_03_CONTEXTO
+  - Documents/DOCA/BOX_04_LEGADO
+  - Documents/DOCA/BOX_05_LEGADO
+  - Documents/DOCA/BOX_06_LEGADO
+  - Documents/DOCA/BOX_07_PRETO
+  - Documents/DOCA/BOX_08_IMPRESSAO_CLAUDE
+  - Documents/DOCA/BOX_09_RELACAO
+  - Documents/DOCA/BOX_10_DEFINITIVO
+  - Documents/DOCA/BOX_11_HISTORICO
+  - Documents/DOCA/BOX_12_INDICE
+  - Documents/DOCA/BOX_13_ESSENCIA
+  - Documents/DOCA/BOX_14_LIVRO
+  - Documents/DOCA_GAIA
+  - Documents/DOCA_PRISMA/BOX_00_PRETO
+  - Documents/DOCA_PRISMA/BOX_01_DOURADO
+  - Documents/DOCA_PRISMA/BOX_02_DOURADO
+  - Documents/DOCA_PRISMA/BOX_03_DOURADO
+  - Documents/DOCA_PRISMA/BOX_04_DOURADO
+  - Documents/DOCA_PRISMA/BOX_05_DOURADO
+  - Documents/DOCA_PRISMA/BOX_06_DOURADO
+  - Documents/DOCA_PRISMA/BOX_07_DOURADO
+  - Documents/ENCLAVE_DOCA/BOX_01
+  - Documents/ENCLAVE_DOCA/BOX_02
+  - Documents/ENCLAVE_DOCA/BOX_03
+  - Documents/ENCLAVE_DOCA/BOX_04
+  - Documents/ENCLAVE_DOCA/BOX_05
+  - Documents/ENCLAVE_DOCA/BOX_06
+  - Documents/ENCLAVE_DOCA/BOX_07
+  - Documents/ENCLAVE_DOCA/BOX_08
+  - Documents/GAIA_ARQUIVOS
+  - Documents/GAIA_CLINICA
+  - Documents/GAIA_TESTE_FACEID_
+  - Documents/GAIA_UTILS
+  - Documents/GaIA_ChIP.py
+  - Documents/GaIA_Master
+  - Documents/Gaia_Borda
+  - Documents/Gaia_Fremework.py
+  - Documents/Legado_Antygravy_BDO/Scripts/GaIA ChIP.py
+  - Documents/Legado_Antygravy_BDO/Scripts/gaia_chip.py
+  - Documents/Legado_Antygravy_BDO/Scripts/gaia_universal.py
+  - Documents/Legado_Antygravy_BDO_1/Scripts/GaIA ChIP.py
+  - Documents/Legado_Antygravy_BDO_1/Scripts/gaia_chip.py
+  - Documents/Legado_Antygravy_BDO_1/Scripts/gaia_universal.py
+  - Documents/Legado_Antygravy_BDO_2/Scripts/Arquivos_Gaia_Soberana
+  - Documents/Legado_Antygravy_BDO_2/Scripts/GaIA ChIP.py
+  - Documents/Legado_Antygravy_BDO_2/Scripts/gaia_chip.py
+  - Documents/Legado_Antygravy_BDO_2/Scripts/gaia_universal.py
+  - Documents/MetaMinimalVox/.gaia_box33
+  - Documents/SRD Gaia gêmini
+  - Documents/SSRD
+  - Documents/Templates/GAIA_UTILS.py
+  - Documents/Untitled_2/Arquivos_Gaia
+  - Documents/arquivo_gaia
+  - Documents/arquivo_gaia2
+  - Documents/gaia
+  - Documents/gaia_auditoria
+  - Documents/gaia_chip.py
+  - Documents/gaia_fenix
+  - Documents/gaia_memory
+  - Documents/gaia_opera_0726.py
+  - Documents/gaia_universal.py
+  - Documents/projetos/gaia
+  - Documents/ssrd gaia gemini
+
+107 arquivo(s). Mostrando 40:
+
+ 1. 02/11/2026 03:10:44  resultado_execucao.txt
+    Documents/SRD Gaia gêmini  (1.7 KB)
+ 2. 01/11/2026 21:08:12  indice.json
+    Documents/arquivo_gaia  (1.6 KB)
+ 3. 01/11/2026 21:08:12  teste@v2.p3.json
+    Documents/arquivo_gaia/nuvem  (0.1 KB)
+ 4. 01/11/2026 21:08:12  teste@v2.p2.json
+    Documents/arquivo_gaia/aqui  (0.1 KB)
+ 5. 01/11/2026 21:08:12  teste@v2.p1.json
+    Documents/arquivo_gaia/aqui  (0.1 KB)
+ 6. 01/11/2026 21:08:12  teste@v1.p3.json
+    Documents/arquivo_gaia/nuvem  (0.1 KB)
+ 7. 01/11/2026 21:08:12  teste@v1.p2.json
+    Documents/arquivo_gaia/aqui  (0.1 KB)
+ 8. 01/11/2026 21:08:12  teste@v1.p1.json
+    Documents/arquivo_gaia/aqui  (0.1 KB)
+ 9. 01/11/2026 21:08:12  funcoes_vitais@v2.p3.json
+    Documents/arquivo_gaia/nuvem  (0.8 KB)
+10. 01/11/2026 21:08:12  funcoes_vitais@v2.p2.json
+    Documents/arquivo_gaia/nuvem  (0.8 KB)
+11. 01/11/2026 21:08:12  funcoes_vitais@v2.p1.json
+    Documents/arquivo_gaia/aqui  (0.8 KB)
+12. 01/11/2026 21:08:12  funcoes_vitais@v1.p1.json
+    Documents/arquivo_gaia/aqui  (0.8 KB)
+13. 01/11/2026 21:08:12  funcoes_vitais@v1.p3.json
+    Documents/arquivo_gaia/nuvem  (0.8 KB)
+14. 01/11/2026 21:08:12  funcoes_vitais@v1.p2.json
+    Documents/arquivo_gaia/aqui  (0.8 KB)
+15. 07/08/2026 19:05:44  vigia_bilateral.jsonl
+    Documents/GAIA_UTILS  (0.7 KB)
+16. 25/07/2026 19:08:17  vault.jsonl
+    Documents/GAIA_UTILS  (0.3 KB)
+17. 25/07/2026 19:08:17  violet_box.txt
+    Documents/GAIA_UTILS  (0.4 KB)
+18. 25/07/2026 18:53:48  opera_config.json
+    Documents/GAIA_UTILS  (0.3 KB)
+19. 21/07/2026 15:31:47  20260721_153147_PROCESSADO_ARMAZENADO_c7d35d27ce.json
+    Documents/ENCLAVE_DOCA/BOX_04  (0.4 KB)  box 04
+20. 21/07/2026 12:27:56  PROVA_20260721_122756.json
+    Documents/GAIA_UTILS  (3.0 KB)
+21. 21/07/2026 12:27:56  GAIA_BOX4_prova_20260721_122756.txt
+    Documents/GAIA_UTILS  (0.0 KB)
+22. 21/07/2026 12:27:10  PROVA_20260721_122710.json
+    Documents/GAIA_UTILS  (2.9 KB)
+23. 21/07/2026 12:27:10  GAIA_BOX4_prova_20260721_122710.txt
+    Documents/GAIA_UTILS  (0.0 KB)
+24. 21/07/2026 12:26:15  PROVA_20260721_122615.json
+    Documents/GAIA_UTILS  (2.7 KB)
+25. 21/07/2026 12:26:15  GAIA_BOX4_prova_20260721_122615.txt
+    Documents/GAIA_UTILS  (0.0 KB)
+26. 21/07/2026 12:09:14  GAIA_BOX4_teste_20260721_120914.txt
+    Documents/GAIA_UTILS  (0.0 KB)
+27. 21/07/2026 12:08:46  GAIA_BOX4_teste_20260721_120846.txt
+    Documents/GAIA_UTILS  (0.0 KB)
+28. 21/07/2026 12:08:36  GAIA_BOX4_teste_20260721_120836.txt
+    Documents/GAIA_UTILS  (0.0 KB)
+29. 21/07/2026 01:28:10  GAIA_BOX1_2e6c1006_20260721_012810.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+30. 21/07/2026 01:23:17  GAIA_BOX1_2e6c1006_20260721_012317.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+31. 21/07/2026 01:18:51  GAIA_BOX1_2e6c1006_20260721_011851.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+32. 21/07/2026 01:17:42  GAIA_BOX1_2e6c1006_20260721_011742.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+33. 21/07/2026 01:11:55  GAIA_BOX1_2e6c1006_20260721_011155.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+34. 21/07/2026 01:07:09  GAIA_BOX1_2e6c1006_20260721_010709.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+35. 21/07/2026 01:07:05  GAIA_BOX1_2e6c1006_20260721_010705.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+36. 21/07/2026 01:06:42  GAIA_BOX1_2e6c1006_20260721_010642.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+37. 21/07/2026 01:04:54  GAIA_BOX1_2e6c1006_20260721_010454.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+38. 21/07/2026 00:51:32  GAIA_BOX1_2e6c1006_20260721_005132.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+39. 21/07/2026 00:51:20  GAIA_BOX1_2e6c1006_20260721_005120.jsonl
+    Documents/GAIA_ARQUIVOS  (0.3 KB)
+40. 21/07/2026 00:50:44  package-lock.json
+    Documents/A1_Replit_test.py/ReplitExport-dralbertoelias (1)/GaIA-Translator 2  (299.1 KB)
+
+Manifesto (ultimas 15 operacoes, mais nova em cima):
+  2026-07-06T01:09:22.591278 | STOP (duplicado) ff100e4f1234 origem=teste1
+  2026-07-06T01:09:22.589840 | GO (selado) ff100e4f1234 box=00 origem=teste1
+
+Lista completa salva em: Documents/lista_arquivista_20261102_212455.txt

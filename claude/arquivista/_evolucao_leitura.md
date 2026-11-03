@@ -11,7 +11,7 @@ Data só onde o próprio arquivo tem data. As outras estão na ordem que o códi
 | 9 | `codigos/ARQUIVISTA_LISTA_RECENTES_v2.py` | 02/11/2026 | Lista tudo que as versões gravaram, mais novo em cima; só lê | testada |
 | 8 | bancada `gaia-ip-teste.html` (Inox + Arquivista) | 02/11/2026 | Inox na porta, cadeia SHA-256, Black 2/3, nome-informação | testada 15/15 |
 | 7 | `codigos/GaIA_all_in_2026-11-01.py` | 01/11/2026 | Arquivista 2/3: quaisquer 2 de 3 pedaços reconstroem | testada |
-| 6 | `a6_core_v1_real_hmac.py` | sem data | HMAC real, nome = data + hash, índice, manifesto, verificar e recuperar | testada; chave padrão é pública |
+| 6 | `a6_core_v1_real_hmac.py` | 06/07/2026 01:09 (1º uso no manifesto do iPhone) | HMAC real, nome = data + hash, índice, manifesto, verificar e recuperar | testada; chave padrão é pública |
 | 5 | `a5_ssrd_v1.2_enclave_TEXTO-DO-DOCX.txt` | sem data | Stop/Go por hash, níveis L1–L4, zlib, Fernet na Violeta L4 | não rodou: o .docx perdeu a indentação |
 | 4 | `a4_recuperacao_sem_exclusao.py` | sem data | Promessa explícita de nunca apagar; Stop/Go | testada |
 | 3 | `a3_prisma_v1.0_7dourados_1preto.py` | sem data | 7 caixas + Box 00 Preto | testada; "sig" é só a palavra ARQUITETO |
@@ -21,6 +21,18 @@ Data só onde o próprio arquivo tem data. As outras estão na ordem que o códi
 | — | Memorial 7 Box v1.2 | 09/04/2026 | Prefixo 7 + caixa + data invertida | referência |
 
 Nota: as versões 1 e 2 são o "cérebro" que decide (Delta). As versões 3 a 6 são o Arquivista que guarda. As duas linhas se juntam no all-in (7).
+
+## Uso real no iPhone (lista v2 rodada por Sounavy em 02/11/2026 21:24)
+107 arquivos em mais de 70 pastas. Do mais novo ao mais antigo:
+- 02/11 03:10 · `SRD Gaia gêmini/resultado_execucao.txt`
+- 01/11 21:08 · `arquivo_gaia/` aqui + nuvem · teste 2/3 do all-in (v1 e v2 de funcoes_vitais)
+- 07/08 19:05 · `GAIA_UTILS/vigia_bilateral.jsonl`
+- 25/07 19:08 · `GAIA_UTILS/vault.jsonl` e `violet_box.txt` (DOCA_1)
+- 21/07 15:31 · `ENCLAVE_DOCA/BOX_04` · PROCESSADO_ARMAZENADO
+- 21/07 12:08–12:27 · `GAIA_UTILS` · 3 PROVA + testes da Box 4
+- 21/07 00:50–01:28 · `GAIA_ARQUIVOS` · 12 registros na Box 1
+- 06/07 01:09 · `ARQUIVISTA_CORE` · Core v1 (GO + STOP)
+Achado: existe uma DOCA com 14 caixas (08 Impressão Claude, 09 Relação, 10 Definitivo, 11 Histórico, 12 Índice, 13 Essência, 14 Livro). Saída completa em `saida_iphone_2026-11-02_2124.txt`.
 
 ## Como funciona (Core v1, a mais madura das antigas)
 1. Recebe um texto e calcula o SHA-256 completo.
@@ -50,5 +62,6 @@ O que nenhuma versão faz: não apaga arquivo, não manda nada para a internet (
 
 ## Pendências
 - SSRD v1.2: preciso do .py original (o .docx não guarda espaços).
-- Datas reais das versões 3 a 6: o iPhone tem (data do arquivo no Pythonista).
+- Datas reais das versões 3 a 5: o Core v1 já tem (06/07); faltam Prisma, Recuperação e SSRD.
+- A DOCA de 14 caixas: achar o código que criou.
 - Escolher uma pasta só para o Arquivista daqui em diante.
