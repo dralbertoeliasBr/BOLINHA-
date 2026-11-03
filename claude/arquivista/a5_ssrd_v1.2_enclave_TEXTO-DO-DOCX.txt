@@ -1,0 +1,239 @@
+# -*- coding: utf-8 -*-
+
+# ARQUIVISTA_SSRD v1.2 ENCLAVE - OFFLINE 100%
+
+# DNA-ARQUITETO-2026-SOUNAVY | Lei 1,2,3 | Bioma BRASIL_TROPICAL
+
+# STATUS: ENCLAVE CELULAR PRONTO | STOP/GO | VGA_V9 | TAG VIOLETA
+
+import hashlib, json, os, base64, zlib, platform
+
+from datetime import datetime
+
+from pathlib import Path
+
+class ArquivistaSSRD:
+
+def __init__(self):
+
+self.dna = "DNA-ARQUITETO-2026-SOUNAVY"
+
+self.PRIMOS_ANCORA = {'T':2,'D':3,'I':5,'E':7,'N':11}
+
+# PATCH 1: Caminho persistente por plataforma
+
+sistema = platform.system()
+
+if sistema == "Darwin": # iOS Pythonista / macOS
+
+base = os.path.expanduser("~/Documents")
+
+elif "Android" in platform.platform() or os.path.exists("/sdcard"):
+
+base = "/storage/emulated/0/Documents"
+
+else:
+
+base = os.path.expanduser("~")
+
+self.pasta = f"{base}/Arquivos_Gaia"
+
+Path(self.pasta).mkdir(parents=True, exist_ok=True)
+
+self.baseline_hash = self._carregar_baseline()
+
+self._log("ENCLAVE", f"Gaia acordou em {self.pasta}. Sanidade OK.")
+
+def _carregar_baseline(self):
+
+try:
+
+with open(f"{self.pasta}/last_hash.txt", 'r') as f:
+
+return f.read().strip()
+
+except:
+
+return None
+
+def _salvar_baseline(self, h):
+
+# PATCH 2: Lock atômico
+
+path = f"{self.pasta}/last_hash.txt"
+
+with open(path, 'w') as f:
+
+try:
+
+import fcntl
+
+fcntl.flock(f, fcntl.LOCK_EX)
+
+f.write(h)
+
+fcntl.flock(f, fcntl.LOCK_UN)
+
+except:
+
+f.write(h) # Windows/Android sem fcntl
+
+def _refino_semantico(self, texto):
+
+return " ".join(texto.split()).strip().capitalize()
+
+def _classificar_nivel(self, texto):
+
+t = len(texto)
+
+if t < 20: return "L1_VGA_V9_MAXIMA"
+
+elif t < 200: return "L2_VGA_V9_LEVE"
+
+elif t < 2000: return "L3_VGA_V9_MEDIA"
+
+else: return "L4_VGA_V9_LOSSLESS_8K"
+
+def COMPRIMIR(self, entrada, nivel_forcado=None, tag_violeta=False):
+
+intencao = self._refino_semantico(entrada)
+
+if not intencao: return None
+
+h = hashlib.sha256(intencao.encode()).hexdigest()
+
+# STOP/GO
+
+if h == self.baseline_hash:
+
+return {"status":"STOP","hash":h[:8],"economia":len(intencao)}
+
+nivel = nivel_forcado or self._classificar_nivel(intencao)
+
+# PATCH 3: Criptografia L4 se violeta
+
+payload_texto = intencao
+
+if tag_violeta and nivel.startswith("L4"):
+
+try:
+
+from cryptography.fernet import Fernet
+
+key_path = f"{self.pasta}/.gaia_key"
+
+if not os.path.exists(key_path):
+
+key = Fernet.generate_key()
+
+with open(key_path, 'wb') as kf: kf.write(key)
+
+else:
+
+with open(key_path, 'rb') as kf: key = kf.read()
+
+f = Fernet(key)
+
+payload_texto = f.encrypt(intencao.encode()).decode()
+
+except:
+
+pass # Sem crypto, segue aberto
+
+payload =
+base64.b64encode(zlib.compress(payload_texto.encode(),9)).decode()
+
+pacote = {
+
+"signature_p": self.dna,
+
+"ssrd_v": "ENCLAVE_v1.2",
+
+"nivel": nivel,
+
+"violeta": tag_violeta,
+
+"hash_sha256": h,
+
+"timestamp": datetime.now().isoformat(),
+
+"origem": f"{platform.system()}_Enclave",
+
+"payload_zlib_b64": payload,
+
+"tamanho_original": len(intencao.encode()),
+
+"tamanho_ssrd": len(payload)
+
+}
+
+slug = intencao[:15].lower().replace(" ","_")
+
+nome =
+f"{self.pasta}/ssrd_{datetime.now().strftime('%H%M%S')}_{slug}.json"
+
+with open(nome, 'w', encoding='utf-8') as f:
+
+json.dump(pacote, f, ensure_ascii=False, indent=2)
+
+self._salvar_baseline(h)
+
+self.baseline_hash = h
+
+economia = pacote["tamanho_original"] - pacote["tamanho_ssrd"]
+
+taxa = (economia/pacote["tamanho_original"]*100) if
+pacote["tamanho_original"] else 0
+
+print(f"\n🟢 GO | {nivel} | {taxa:.1f}% economia | Hash {h[:8]}")
+
+return pacote
+
+def DESCOMPRIMIR(self, pacote):
+
+try:
+
+payload = base64.b64decode(pacote["payload_zlib_b64"])
+
+texto = zlib.decompress(payload).decode()
+
+if pacote.get("violeta") and pacote["nivel"].startswith("L4"):
+
+try:
+
+from cryptography.fernet import Fernet
+
+with open(f"{self.pasta}/.gaia_key",'rb') as kf: key=kf.read()
+
+f = Fernet(key)
+
+texto = f.decrypt(texto.encode()).decode()
+
+except: pass
+
+return texto
+
+except Exception as e:
+
+return f"ERRO: {e}"
+
+def _log(self, evento, dado):
+
+print(f"[{datetime.now().strftime('%H:%M:%S')}] {evento}: {dado}")
+
+# USO ENCLAVE
+
+if __name__ == "__main__":
+
+gaia = ArquivistaSSRD()
+
+# Teste offline
+
+r1 = gaia.COMPRIMIR("Bom dia Gaia", tag_violeta=False)
+
+r2 = gaia.COMPRIMIR("Bom dia Gaia") # STOP
+
+r3 = gaia.COMPRIMIR("Contrato secreto de IP com cláusula de foro
+íntimo", tag_violeta=True)
+
+print("\nDescomprimindo:", gaia.DESCOMPRIMIR(r3)[:40]+"
