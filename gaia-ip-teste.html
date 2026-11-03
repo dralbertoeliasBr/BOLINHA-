@@ -267,6 +267,12 @@ footer .trinta{
 .lista .h{font-family:var(--mono);font-size:10px;color:var(--fraco);word-break:break-all}
 .res{font-family:var(--mono);font-size:12.5px;line-height:1.7;margin-top:10px;white-space:pre-wrap}
 .res .ok{color:var(--g)} .res .no{color:var(--r)}
+.inox{border:2px solid #B8C4CC;background:linear-gradient(160deg,#2a2f36,#1b1520);border-radius:12px;padding:14px;margin-top:14px}
+.inox h3{font-family:var(--disp);font-weight:600;font-size:18px;color:#E6EDF2}
+.inox select{width:100%;margin-top:8px;background:var(--fundo);color:var(--osso);border:1px solid var(--borda);border-radius:6px;padding:10px;font:inherit;font-size:16px}
+.log{font-family:var(--mono);font-size:11.5px;color:var(--fraco);margin-top:8px;line-height:1.6}
+.dentro{border:1px dashed var(--prisma);border-radius:12px;padding:4px 12px 12px;margin-top:14px}
+.dentro>.rot{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--prisma);display:block;margin-top:10px}
 .estavel{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--r);border:1px solid var(--r);border-radius:3px;padding:3px 7px;margin-top:12px}
 </style>
 </head>
@@ -282,8 +288,8 @@ footer .trinta{
 </header>
 
 <main style="padding-top:26px">
-  <p class="tese">Três caixas <em>vivas</em>.</p>
-  <p class="sob">Tudo que entra aqui fica só neste aparelho. Nada vai para servidor. Serve para testar se guarda, se volta igual e se percebe adulteração.</p>
+  <p class="tese">Contêiner dentro de <em>contêiner</em>.</p>
+  <p class="sob">Inox por fora, as caixas por dentro, o Arquivista na porta. Tudo fica neste aparelho; só os pedaços da Black saem, e só quando você baixa. Serve para testar se guarda, se volta igual e se percebe adulteração.</p>
 
   <h2>As sete caixas · três acesas</h2>
   <div class="mapa">
@@ -291,6 +297,18 @@ footer .trinta{
     <div class="on" style="background:#FF4D5E">05</div><div class="on" style="background:#C9A6FF">06</div><div class="on" style="background:#0d0610;color:#EFEAE1">07</div>
   </div>
 
+  <div class="inox" id="cx-inox">
+    <h3>Inox · a caixa de fora</h3>
+    <p class="o" style="font-size:14.5px;color:#B8C4CC;margin:4px 0 10px">Quarentena e uso. Joga aqui sem pensar: o Arquivista pega, carimba, verifica e leva para a caixa certa.</p>
+    <textarea placeholder="Joga aqui…"></textarea>
+    <select><option value="red">Destino: 05 Red</option><option value="vio">Destino: 06 Violeta</option><option value="blk">Destino: 07 Black (usa a senha da Black)</option></select>
+    <div class="bts"><button class="p" data-a="jogar">Jogar no Inox</button><button data-a="arquivista">Arquivista, trabalha</button></div>
+    <div class="lista"></div>
+    <div class="log"></div>
+  </div>
+
+  <div class="dentro">
+  <span class="rot">Dentro do Inox · as caixas</span>
   <div class="caixa" id="cx-red">
     <h3><i style="background:#FF4D5E"></i>05 · Red</h3>
     <p class="o">Autobiografia, projetos, coisas. Cada registro carrega o selo do anterior.</p>
@@ -305,6 +323,8 @@ footer .trinta{
     <textarea placeholder="Cole um código ou uma memória…"></textarea>
     <div class="bts"><button class="p" data-a="gravar">Gravar</button><button data-a="exportar">Exportar backup</button><button data-a="importar">Importar backup</button><button data-a="limpar">Esvaziar teste</button></div>
     <input type="file" accept=".json" hidden>
+    <div class="it" style="border-top:1px solid var(--borda);padding:9px 0;font-size:14px">Código oficial: <a href="./codigos/GaIA_all_in_2026-11-01.py" style="color:var(--osso)">GaIA_all_in_2026-11-01.py</a>
+      <div class="h">escada + regra 2/3 + Arquivista · roda no Pythonista · SHA-256 e06516f35ac8cdbe…</div></div>
     <div class="lista"></div>
   </div>
 
@@ -315,7 +335,17 @@ footer .trinta{
     <input type="password" placeholder="Senha (mínimo 8)" autocomplete="off">
     <div class="bts"><button class="p" data-a="trancar">Trancar</button><button data-a="abrir">Abrir tudo</button><button data-a="limpar">Esvaziar teste</button></div>
     <div class="lista"></div>
+    <p class="o" style="margin-top:14px"><b style="color:var(--osso)">Três nuvens, dois terços.</b> Tranca o texto e divide em 3 pedaços: um fica neste aparelho (Black iPhone), dois saem como arquivo para as nuvens (Black site/Google e GitHub). Quaisquer 2 reconstituem; 1 sozinho não diz nada.</p>
+    <div class="bts"><button data-a="dividir">Dividir em 3</button><button data-a="reconstituir">Reconstituir com 2</button></div>
+    <input type="file" accept=".json" multiple hidden id="pecas">
+    <div class="log" id="log-blk"></div>
   </div>
+  </div>
+
+  <h2>Memorial 7 Box · v1.2</h2>
+  <div class="peca conc"><div class="cab"><h3>Documento de 09/04/2026</h3><span class="selo conc">Referência</span></div>
+  <p>Prefixo de soberania 7 + número da caixa + data invertida. Assinatura DNA ID em cada fragmento. Combinações numéricas por caixa para acesso e autenticidade.</p></div>
+  <p class="ressalva">Numeração a decidir: o memorial usa 71 Violeta, 72 Vermelho, 73 Preto; esta bancada usa 05 Red, 06 Violeta, 07 Black.</p>
 
   <h2>Prova de integridade</h2>
   <div class="bts"><button class="p" id="bt-teste">Rodar os testes</button></div>
@@ -434,6 +464,87 @@ blk.querySelector('[data-a=limpar]').onclick=function(){
   if(confirm('Esvaziar a Black de teste?')){por('gaia_t_blk',[]);listaBlack();}
 };
 
+
+/* ---------- INOX + Arquivista ---------- */
+var inx=document.getElementById('cx-inox'), ita=inx.querySelector('textarea'), isel=inx.querySelector('select'), ilog=inx.querySelector('.log');
+var NOMES={red:'05 Red',vio:'06 Violeta',blk:'07 Black'};
+function listaInox(){var c=ler('gaia_t_inox');inx.querySelector('.lista').innerHTML=c.map(function(r){return '<div class="it">'+esc(r.t.slice(0,140))+'<div class="h">aguardando Arquivista → '+NOMES[r.d]+'</div></div>';}).join('');}
+listaInox();
+inx.querySelector('[data-a=jogar]').onclick=function(){var t=ita.value.trim();if(!t)return;var c=ler('gaia_t_inox');c.push({t:t,d:isel.value,ts:new Date().toISOString()});por('gaia_t_inox',c);ita.value='';listaInox();};
+inx.querySelector('[data-a=arquivista]').onclick=function(){
+  var c=ler('gaia_t_inox'), fica=[], linhas=[], pw=bpw.value;
+  if(!c.length){ilog.textContent='Arquivista: o Inox está vazio.';return;}
+  var i=0;
+  function proximo(){
+    if(i>=c.length){por('gaia_t_inox',fica);listaInox();mostrar(document.getElementById('cx-red'),ler('gaia_t_red'));mostrar(vio,ler('gaia_t_vio'));listaBlack();ilog.innerHTML=linhas.join('<br>');return;}
+    var r=c[i++];
+    sha(r.t).then(function(h){
+      var sel=h.slice(0,12);
+      if(r.d==='blk'){
+        if(pw.length<8){fica.push(r);linhas.push('✗ '+sel+' fica no Inox: falta a senha da Black');return proximo();}
+        return trancar(pw,r.t).then(function(x){var b=ler('gaia_t_blk');b.push(x);por('gaia_t_blk',b);linhas.push('✓ '+sel+' carimbado e trancado na 07 Black');proximo();});
+      }
+      var k=r.d==='red'?'gaia_t_red':'gaia_t_vio';
+      return anexar(k,r.t).then(function(cad){return conferir(cad);}).then(function(v){linhas.push((v.ok?'✓ ':'✗ ')+sel+' carimbado, levado à '+NOMES[r.d]+(v.ok?' e cadeia conferida':' — cadeia quebrada'));proximo();});
+    });
+  }
+  proximo();
+};
+
+/* ---------- 2/3: três nuvens ---------- */
+function xor(a,b){var o=new Uint8Array(a.length);for(var i=0;i<a.length;i++)o[i]=a[i]^b[i];return o;}
+function dividir(ct){
+  var n=ct.length, m=Math.ceil(n/2), A=new Uint8Array(m), B=new Uint8Array(m);
+  A.set(ct.slice(0,m));B.set(ct.slice(m));
+  return [A,B,xor(A,B)];
+}
+function juntar(pecas,n){
+  var p={};pecas.forEach(function(x){p[x.k]=deb(x.d);});
+  var A=p[1]||xor(p[2],p[3]), B=p[2]||xor(p[1],p[3]);
+  var o=new Uint8Array(A.length*2);o.set(A);o.set(B,A.length);return o.slice(0,n);
+}
+function fazerPecas(pw,txt){
+  return trancar(pw,txt).then(function(r){
+    var ct=deb(r.c);
+    return crypto.subtle.digest('SHA-256',ct).then(function(hh){
+      var id=hex(hh).slice(0,16), selo=hex(hh), ps=dividir(ct);
+      return ps.map(function(d,i){return {gaia:'black-peca',k:i+1,id:id,selo:selo,n:ct.length,ts:r.ts,s:r.s,i:r.i,d:b64(d)};});
+    });
+  });
+}
+function reconstituir(pw,pecas){
+  var porId={};pecas.forEach(function(x){if(x&&x.gaia==='black-peca'){(porId[x.id]=porId[x.id]||{})[x.k]=x;}});
+  var ids=Object.keys(porId).filter(function(id){return Object.keys(porId[id]).length>=2;});
+  if(!ids.length) return Promise.reject('faltam pedaços');
+  var g=porId[ids[0]], lista=Object.keys(g).map(function(k){return g[k];}).slice(0,2), b=lista[0];
+  var ct=juntar(lista,b.n);
+  return crypto.subtle.digest('SHA-256',ct).then(function(hh){
+    if(hex(hh)!==b.selo) throw 'selo não confere';
+    return abrir(pw,{s:b.s,i:b.i,c:b64(ct)});
+  });
+}
+var llog=document.getElementById('log-blk'), finp=document.getElementById('pecas');
+function baixar(obj,nome){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(obj)],{type:'application/json'}));a.download=nome;a.click();}
+blk.querySelector('[data-a=dividir]').onclick=function(){
+  var t=bta.value.trim(), pw=bpw.value; if(!t){llog.textContent='Escreva o documento no campo da Black.';return;}
+  if(pw.length<8){llog.textContent='Senha curta: mínimo 8.';return;}
+  fazerPecas(pw,t).then(function(ps){
+    por('gaia_t_peca1',ps[0]);
+    baixar(ps[1],'black_'+ps[1].id+'_peca2_site-google.json');
+    setTimeout(function(){baixar(ps[2],'black_'+ps[2].id+'_peca3_github.json');},400);
+    bta.value='';
+    llog.innerHTML='✓ Pedaço 1 ficou neste aparelho (Black iPhone).<br>✓ Pedaços 2 e 3 baixados: guarde um no Google/iCloud e outro no GitHub.<br>Selo '+ps[0].id;
+  });
+};
+blk.querySelector('[data-a=reconstituir]').onclick=function(){if(bpw.value.length<8){llog.textContent='Digite a senha antes.';return;}finp.click();};
+finp.onchange=function(){
+  var pw=bpw.value, local=ler('gaia_t_peca1');
+  Promise.all(Array.from(finp.files).map(function(f){return f.text().then(function(t){try{return JSON.parse(t);}catch(e){return null;}});}))
+  .then(function(ps){if(local&&local.gaia)ps.push(local);return reconstituir(pw,ps).then(function(t){llog.innerHTML='✓ Reconstituído com 2 de 3 e selo conferido:<br>'+esc(t);});})
+  .catch(function(e){llog.textContent='✗ Não reconstituiu: '+(typeof e==='string'?e:'senha errada ou pedaço adulterado');});
+  finp.value='';bpw.value='';
+};
+
 /* ---------- prova de integridade ---------- */
 document.getElementById('bt-teste').onclick=function(){
   var out=document.getElementById('res'), linhas=[];
@@ -458,6 +569,16 @@ document.getElementById('bt-teste').onclick=function(){
   .then(function(r){return abrir('senha-errada-000',r).then(function(){diz(false,'Black: senha errada recusada');},function(){diz(true,'Black: senha errada recusada');}).then(function(){return r;});})
   .then(function(r){var x=Object.assign({},r),b=deb(x.c);b[0]^=1;x.c=b64(b);
     return abrir('senha-de-teste-33',x).then(function(){diz(false,'Black: adulteração do cofre detectada');},function(){diz(true,'Black: adulteração do cofre detectada');});})
+  .then(function(){return fazerPecas('senha-de-teste-33','Documento em três nuvens');})
+  .then(function(ps){
+    var pares=[[0,1],[0,2],[1,2]], nomes=['iPhone + site','iPhone + GitHub','site + GitHub'];
+    return Promise.all(pares.map(function(p){return reconstituir('senha-de-teste-33',[ps[p[0]],ps[p[1]]]);})).then(function(r){
+      r.forEach(function(t,i){diz(t==='Documento em três nuvens','2/3: '+nomes[i]+' reconstitui');});
+      diz(atob(ps[0].d).indexOf('Documento')<0,'2/3: um pedaço sozinho não mostra o texto');
+      return reconstituir('senha-de-teste-33',[ps[1]]).then(function(){diz(false,'2/3: um pedaço só não reconstitui');},function(){diz(true,'2/3: um pedaço só não reconstitui');}).then(function(){return ps;});
+    });})
+  .then(function(ps){var x=Object.assign({},ps[1]),b=deb(x.d);b[3]^=1;x.d=b64(b);
+    return reconstituir('senha-de-teste-33',[ps[0],x]).then(function(){diz(false,'2/3: pedaço adulterado é recusado pelo selo');},function(){diz(true,'2/3: pedaço adulterado é recusado pelo selo');});})
   .then(function(){try{localStorage.removeItem(K);}catch(e){}
     var ok=linhas.filter(function(l){return l.indexOf('class="ok"')>0;}).length;
     linhas.push('\n'+ok+' de '+linhas.length+' passaram · '+new Date().toISOString());out.innerHTML=linhas.join('\n');})
