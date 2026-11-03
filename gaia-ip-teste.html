@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GaIA Teste — Sounavy</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="GaIA: IA pessoal soberana que nasce no telefone. Opera Vox: a voz como sistema operacional. Sounavy — Antônio Alberto Lopes Elias.">
+<meta name="theme-color" content="#16091F">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sounavy">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fundo:#16091F;
+  --campo:#20102D;
+  --campo2:#2A1739;
+  --borda:rgba(239,234,225,.13);
+  --osso:#EFEAE1;
+  --fraco:#A093AE;
+  --prisma:#C9A6FF;
+  --r:#FF4D5E;
+  --g:#3DDC84;
+  --b:#5B8CFF;
+  --disp:"Syne",system-ui,sans-serif;
+  --corpo:"Spectral",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --raio:3px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--fundo);
+  color:var(--osso);
+  font-family:var(--corpo);
+  font-weight:300;
+  font-size:17px;
+  line-height:1.62;
+  padding:0 20px calc(64px + env(safe-area-inset-bottom));
+  overflow-x:hidden;
+}
+.folha{max-width:640px;margin:0 auto}
+::selection{background:var(--prisma);color:var(--fundo)}
+:focus-visible{outline:2px solid var(--prisma);outline-offset:3px}
+
+/* ---------- cabeça ---------- */
+header{padding:calc(38px + env(safe-area-inset-top)) 0 4px}
+.topo{display:flex;align-items:center;gap:16px}
+.prisma{width:52px;height:38px;position:relative;flex:0 0 auto}
+.prisma i{
+  position:absolute;width:26px;height:26px;border-radius:50%;
+  mix-blend-mode:screen;transition:transform .5s cubic-bezier(.2,.7,.3,1);
+}
+.prisma .p1{background:var(--r);top:0;left:13px}
+.prisma .p2{background:var(--g);bottom:0;left:0}
+.prisma .p3{background:var(--b);bottom:0;right:0}
+body[data-aba="opera"] .prisma .p1{transform:translateY(5px)}
+body[data-aba="opera"] .prisma .p2{transform:translate(6px,-4px)}
+body[data-aba="opera"] .prisma .p3{transform:translate(-6px,-4px)}
+body[data-aba="livro"] .prisma .p1{transform:translateY(9px)}
+body[data-aba="livro"] .prisma .p2{transform:translate(13px,-9px)}
+body[data-aba="livro"] .prisma .p3{transform:translate(-13px,-9px)}
+body[data-aba="lab"] .prisma .p1{transform:translate(-8px,4px)}
+body[data-aba="lab"] .prisma .p3{transform:translate(-4px,-6px)}
+body[data-aba="arte"] .prisma .p2{transform:translate(4px,-10px)}
+body[data-aba="arte"] .prisma .p3{transform:translate(-2px,-2px) scale(1.15)}
+body[data-aba="radio"] .prisma i{animation:pulsa 2.4s ease-in-out infinite}
+body[data-aba="radio"] .prisma .p2{animation-delay:.3s}
+body[data-aba="radio"] .prisma .p3{animation-delay:.6s}
+@keyframes pulsa{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@media (prefers-reduced-motion:reduce){body[data-aba="radio"] .prisma i{animation:none}}
+.abas{-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+.aba:hover{color:var(--fraco)}
+@media (hover:hover){.aba:hover{color:var(--osso)}}
+.aba[aria-selected="true"]{color:var(--osso)}
+.nome{font-family:var(--disp);font-weight:800;font-size:27px;letter-spacing:-.02em;line-height:1}
+.nome span{
+  display:block;font-family:var(--mono);font-weight:400;font-size:10px;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--fraco);margin-top:8px;
+}
+
+/* ---------- abas ---------- */
+.abas{display:flex;gap:0;margin:30px 0 0;border-bottom:1px solid var(--borda);
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.abas::-webkit-scrollbar{display:none}
+.aba{
+  appearance:none;background:none;border:0;cursor:pointer;flex:0 0 auto;
+  font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:-.01em;
+  color:var(--fraco);padding:11px 0;margin-right:24px;white-space:nowrap;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .2s;
+}
+.aba:hover{color:var(--osso)}
+.aba[aria-selected="true"]{color:var(--osso);border-bottom-color:var(--prisma)}
+
+/* ---------- painel ---------- */
+[role="tabpanel"]{padding-top:34px;animation:sobe .4s ease both}
+@keyframes sobe{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.tese{
+  font-family:var(--disp);font-weight:600;font-size:29px;line-height:1.22;
+  letter-spacing:-.025em;max-width:19ch;
+}
+.tese em{font-style:normal;color:var(--prisma)}
+.sob{margin-top:16px;color:var(--fraco);max-width:44ch}
+
+h2{
+  font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--fraco);
+  margin:46px 0 16px;padding-bottom:9px;border-bottom:1px solid var(--borda);
+}
+
+/* ---------- peças ---------- */
+.peca{
+  border-left:2px solid var(--borda);padding:2px 0 2px 16px;margin-bottom:22px;
+}
+.peca .cab{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.peca h3{font-family:var(--disp);font-weight:600;font-size:17px;letter-spacing:-.01em}
+.peca p{font-size:15.5px;color:var(--fraco);margin-top:5px}
+.peca p b{color:var(--osso);font-weight:600}
+.peca.roda{border-left-color:var(--g)}
+.peca.proto{border-left-color:var(--b)}
+.peca.conc{border-left-color:var(--fraco)}
+
+.selo{
+  font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;padding:3px 7px;border-radius:var(--raio);
+  border:1px solid currentColor;white-space:nowrap;
+}
+.selo.roda{color:var(--g)}
+.selo.proto{color:var(--b)}
+.selo.conc{color:var(--fraco)}
+
+/* ---------- canais ---------- */
+.canais{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:6px}
+.canal{
+  border:1px solid var(--borda);border-radius:var(--raio);background:var(--campo);
+  padding:13px 11px;
+}
+.canal b{
+  display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;margin-bottom:7px;
+}
+.canal span{font-size:14px;color:var(--fraco);line-height:1.4;display:block}
+.canal.cr b{color:var(--r)}
+.canal.cg b{color:var(--g)}
+.canal.cb b{color:var(--b)}
+.mistura{
+  margin-top:12px;font-size:15px;color:var(--fraco);
+  border-left:2px solid var(--prisma);padding-left:14px;
+}
+.mistura b{color:var(--osso);font-weight:600}
+
+/* ---------- números ---------- */
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--borda);
+  border:1px solid var(--borda);border-radius:var(--raio);overflow:hidden}
+.num{background:var(--campo);padding:14px 13px}
+.num b{display:block;font-family:var(--disp);font-weight:800;font-size:22px;letter-spacing:-.02em}
+.num span{display:block;font-size:13.5px;color:var(--fraco);line-height:1.35;margin-top:3px}
+.ressalva{margin-top:12px;font-size:14px;color:var(--fraco);font-style:italic}
+
+/* ---------- registro ---------- */
+.doi{font-family:var(--mono);font-size:13px;line-height:2.1;color:var(--fraco);word-break:break-all}
+.doi a{color:var(--osso);text-decoration:none;border-bottom:1px solid var(--borda)}
+.doi a:hover{border-bottom-color:var(--prisma)}
+.doi u{text-decoration:none;color:var(--prisma)}
+
+/* ---------- botão ---------- */
+.btn{
+  display:inline-block;margin-top:8px;font-family:var(--disp);font-weight:600;font-size:15px;
+  color:var(--fundo);background:var(--prisma);text-decoration:none;
+  padding:12px 20px;border-radius:var(--raio);
+}
+.btn:hover{background:var(--osso)}
+
+/* ---------- livro ---------- */
+.trav{border:1px solid var(--borda);border-radius:var(--raio);background:var(--campo);
+  padding:15px;margin-bottom:12px}
+.trav .de{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--fraco);margin-bottom:9px}
+.trav .de b{font-weight:500}
+.trav .seta{color:var(--prisma);font-size:13px;letter-spacing:0}
+.trav.virou .de .fim{color:var(--g)}
+.trav.caiu .de .fim{color:var(--r)}
+.trav h3{font-family:var(--disp);font-weight:600;font-size:16px;margin-bottom:4px}
+.trav p{font-size:15px;color:var(--fraco)}
+.cap{border-left:2px solid var(--prisma);padding:1px 0 1px 15px;margin-bottom:18px}
+.cap b{font-family:var(--disp);font-weight:600;font-size:16px;display:block}
+.cap span{font-size:14.5px;color:var(--fraco)}
+.cap i{font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--fraco);display:block;margin-top:4px}
+
+/* ---------- cofre ---------- */
+.cx{background:var(--campo);border:1px solid var(--borda);border-radius:var(--raio);padding:16px}
+.cx input,.cx textarea{
+  width:100%;background:var(--campo2);color:var(--osso);border:1px solid var(--borda);
+  border-radius:var(--raio);padding:12px;font-family:var(--corpo);font-size:16px;font-weight:300;
+}
+.cx textarea{min-height:220px;resize:vertical;line-height:1.6}
+.cx input:focus,.cx textarea:focus{outline:2px solid var(--prisma);outline-offset:1px}
+.cx label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fraco);margin:0 0 8px}
+.linha{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.bt{flex:1 1 auto;min-width:120px;padding:13px;border:0;border-radius:var(--raio);cursor:pointer;
+  font-family:var(--disp);font-weight:600;font-size:15px;background:var(--prisma);color:var(--fundo)}
+.bt.sec{background:transparent;color:var(--prisma);border:1px solid var(--prisma)}
+.bt:disabled{opacity:.45;cursor:default}
+.aviso{margin-top:12px;padding:11px 13px;border-radius:var(--raio);font-size:14px;display:none;line-height:1.5}
+.aviso.on{display:block}
+.aviso.ok{color:var(--g);border-left:2px solid var(--g);background:rgba(61,220,132,.07)}
+.aviso.no{color:var(--r);border-left:2px solid var(--r);background:rgba(255,77,94,.07)}
+.aviso.av{color:var(--prisma);border-left:2px solid var(--prisma);background:rgba(201,166,255,.07)}
+.selado{text-align:center;padding:34px 12px;color:var(--fraco);font-size:15px;line-height:1.7}
+.selado b{display:block;font-family:var(--disp);font-weight:800;font-size:38px;color:var(--prisma);
+  letter-spacing:-.03em;margin-bottom:10px}
+
+/* ---------- contato ---------- */
+.contato{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.lk{
+  display:inline-flex;align-items:center;gap:7px;text-decoration:none;
+  font-family:var(--disp);font-weight:600;font-size:14px;color:var(--osso);
+  background:var(--campo);border:1px solid var(--borda);border-radius:var(--raio);
+  padding:11px 15px;
+}
+.lk:hover{border-color:var(--prisma);color:var(--prisma)}
+.lk s{text-decoration:none;font-family:var(--mono);font-size:11px;color:var(--fraco)}
+
+/* ---------- rodapé ---------- */
+footer{margin-top:60px;padding-top:26px;border-top:1px solid var(--borda);color:var(--fraco)}
+footer p{font-size:14.5px}
+footer .mono{font-family:var(--mono);font-size:11.5px;line-height:2;letter-spacing:.03em;margin-top:12px}
+footer .frase{font-family:var(--disp);font-weight:600;font-size:17px;color:var(--osso);margin-top:22px}
+footer .trinta{
+  font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--prisma);margin-top:20px;
+}
+
+@media (max-width:400px){
+  .tese{font-size:25px}
+  .canais{grid-template-columns:1fr}
+  .nums{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+
+.mapa{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:6px 0 4px}
+.mapa div{height:30px;border-radius:4px;font-family:var(--mono);font-size:9.5px;display:flex;align-items:center;justify-content:center;color:#16091F;opacity:.25}
+.mapa div.on{opacity:1;outline:2px solid var(--osso);outline-offset:1px}
+.caixa{border-radius:10px;padding:14px;margin-top:14px;border:1px solid var(--borda);background:var(--campo)}
+.caixa h3{font-family:var(--disp);font-weight:600;font-size:18px;display:flex;align-items:center;gap:9px}
+.caixa h3 i{width:13px;height:13px;border-radius:50%;display:inline-block}
+.caixa .o{font-size:14.5px;color:var(--fraco);margin:4px 0 10px}
+.caixa textarea,.caixa input{width:100%;background:var(--fundo);color:var(--osso);border:1px solid var(--borda);border-radius:6px;padding:10px;font:inherit;font-size:16px}
+.caixa textarea{min-height:76px;resize:vertical}
+.caixa input{margin-top:8px}
+.bts{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.bts button{appearance:none;border:1px solid var(--borda);background:var(--campo2);color:var(--osso);font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;padding:9px 11px;border-radius:6px;cursor:pointer}
+.bts button.p{background:var(--prisma);color:var(--fundo);border-color:var(--prisma)}
+.lista{margin-top:10px;font-size:14px}
+.lista .it{border-top:1px solid var(--borda);padding:8px 0}
+.lista .h{font-family:var(--mono);font-size:10px;color:var(--fraco);word-break:break-all}
+.res{font-family:var(--mono);font-size:12.5px;line-height:1.7;margin-top:10px;white-space:pre-wrap}
+.res .ok{color:var(--g)} .res .no{color:var(--r)}
+.estavel{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--r);border:1px solid var(--r);border-radius:3px;padding:3px 7px;margin-top:12px}
+</style>
+</head>
+<body data-aba="lab">
+<div class="folha">
+<header>
+  <a class="volta" href="./gaia-ip.html" style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fraco);text-decoration:none">← versão estável</a>
+  <div class="topo" style="margin-top:18px">
+    <div class="prisma" aria-hidden="true"><i class="p1"></i><i class="p2"></i><i class="p3"></i></div>
+    <div class="nome">GaIA · 2º plano<span>bancada de teste · não está no menu</span></div>
+  </div>
+  <span class="estavel">Teste — dados descartáveis</span>
+</header>
+
+<main style="padding-top:26px">
+  <p class="tese">Três caixas <em>vivas</em>.</p>
+  <p class="sob">Tudo que entra aqui fica só neste aparelho. Nada vai para servidor. Serve para testar se guarda, se volta igual e se percebe adulteração.</p>
+
+  <h2>As sete caixas · três acesas</h2>
+  <div class="mapa">
+    <div style="background:#3DDC84">01</div><div style="background:#5B8CFF">02</div><div style="background:#F5C542">03</div><div style="background:#FF9A3D">04</div>
+    <div class="on" style="background:#FF4D5E">05</div><div class="on" style="background:#C9A6FF">06</div><div class="on" style="background:#0d0610;color:#EFEAE1">07</div>
+  </div>
+
+  <div class="caixa" id="cx-red">
+    <h3><i style="background:#FF4D5E"></i>05 · Red</h3>
+    <p class="o">Autobiografia, projetos, coisas. Cada registro carrega o selo do anterior.</p>
+    <textarea placeholder="Escreva ou dite um registro…"></textarea>
+    <div class="bts"><button class="p" data-a="gravar">Gravar</button><button data-a="limpar">Esvaziar teste</button></div>
+    <div class="lista"></div>
+  </div>
+
+  <div class="caixa" id="cx-vio">
+    <h3><i style="background:#C9A6FF"></i>06 · Violeta</h3>
+    <p class="o">Códigos oficiais e a memória da GaIA. Exporta e reimporta inteira: é o que permite trocar de motor.</p>
+    <textarea placeholder="Cole um código ou uma memória…"></textarea>
+    <div class="bts"><button class="p" data-a="gravar">Gravar</button><button data-a="exportar">Exportar backup</button><button data-a="importar">Importar backup</button><button data-a="limpar">Esvaziar teste</button></div>
+    <input type="file" accept=".json" hidden>
+    <div class="lista"></div>
+  </div>
+
+  <div class="caixa" id="cx-blk">
+    <h3><i style="background:#0d0610;border:1px solid #EFEAE1"></i>07 · Black</h3>
+    <p class="o">Documentos privados. Trancado com a sua senha (AES-GCM). Sem a senha, nem esta página lê.</p>
+    <textarea placeholder="Documento privado…"></textarea>
+    <input type="password" placeholder="Senha (mínimo 8)" autocomplete="off">
+    <div class="bts"><button class="p" data-a="trancar">Trancar</button><button data-a="abrir">Abrir tudo</button><button data-a="limpar">Esvaziar teste</button></div>
+    <div class="lista"></div>
+  </div>
+
+  <h2>Prova de integridade</h2>
+  <div class="bts"><button class="p" id="bt-teste">Rodar os testes</button></div>
+  <div class="res" id="res"></div>
+  <p class="ressalva">Os testes usam caixas de ensaio separadas: não tocam no que você gravou acima.</p>
+</main>
+<footer><p class="frase">Não é eu — é nós.</p><p class="trinta">33</p></footer>
+</div>
+
+<script>
+(function(){
+var enc=new TextEncoder(), dec=new TextDecoder();
+function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');}
+function sha(t){return crypto.subtle.digest('SHA-256',enc.encode(t)).then(hex);}
+function b64(b){return btoa(String.fromCharCode.apply(null,new Uint8Array(b)));}
+function deb(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0);});}
+function ler(k){try{return JSON.parse(localStorage.getItem(k))||[];}catch(e){return [];}}
+function por(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
+var ZERO='0'.repeat(64);
+
+/* ---------- cadeia (Red e Violeta) ---------- */
+function selar(ant,ts,txt){return sha(ant+'|'+ts+'|'+txt);}
+function anexar(k,txt){
+  var c=ler(k), ant=c.length?c[c.length-1].h:ZERO, ts=new Date().toISOString();
+  return selar(ant,ts,txt).then(function(h){c.push({ts:ts,t:txt,a:ant,h:h});por(k,c);return c;});
+}
+function conferir(c){
+  var ant=ZERO, i=0;
+  function passo(){
+    if(i>=c.length) return Promise.resolve({ok:true});
+    var r=c[i];
+    if(r.a!==ant) return Promise.resolve({ok:false,em:i+1});
+    return selar(r.a,r.ts,r.t).then(function(h){
+      if(h!==r.h) return {ok:false,em:i+1};
+      ant=r.h;i++;return passo();
+    });
+  }
+  return passo();
+}
+
+/* ---------- cofre (Black) ---------- */
+function chave(pw,salt){
+  return crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveKey']).then(function(b){
+    return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:310000,hash:'SHA-256'},b,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);});
+}
+function trancar(pw,txt){
+  var s=crypto.getRandomValues(new Uint8Array(16)), iv=crypto.getRandomValues(new Uint8Array(12));
+  return chave(pw,s).then(function(k){return crypto.subtle.encrypt({name:'AES-GCM',iv:iv},k,enc.encode(txt));})
+    .then(function(ct){return {ts:new Date().toISOString(),s:b64(s),i:b64(iv),c:b64(ct)};});
+}
+function abrir(pw,r){
+  return chave(pw,deb(r.s)).then(function(k){return crypto.subtle.decrypt({name:'AES-GCM',iv:deb(r.i)},k,deb(r.c));}).then(function(p){return dec.decode(p);});
+}
+
+/* ---------- telas ---------- */
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function mostrar(el,c){
+  el.querySelector('.lista').innerHTML=c.slice().reverse().map(function(r){
+    return '<div class="it">'+esc(r.t.length>220?r.t.slice(0,220)+'…':r.t)+'<div class="h">'+r.ts.replace('T',' ').slice(0,19)+' · '+r.h.slice(0,16)+'…</div></div>';}).join('');
+}
+function caixaCadeia(id,k){
+  var el=document.getElementById(id), ta=el.querySelector('textarea');
+  mostrar(el,ler(k));
+  el.querySelector('[data-a=gravar]').onclick=function(){
+    var t=ta.value.trim(); if(!t) return;
+    anexar(k,t).then(function(c){ta.value='';mostrar(el,c);});
+  };
+  el.querySelector('[data-a=limpar]').onclick=function(){
+    if(confirm('Esvaziar esta caixa de teste? Os registros dela somem deste aparelho.')){por(k,[]);mostrar(el,[]);}
+  };
+  return el;
+}
+caixaCadeia('cx-red','gaia_t_red');
+var vio=caixaCadeia('cx-vio','gaia_t_vio'), arq=vio.querySelector('input[type=file]');
+vio.querySelector('[data-a=exportar]').onclick=function(){
+  var c=ler('gaia_t_vio');
+  sha(JSON.stringify(c)).then(function(h){
+    var pac={gaia:'violeta',versao:1,criado:new Date().toISOString(),selo:h,registros:c};
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([JSON.stringify(pac,null,1)],{type:'application/json'}));
+    a.download='violeta_backup_'+pac.criado.slice(0,10)+'.json';a.click();
+  });
+};
+vio.querySelector('[data-a=importar]').onclick=function(){arq.click();};
+arq.onchange=function(){
+  var f=arq.files[0]; if(!f) return;
+  f.text().then(function(t){
+    var p=JSON.parse(t);
+    return sha(JSON.stringify(p.registros)).then(function(h){
+      if(h!==p.selo) throw new Error('selo');
+      return conferir(p.registros).then(function(r){
+        if(!r.ok) throw new Error('cadeia');
+        por('gaia_t_vio',p.registros);mostrar(vio,p.registros);alert('Backup íntegro: '+p.registros.length+' registros restaurados.');
+      });
+    });
+  }).catch(function(){alert('Backup recusado: o arquivo foi alterado ou não é da Violeta.');});
+  arq.value='';
+};
+
+var blk=document.getElementById('cx-blk'), bta=blk.querySelector('textarea'), bpw=blk.querySelector('input'), bl=blk.querySelector('.lista');
+function listaBlack(){var c=ler('gaia_t_blk');bl.innerHTML=c.length?'<div class="it">'+c.length+' documento(s) trancado(s).<div class="h">o que se vê aqui é só a contagem</div></div>':'';}
+listaBlack();
+blk.querySelector('[data-a=trancar]').onclick=function(){
+  var t=bta.value.trim(), pw=bpw.value; if(!t) return;
+  if(pw.length<8){alert('Senha curta: mínimo 8 caracteres.');return;}
+  trancar(pw,t).then(function(r){var c=ler('gaia_t_blk');c.push(r);por('gaia_t_blk',c);bta.value='';listaBlack();});
+};
+blk.querySelector('[data-a=abrir]').onclick=function(){
+  var pw=bpw.value, c=ler('gaia_t_blk'); if(!c.length) return;
+  Promise.all(c.map(function(r){return abrir(pw,r);})).then(function(ts){
+    bl.innerHTML=ts.map(function(t,i){return '<div class="it">'+esc(t)+'<div class="h">'+c[i].ts.replace('T',' ').slice(0,19)+'</div></div>';}).join('');
+    bpw.value='';
+  }).catch(function(){alert('Senha errada. Tudo continua trancado.');});
+};
+blk.querySelector('[data-a=limpar]').onclick=function(){
+  if(confirm('Esvaziar a Black de teste?')){por('gaia_t_blk',[]);listaBlack();}
+};
+
+/* ---------- prova de integridade ---------- */
+document.getElementById('bt-teste').onclick=function(){
+  var out=document.getElementById('res'), linhas=[];
+  function diz(ok,t){linhas.push('<span class="'+(ok?'ok':'no')+'">'+(ok?'✓':'✗')+'</span> '+t);out.innerHTML=linhas.join('\n');}
+  out.textContent='Rodando…';
+  var K='gaia_ensaio'; por(K,[]);
+  anexar(K,'Primeiro registro').then(function(){return anexar(K,'Segundo registro');}).then(function(){return anexar(K,'Terceiro, com acento: ação, coração');})
+  .then(function(c){return conferir(c).then(function(r){diz(r.ok,'Red/Violeta: 3 registros gravados e a cadeia confere');return c;});})
+  .then(function(c){var x=JSON.parse(JSON.stringify(c));x[1].t='Segundo registro adulterado';
+    return conferir(x).then(function(r){diz(!r.ok&&r.em===2,'Adulteração no texto detectada (registro '+r.em+')');return c;});})
+  .then(function(c){var x=JSON.parse(JSON.stringify(c));x.splice(1,1);
+    return conferir(x).then(function(r){diz(!r.ok,'Registro apagado no meio detectado');return c;});})
+  .then(function(c){var x=JSON.parse(JSON.stringify(c));var t=x[0];x[0]=x[2];x[2]=t;
+    return conferir(x).then(function(r){diz(!r.ok,'Troca de ordem detectada');return c;});})
+  .then(function(c){var s=JSON.stringify(c), volta=JSON.parse(s);
+    return Promise.all([sha(s),sha(JSON.stringify(volta)),conferir(volta)]).then(function(v){diz(v[0]===v[1]&&v[2].ok,'Backup exportado e reimportado volta idêntico (troca de motor)');});})
+  .then(function(){return trancar('senha-de-teste-33','Documento privado de ensaio');})
+  .then(function(r){
+    var guardado=JSON.stringify(r);
+    diz(guardado.indexOf('Documento')<0,'Black: o texto não aparece no que fica gravado');
+    return abrir('senha-de-teste-33',r).then(function(t){diz(t==='Documento privado de ensaio','Black: senha certa devolve o texto igual');return r;});})
+  .then(function(r){return abrir('senha-errada-000',r).then(function(){diz(false,'Black: senha errada recusada');},function(){diz(true,'Black: senha errada recusada');}).then(function(){return r;});})
+  .then(function(r){var x=Object.assign({},r),b=deb(x.c);b[0]^=1;x.c=b64(b);
+    return abrir('senha-de-teste-33',x).then(function(){diz(false,'Black: adulteração do cofre detectada');},function(){diz(true,'Black: adulteração do cofre detectada');});})
+  .then(function(){try{localStorage.removeItem(K);}catch(e){}
+    var ok=linhas.filter(function(l){return l.indexOf('class="ok"')>0;}).length;
+    linhas.push('\n'+ok+' de '+linhas.length+' passaram · '+new Date().toISOString());out.innerHTML=linhas.join('\n');})
+  .catch(function(e){diz(false,'Erro: '+e);});
+};
+})();
+</script>
+</body>
+</html>
