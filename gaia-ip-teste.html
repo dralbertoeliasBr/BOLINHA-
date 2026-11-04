@@ -347,11 +347,22 @@ footer .trinta{
   <p>Prefixo de soberania 7 + número da caixa + data invertida. Assinatura DNA ID em cada fragmento. Combinações numéricas por caixa para acesso e autenticidade.</p></div>
   <p class="ressalva">Numeração a decidir: o memorial usa 71 Violeta, 72 Vermelho, 73 Preto; esta bancada usa 05 Red, 06 Violeta, 07 Black.</p>
 
+  <h2>Caixa Borges · semente de 5 bytes</h2>
+  <div class="caixa" id="cx-borges">
+    <p class="o">A semente não carrega o texto: é o endereço. O acervo deste aparelho guarda o texto inteiro e reconstitui 100% igual. Conceito: Sounavy. Motor: Borges v3.2 (03/11/2026).</p>
+    <textarea id="bg-entrada" placeholder="Fale ou escreva aqui…"></textarea>
+    <div class="bts"><button class="p" id="bg-arq">Arquivar e gerar semente</button></div>
+    <div class="log" id="bg-saida-arq"></div>
+    <input id="bg-semente" placeholder="Semente (10 letras)" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div class="bts"><button id="bg-rec">Reconstituir</button></div>
+    <div class="log" id="bg-saida-rec"></div>
+  </div>
+
   <h2>Índice do Arquivista · mais novo em cima</h2>
   <div class="caixa" id="cx-indice">
     <p class="o">Tudo que está em todas as caixas, numa lista só, pela hora. O nome de cada item já diz caixa, data e selo.</p>
     <input type="search" placeholder="Buscar (a Black nunca aparece no texto)" id="busca-ind">
-    <div class="bts" id="filtro-ind"><button class="p" data-f="">Todas</button><button data-f="00">Inox</button><button data-f="05">Red</button><button data-f="06">Violeta</button><button data-f="07">Black</button></div>
+    <div class="bts" id="filtro-ind"><button class="p" data-f="">Todas</button><button data-f="00">Inox</button><button data-f="05">Red</button><button data-f="06">Violeta</button><button data-f="07">Black</button><button data-f="BG">Borges</button></div>
     <div class="lista" id="lista-ind"></div>
   </div>
 
@@ -567,13 +578,14 @@ function indice(){
   ler('gaia_t_red').forEach(function(r){it.push({b:'05',ts:r.ts,t:r.t,h:r.h});});
   ler('gaia_t_vio').forEach(function(r){it.push({b:'06',ts:r.ts,t:r.t,h:r.h});});
   ler('gaia_t_blk').forEach(function(r){it.push({b:'07',ts:r.ts,t:'🔒 trancado',h:hex(deb(r.c).slice(0,8))});});
+  try{var bga=JSON.parse(localStorage.getItem('gaia.borges.acervo.v1')||'{}');Object.keys(bga).forEach(function(sm){it.push({b:'BG',ts:bga[sm].criado_em,t:bga[sm].texto,h:sm});});}catch(e){}
   var p1=ler('gaia_t_peca1'); if(p1&&p1.gaia) it.push({b:'07',ts:p1.ts,t:'🔒 pedaço 1 de 3 (Black iPhone)',h:p1.selo});
   it.sort(function(a,b){return a.ts<b.ts?1:a.ts>b.ts?-1:0;});
   var q=(buscaInd.value||'').toLowerCase();
   it=it.filter(function(x){return (!filtroInd||x.b===filtroInd)&&(!q||(x.b!=='07'&&x.t.toLowerCase().indexOf(q)>=0));});
-  var cor={'00':'#B8C4CC','05':'#FF4D5E','06':'#C9A6FF','07':'#EFEAE1'};
+  var cor={'00':'#B8C4CC','05':'#FF4D5E','06':'#C9A6FF','07':'#EFEAE1','BG':'#E8C98A'};
   listaInd.innerHTML=it.length?it.map(function(x,i){
-    var nome=x.h==='aguardando'?'Inox · aguardando Arquivista':nomeGaia(x.b,x.ts,(x.h.match(/^[0-9a-f]+$/)?x.h:'00000000')).replace('.json','');
+    var nome=x.b==='BG'?'Borges · semente '+x.h:x.h==='aguardando'?'Inox · aguardando Arquivista':nomeGaia(x.b,x.ts,(x.h.match(/^[0-9a-f]+$/)?x.h:'00000000')).replace('.json','');
     return '<div class="it"><span style="font-family:var(--mono);font-size:11px;color:'+cor[x.b]+'">'+(i+1)+'. '+esc(nome)+'</span><br>'+esc(x.t.length>120?x.t.slice(0,120)+'…':x.t)+'</div>';
   }).join(''):'<div class="it" style="color:var(--fraco)">Nada aqui ainda.</div>';
 }
@@ -582,6 +594,46 @@ document.getElementById('filtro-ind').onclick=function(e){var b=e.target.closest
 buscaInd.oninput=indice;
 document.addEventListener('click',function(){setTimeout(indice,1200);});
 indice();
+
+
+/* ---------- Caixa Borges (motor do arquivista_borges_v3.2.py; mesma semente do Python) ---------- */
+(function(){
+  var CHAVE='gaia.borges.acervo.v1';
+  function lerA(){try{return JSON.parse(localStorage.getItem(CHAVE)||'{}');}catch(e){return {};}}
+  function gravA(a){try{localStorage.setItem(CHAVE,JSON.stringify(a));return true;}catch(e){return false;}}
+  function delta(t){return String(t).split(/\s+/).filter(Boolean).join(' ');}
+  function arq(bruto){
+    var texto=delta(bruto); if(!texto) return Promise.resolve({erro:'nada para arquivar'});
+    return sha(texto).then(function(completo){
+      var a=lerA(),tams=[10,12,16,64],semente=null;
+      for(var i=0;i<tams.length;i++){var s=completo.slice(0,tams[i]); if(!a[s]){semente=s;break;} if(a[s].sha256===completo) return {semente:s,novo:false};}
+      a[semente]={sha256:completo,texto:texto,criado_em:new Date().toISOString()};
+      if(!gravA(a)) return {erro:'este navegador não deixou gravar'};
+      return {semente:semente,novo:true};
+    });
+  }
+  function rec(semente){
+    var r=lerA()[String(semente).trim()];
+    if(!r) return Promise.resolve({erro:'semente não está neste acervo'});
+    return sha(r.texto).then(function(h){return h!==r.sha256?{erro:'ADULTERADO: o texto não bate com o selo'}:{texto:r.texto};});
+  }
+  function $(i){return document.getElementById(i);}
+  $('bg-arq').onclick=function(){
+    arq($('bg-entrada').value).then(function(r){
+      var o=$('bg-saida-arq');
+      if(r.erro){o.innerHTML='<span style="color:var(--r)">'+esc(r.erro)+'</span>';return;}
+      o.innerHTML='<span style="color:var(--g)">Semente: '+r.semente+' ('+(r.semente.length/2)+' bytes) · '+(r.novo?'gravado agora':'já estava no acervo')+'</span>';
+      $('bg-semente').value=r.semente; $('bg-entrada').value=''; indice();
+    });
+  };
+  $('bg-rec').onclick=function(){
+    rec($('bg-semente').value).then(function(r){
+      var o=$('bg-saida-rec');
+      o.innerHTML=r.erro?'<span style="color:var(--r)">'+esc(r.erro)+'</span>':'<span style="color:var(--g)">Íntegro (SHA-256 completo confere):</span><br>'+esc(r.texto);
+    });
+  };
+  window.__borges={arq:arq,rec:rec,CHAVE:CHAVE};
+})();
 
 /* ---------- prova de integridade ---------- */
 document.getElementById('bt-teste').onclick=function(){
