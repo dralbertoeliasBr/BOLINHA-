@@ -17,3 +17,10 @@ Acordo ético v1 (selo 70706526): nada se apaga; correção em versão nova.
 - A senha nunca sai do aparelho; o Drive só vê pedaços cifrados. Pasta sugerida: GaIA_INOX_TESTE.
 - SHA-256 de v2/index.html: 017bb0c08fbc744cde2826bb35bd41c984baf4e394aa9ea84495dab73de4e3fe
 - Testado em navegador imitando iPhone: 26/26 (16 da v1 + 10 da viagem). Falta o iPhone real.
+
+## v3 — www.sounavy.com/gaia/v3/  (06/11/2026, 16:08)
+- v1 e v2 intactas. A v3 acrescenta a PORTA EM MODO TESTE: pede "senha FAKE", abre com qualquer coisa (até vazia),
+  nunca tranca e não guarda o que foi digitado. Faixa fixa lembra de blindar quando tudo funcionar no iPhone
+  (senha forte + chave de reserva em papel). Decisão do Sounavy, 06/11/2026.
+- SHA-256 de v3/index.html: 09e0459934d395a24b3a8e7804854f6de6cb24788f9a7fce981b32fe2aca4909
+- Testado em navegador imitando iPhone: 32/32 (16 casa + 10 viagem + 6 porta).

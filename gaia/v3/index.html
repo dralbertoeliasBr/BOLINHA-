@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GaIA">
+<meta name="theme-color" content="#0F0D1A">
+<title>GaIA Casca v3</title>
+<!--
+  GaIA Casca v3 (06/11/2026) — v2 + PORTA EM MODO TESTE: pede senha, mas abre com qualquer coisa (ate vazia).
+      Nunca tranca. Faixa fixa lembra de blindar quando tudo funcionar no iPhone (decisao do Sounavy, 06/11/2026).
+      A senha digitada na porta NAO e guardada nem enviada. v1 e v2 ficam intactas.
+
+  GaIA Casca v2 (06/11/2026) — v1 + VIAGEM CIFRADA PARA A NUVEM (Drive). A v1 fica intacta.
+  v2: "Mandar para a nuvem" cifra a Casa inteira com a sua senha (AES-GCM 256, chave por PBKDF2 300 mil voltas),
+      comprime antes (gzip do proprio navegador), quebra em 3 pedacos (quaisquer 2 reconstroem) e entrega os
+      arquivos para "Salvar em Arquivos" (Google Drive, pasta GaIA_INOX_TESTE). A senha nunca sai do aparelho.
+      "Trazer da nuvem" junta 2 ou 3 pedacos, confere o SHA-256, decifra, confere a corrente e so entao aceita.
+      Mede a viagem: bytes da Casa, comprimida, cifrada, por pedaco, e o tempo.
+
+  GaIA Casca v1 (06/11/2026) — pagina unica, sem instalar nada.
+  Conceito: Sounavy (Antonio Alberto Lopes Elias, ORCID 0000-0002-5602-9916).
+  Base visual e logica: app "Bolinha GaIA" do Replit (@drbetoelias, 18/10/2026), que fica intacto.
+  Engenharia desta versao: Claude. Acordo etico v1 (selo 70706526): nada se apaga; correcao em versao nova.
+  O que mudou em relacao ao Replit:
+   - roda no Safari e vira icone pela "Adicionar a Tela de Inicio" (sem App Store, sem Expo Go)
+   - voz de verdade: usa o reconhecimento do navegador quando existe; senao, o microfone do teclado
+   - Arquivista V SEM botao de apagar (so cresce; corrente SHA-256 conferida ao abrir)
+   - a bolinha gruda na borda mais proxima (ima), como no desenho original da Bolinha 33
+   - as 10 caixas do ENCLAVE: 00 Inox, 01 Vermelho ... 07 Violeta, 08 Black, 09 Doca
+   - copia de seguranca: baixar tudo num arquivo .json (e trazer de volta)
+  Os dados ficam so neste aparelho, neste navegador.
+-->
+<style>
+:root{
+  --bg:#0F0D1A;--fg:#F7F5FF;--card:#19152A;--pri:#8B5CF6;--sec:#28213F;--secfg:#EDE9FE;
+  --mutedfg:#B8B0CE;--acc:#F2C879;--accfg:#251D0E;--border:#3B3156;--danger:#F87171;
+  --idle:#7253B8;--ready:#3F795D;--att:#D6B34F;--attfg:#2B240F;--alert:#A94450;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Inter",system-ui,sans-serif;overflow-x:hidden}
+main{padding:calc(env(safe-area-inset-top) + 18px) 16px calc(env(safe-area-inset-bottom) + 120px);max-width:560px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:flex-start}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.4px;color:var(--acc)}
+.brand{font-size:38px;font-weight:700;letter-spacing:-1.4px;margin:2px 0 0}
+.pill{display:inline-flex;align-items:center;gap:7px;background:var(--sec);color:var(--secfg);border-radius:20px;padding:8px 11px;font-size:11px;font-weight:600}
+.dot{width:7px;height:7px;border-radius:4px;background:var(--acc)}
+h2{font-size:26px;line-height:1.2;letter-spacing:-.6px;margin:26px 0 8px}
+p.lead{color:var(--mutedfg);margin:0 0 6px;font-size:15px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px;margin-top:14px}
+.card h3{margin:0;font-size:15px}
+.sub{font-size:11px;color:var(--mutedfg);margin-top:3px}
+.row{display:flex;align-items:center;gap:10px}
+.ico{width:36px;height:36px;border-radius:11px;background:var(--sec);display:grid;place-items:center;font-size:18px;flex:none}
+.grow{flex:1;min-width:0}
+.boxes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+.box{border:1px solid var(--border);border-radius:10px;padding:7px 2px;text-align:center;font-size:10px;font-weight:700;color:var(--fg);background:var(--bg);cursor:pointer;min-height:44px}
+.box b{display:block;font-size:13px}
+.box.on{outline:2px solid var(--acc)}
+.list{margin-top:10px;max-height:46vh;overflow:auto}
+.item{border-top:1px solid var(--border);padding:9px 0;font-size:13px}
+.item .meta{font-size:10px;color:var(--mutedfg);margin-top:3px;word-break:break-all}
+.btn{min-height:44px;border:0;border-radius:13px;padding:0 14px;font:inherit;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer}
+.btn.pri{background:var(--pri);color:#fff}.btn.sec{background:var(--sec);color:var(--fg)}.btn.acc{background:var(--acc);color:var(--accfg)}
+.btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.btns .btn{flex:1}
+.ok{color:#6EE7B7;font-size:10px;font-weight:700}.err{color:var(--danger);font-size:12px}
+textarea{width:100%;min-height:76px;max-height:160px;border:1px solid var(--border);border-radius:14px;background:var(--bg);color:var(--fg);padding:11px 13px;font:inherit;font-size:16px;resize:vertical;margin-top:12px}
+.bubble{background:var(--sec);border-radius:15px;border-top-left-radius:5px;padding:12px;margin-top:14px;font-size:14px;white-space:pre-wrap}
+#panel{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom) + 84px);max-width:540px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:16px;box-shadow:0 18px 48px rgba(0,0,0,.45);display:none;z-index:20;max-height:72vh;overflow:auto}
+#panel.open{display:block}
+.ph{display:flex;justify-content:space-between;align-items:center}
+.x{background:none;border:0;color:var(--mutedfg);font-size:24px;min-width:44px;min-height:44px;cursor:pointer}
+#orb{position:fixed;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:27px;font-weight:700;color:#fff;background:var(--idle);box-shadow:0 0 0 1px rgba(255,255,255,.15) inset,0 6px 18px rgba(0,0,0,.4);z-index:30;touch-action:none;user-select:none;-webkit-user-select:none;transition:left .18s ease,top .18s ease,background .2s}
+#orb.drag{transition:none;transform:scale(1.06)}
+#orb.listening{background:var(--att);color:var(--attfg)}
+.hint{font-size:12px;color:var(--mutedfg);text-align:center;margin-top:18px}
+.small{font-size:11px;color:var(--mutedfg)}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div id="porta" role="dialog" aria-labelledby="t-porta" style="position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px">
+  <div style="width:100%;max-width:380px;text-align:center">
+    <div style="font-size:52px">🚪</div>
+    <h2 id="t-porta" style="margin:8px 0 4px">Porta da Casa</h2>
+    <p class="lead"><b>Senha FAKE</b> · modo TESTE: qualquer senha abre, até vazia. Nada fica trancado.</p>
+    <input id="porta-senha" type="password" autocomplete="off" placeholder="Senha FAKE (qualquer uma abre)" aria-label="Senha da porta"
+      style="width:100%;min-height:48px;margin-top:14px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--fg);padding:0 14px;font-size:16px;text-align:center">
+    <button class="btn pri" id="b-entrar" style="width:100%;margin-top:12px">Entrar</button>
+    <p class="small" style="margin-top:14px">⚠️ Lembrete: blindar a porta quando a GaIA estiver funcionando no iPhone.</p>
+  </div>
+</div>
+<main>
+  <div class="top">
+    <div><div class="eyebrow">ASSISTENTE DE INCLUSÃO</div><div class="brand">GaIA</div></div>
+    <span class="pill"><span class="dot"></span>só neste aparelho</span>
+  </div>
+  <div id="lembrete" class="card" style="border-color:var(--att);background:#2B240F;margin-top:12px;padding:11px 13px" role="status">
+    <b style="color:var(--att)">🔓 Porta em modo TESTE · senha FAKE</b><div class="small" id="lembrete-txt" style="color:#EDE3C4"></div>
+  </div>
+  <h2>Você não precisa sair da tela.</h2>
+  <p class="lead">Toque na bolinha <b>G</b> e fale ou escreva. A GaIA guarda na caixa certa, com selo, e devolve quando você pedir.</p>
+
+  <section class="card" aria-labelledby="t-casa">
+    <div class="row"><div class="ico">🏠</div><div class="grow"><h3 id="t-casa">Casa ENCLAVE</h3><div class="sub">10 caixas · toque numa para ver o que tem</div></div></div>
+    <div class="boxes" id="boxes"></div>
+    <div class="list" id="boxlist"></div>
+  </section>
+
+  <section class="card" aria-labelledby="t-arq">
+    <div class="row"><div class="ico">🗄️</div><div class="grow"><h3 id="t-arq">Arquivista V</h3><div class="sub">corrente SHA-256 · nada se apaga</div></div><div id="arqstate" class="small"></div></div>
+    <div id="arqlast" class="small" style="margin-top:10px"></div>
+    <div class="btns">
+      <button class="btn sec" id="b-export">⬇︎ Cópia de segurança</button>
+      <label class="btn sec" for="f-import">⬆︎ Trazer cópia</label>
+      <input type="file" id="f-import" accept="application/json" class="hidden">
+    </div>
+  </section>
+  <section class="card" aria-labelledby="t-nuvem">
+    <div class="row"><div class="ico">⛅️</div><div class="grow"><h3 id="t-nuvem">Viagem para a nuvem</h3><div class="sub">cifrada no aparelho · 3 pedaços, 2 reconstroem · Drive normal</div></div></div>
+    <input id="senha" type="password" autocomplete="new-password" placeholder="Senha da viagem (mínimo 8)" aria-label="Senha da viagem"
+      style="width:100%;min-height:44px;margin-top:12px;border:1px solid var(--border);border-radius:12px;background:var(--bg);color:var(--fg);padding:0 12px;font-size:16px">
+    <div class="btns">
+      <button class="btn acc" id="b-ida">☁︎ Mandar para a nuvem</button>
+      <label class="btn sec" for="f-volta">⇣ Trazer da nuvem</label>
+      <input type="file" id="f-volta" multiple class="hidden">
+    </div>
+    <div id="viagem" class="small" style="margin-top:10px;white-space:pre-wrap">Salve os 3 pedaços em Arquivos › Google Drive › GaIA_INOX_TESTE. Para trazer de volta, escolha 2 ou 3 pedaços.</div>
+  </section>
+  <p class="hint">Para virar ícone: botão Compartilhar do Safari › Adicionar à Tela de Início.</p>
+</main>
+
+<div id="panel" role="dialog" aria-modal="false" aria-labelledby="t-fale">
+  <div class="ph"><div><b id="t-fale">Fale com a GaIA</b><div class="small" id="pstatus">pronta</div></div><button class="x" id="b-close" aria-label="Fechar">×</button></div>
+  <div class="bubble" id="reply">Oi, eu sou a GaIA. Diga, por exemplo: “guardar comprar pão” ou “busca pão”.</div>
+  <textarea id="txt" placeholder="Fale (microfone do teclado) ou escreva…" aria-label="O que você quer"></textarea>
+  <div class="btns">
+    <button class="btn sec" id="b-mic">🎤 falar</button>
+    <button class="btn pri" id="b-go">Enviar</button>
+  </div>
+  <div class="small" style="margin-top:10px">Comandos: <b>guardar …</b> (ou salve, anote, grave) · <b>busca …</b> · <b>lista</b> · <b>caixas</b> · <b>ajuda</b>. Para escolher a caixa, termine com “na verde”, “na black”…</div>
+</div>
+
+<div id="orb" role="button" tabindex="0" aria-label="Abrir a GaIA">G</div>
+
+<script>
+"use strict";
+/* ---------------- armazenamento (so neste aparelho) ---------------- */
+const CHAVE = "gaia.casca.v1.ledger";
+const POS = "gaia.casca.v1.orb";
+const mem = {};
+function ler(k){ try{ return localStorage.getItem(k); }catch(e){ return mem[k] ?? null; } }
+function gravar(k,v){ try{ localStorage.setItem(k,v); }catch(e){ mem[k]=v; } }
+
+/* ---------------- caixas ---------------- */
+const CAIXAS = {
+  "00":["Inox","quarentena"], "01":["Vermelho","projetos"], "02":["Laranja","licenciáveis"],
+  "03":["Amarelo","trabalho"], "04":["Verde","rotinas"], "05":["Azul","memórias"],
+  "06":["Anil","reservada"], "07":["Violeta","código"], "08":["Black","privado"], "09":["Doca","diário"]
+};
+const COR = {"00":"#9aa0a6","01":"#e5484d","02":"#f76b15","03":"#f5d90a","04":"#46a758","05":"#3e63dd","06":"#5b5bd6","07":"#8e4ec6","08":"#111","09":"#F2C879"};
+const PALAVRA_CAIXA = {vermelho:"01",vermelha:"01",red:"01",projeto:"01",laranja:"02",amarelo:"03",amarela:"03",trabalho:"03",
+  verde:"04",azul:"05",anil:"06",violeta:"07",codigo:"07",black:"08",preta:"08",preto:"08",privado:"08",segredo:"08",doca:"09"};
+const PRIVADO = [/\b\d{3}\.?\d{3}\.?\d{3}-\d{2}\b/, /\b(?:\d{4}[ -]){3}\d{4}\b/, /[\w.+-]+@[\w-]+\.[\w.]+/,
+  /\(?\b\d{2}\)?\s?9\d{4}-\d{4}\b/, /\bsenha\b/i, /\bpaciente\b/i, /\bprontu[aá]rio\b/i, /\blaudo\b/i, /\bpix\b/i, /\btoken\b/i];
+const PROJETO = /\b(projeto|gaia|enclave|livro|tese|cap[ií]tulo|cl[ií]nica|ideia|manifesto|zenodo)\b/i;
+function semAcento(t){ return t.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase(); }
+function privado(t){ return PRIVADO.some(r=>r.test(t)); }
+function classificar(t){
+  if(privado(t)) return ["08","tem dado privado"];
+  if(/(^|\n)\s*(def |class |import |function |const |<html)/i.test(t)) return ["07","é código"];
+  if(PROJETO.test(t)) return ["01","fala de projeto"];
+  return ["03","texto geral"];
+}
+
+/* ---------------- Arquivista V: corrente SHA-256, so cresce ---------------- */
+async function sha256(txt){
+  const b = new TextEncoder().encode(txt);
+  if (window.crypto && crypto.subtle) {
+    const h = await crypto.subtle.digest("SHA-256", b);
+    return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,"0")).join("");
+  }
+  throw new Error("Este navegador não tem SHA-256 (abra pelo Safari em https).");
+}
+function corpo(r){ return JSON.stringify([r.seq,r.quando,r.tipo,r.caixa,r.texto,r.motivo,r.anterior]); }
+let LEDGER = [], LEDGER_OK = true, LEDGER_ERRO = "";
+async function carregar(){
+  let lista = [];
+  try { lista = JSON.parse(ler(CHAVE) || "[]"); if(!Array.isArray(lista)) throw 0; }
+  catch(e){ LEDGER=[]; LEDGER_OK=false; LEDGER_ERRO="O arquivo da Casa não pôde ser lido. Nada foi apagado."; return; }
+  let ant = "GENESIS";
+  for (let i=0;i<lista.length;i++){
+    const r = lista[i];
+    if (!r || r.seq !== i+1 || r.anterior !== ant || await sha256(corpo(r)) !== r.hash){
+      LEDGER = lista; LEDGER_OK=false; LEDGER_ERRO = "A corrente quebrou no marco "+(i+1)+": alguém mexeu por fora. Nada foi apagado.";
+      return;
+    }
+    ant = r.hash;
+  }
+  LEDGER = lista; LEDGER_OK = true; LEDGER_ERRO = "";
+}
+let fila = Promise.resolve();
+function anotar(tipo, caixa, texto, motivo){
+  fila = fila.catch(()=>{}).then(async ()=>{
+    if(!LEDGER_OK) throw new Error(LEDGER_ERRO);
+    const r = {seq:LEDGER.length+1, quando:new Date().toISOString(), tipo, caixa, texto, motivo,
+               anterior: LEDGER.length ? LEDGER[LEDGER.length-1].hash : "GENESIS"};
+    r.hash = await sha256(corpo(r));
+    LEDGER.push(r); gravar(CHAVE, JSON.stringify(LEDGER));
+    return r;
+  });
+  return fila;
+}
+function vigentes(){ return LEDGER.filter(r=>r.tipo==="guardar"); }
+
+/* ---------------- cerebro simples (degrau N1/N2, sem nuvem) ---------------- */
+const VERBO = /^(guarda|guardar|guarde|arquiva|arquivar|arquive|anota|anotar|anote|lembra|lembrar|lembre|salva|salvar|salve|grava|gravar|grave|registra|registrar|registre)\b[:,]?\s*/i;
+async function responder(entrada){
+  const original = entrada.trim();
+  const t = semAcento(original);
+  if(!original) return "Diga ou escreva alguma coisa.";
+  if(/^(ajuda|comandos|o que voce faz)\b/.test(t))
+    return "guardar … (vai para a caixa certa)\nbusca …\nlista\ncaixas\nPara escolher a caixa: “… na verde”, “… na black”.";
+  if(/^(caixas|boxes)$/.test(t))
+    return Object.entries(CAIXAS).map(([k,[n,p]])=>k+" "+n+": "+p).join("\n");
+  if(/^(lista|ultimos|o que tem)\b/.test(t)){
+    const v = vigentes().slice(-5).reverse();
+    return v.length ? v.map(r=>"["+CAIXAS[r.caixa][0]+"] "+(r.caixa==="08"?"(privado)":r.texto.slice(0,80))).join("\n") : "A Casa ainda está vazia.";
+  }
+  const mb = t.match(/^(busca|buscar|procura|procurar|traz|trazer|acha|achar)\s+(.+)$/);
+  if(mb){
+    const q = mb[2].split(/\W+/).filter(w=>w.length>2);
+    const achados = vigentes().filter(r=>r.caixa!=="08").map(r=>{
+      const w = semAcento(r.texto); return [r, q.filter(p=>w.includes(p)).length/q.length];
+    }).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]||b[0].seq-a[0].seq).slice(0,3);
+    return achados.length ? "Achei:\n"+achados.map(([r])=>"["+CAIXAS[r.caixa][0]+"] "+r.texto.slice(0,160)).join("\n") : "Não achei nada com isso (a Black nunca aparece em busca).";
+  }
+  if(VERBO.test(original)){
+    let texto = original.replace(VERBO,"").replace(/^(isso|isto|que)\s*[:,]?\s*/i,"");
+    let caixa = null, motivo = "";
+    const fim = semAcento(texto).match(/\s+(na|no|em)\s+(caixa\s+)?([a-z]+)\s*$/);
+    if(fim && PALAVRA_CAIXA[fim[3]]){ caixa = PALAVRA_CAIXA[fim[3]]; texto = texto.slice(0, texto.length - fim[0].length).trim(); motivo = "você escolheu"; }
+    if(!texto) return "Guardar o quê? Diga: guardar …";
+    if(!caixa) [caixa, motivo] = classificar(texto);
+    else if(caixa!=="08" && privado(texto)){ caixa="08"; motivo="tem dado privado"; }
+    const dup = vigentes().find(r=>r.texto===texto && r.caixa===caixa);
+    if(dup) return "Isso já estava guardado na "+CAIXAS[caixa][0]+" (marco "+dup.seq+").";
+    const r = await anotar("guardar", caixa, texto, motivo);
+    return "Guardado na "+caixa+" "+CAIXAS[caixa][0]+" ("+motivo+"). Marco "+r.seq+" · selo "+r.hash.slice(0,8)+".";
+  }
+  return "Ainda não sei fazer isso. Para guardar, comece com “guardar …”. Para achar, “busca …”.";
+}
+
+/* ---------------- tela ---------------- */
+const $ = id=>document.getElementById(id);
+let caixaVista = null;
+function desenhar(){
+  const cont = {}; vigentes().forEach(r=>cont[r.caixa]=(cont[r.caixa]||0)+1);
+  $("boxes").innerHTML = Object.entries(CAIXAS).map(([k,[n]])=>
+    '<button class="box'+(caixaVista===k?' on':'')+'" data-k="'+k+'" style="border-color:'+COR[k]+'"><b>'+(cont[k]||0)+'</b>'+k+' '+n+'</button>').join("");
+  $("boxes").querySelectorAll(".box").forEach(b=>b.onclick=()=>{ caixaVista = caixaVista===b.dataset.k?null:b.dataset.k; desenhar(); });
+  if(caixaVista){
+    const v = vigentes().filter(r=>r.caixa===caixaVista).reverse();
+    $("boxlist").innerHTML = v.length ? v.map(r=>'<div class="item">'+(r.caixa==="08"?"🔒 privado (só aparece aqui, nunca em busca)<br>":"")+esc(r.texto)+
+      '<div class="meta">marco '+r.seq+' · '+new Date(r.quando).toLocaleString("pt-BR")+' · '+r.hash.slice(0,16)+'…</div></div>').join("")
+      : '<div class="item small">Caixa vazia.</div>';
+  } else $("boxlist").innerHTML = "";
+  $("arqstate").innerHTML = LEDGER_OK ? '<span class="ok">'+LEDGER.length+' marcos · verificado</span>' : '<span class="err">alerta</span>';
+  const u = LEDGER[LEDGER.length-1];
+  $("arqlast").innerHTML = !LEDGER_OK ? '<span class="err">'+esc(LEDGER_ERRO)+'</span>'
+    : u ? 'Último: '+new Date(u.quando).toLocaleString("pt-BR")+' na '+CAIXAS[u.caixa][0]+' · SHA-256 '+u.hash.slice(0,16)+'…' : 'Ainda sem marcos.';
+  $("orb").style.background = !LEDGER_OK ? "var(--alert)" : LEDGER.length ? "var(--ready)" : "var(--idle)";
+}
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function falar(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="pt-BR"; speechSynthesis.speak(u);}catch(e){} }
+
+async function enviar(){
+  const v = $("txt").value; if(!v.trim()) return;
+  try{ const r = await responder(v); $("reply").textContent = r; falar(r.split("\n")[0]); $("txt").value=""; }
+  catch(e){ $("reply").textContent = "Não consegui: "+e.message; }
+  desenhar();
+}
+$("b-go").onclick = enviar;
+$("txt").addEventListener("keydown", e=>{ if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); enviar(); } });
+$("b-close").onclick = ()=>{ $("panel").classList.remove("open"); $("txt").blur(); };
+
+/* voz: reconhecimento do navegador quando existe; senao, foco no campo (microfone do teclado) */
+const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null;
+$("b-mic").onclick = ()=>{
+  if(!Rec){ $("txt").focus(); $("pstatus").textContent = "toque no 🎤 do teclado para ditar"; return; }
+  if(rec){ rec.stop(); return; }
+  rec = new Rec(); rec.lang = "pt-BR"; rec.interimResults = true; rec.continuous = false;
+  const antes = $("txt").value;
+  rec.onresult = e=>{ let s=""; for(const r of e.results) s+=r[0].transcript; $("txt").value = (antes?antes+" ":"")+s; };
+  rec.onend = ()=>{ rec=null; $("orb").classList.remove("listening"); $("b-mic").textContent="🎤 falar"; $("pstatus").textContent="pronta"; };
+  rec.onerror = e=>{ $("pstatus").textContent = "voz indisponível ("+e.error+"); use o 🎤 do teclado"; };
+  rec.start(); $("orb").classList.add("listening"); $("b-mic").textContent="⏹ parar"; $("pstatus").textContent="ouvindo…";
+};
+
+/* bolinha arrastavel com ima na borda */
+const orb = $("orb");
+function limites(){ const s=56,m=8; return {minX:m,maxX:innerWidth-s-m,minY:m+(parseInt(getComputedStyle(document.documentElement).getPropertyValue("--sat"))||20),maxY:innerHeight-s-m-20}; }
+function por(x,y){ const L=limites(); x=Math.min(Math.max(L.minX,x),L.maxX); y=Math.min(Math.max(L.minY,y),L.maxY); orb.style.left=x+"px"; orb.style.top=y+"px"; return {x,y}; }
+function ima(){ const L=limites(); const r=orb.getBoundingClientRect(); const x = (r.left+28 < innerWidth/2) ? L.minX : L.maxX; const p=por(x,r.top); gravar(POS, JSON.stringify(p)); }
+(function(){ let p=null; try{ p=JSON.parse(ler(POS)||"null"); }catch(e){} if(p&&isFinite(p.x)&&isFinite(p.y)) por(p.x,p.y); else por(innerWidth-72, innerHeight-170); })();
+let arr=null;
+orb.addEventListener("pointerdown", e=>{ arr={x0:e.clientX,y0:e.clientY,l:orb.offsetLeft,t:orb.offsetTop,moveu:false}; orb.setPointerCapture(e.pointerId); });
+orb.addEventListener("pointermove", e=>{ if(!arr) return; const dx=e.clientX-arr.x0, dy=e.clientY-arr.y0;
+  if(!arr.moveu && Math.hypot(dx,dy)>6){ arr.moveu=true; orb.classList.add("drag"); }
+  if(arr.moveu) por(arr.l+dx, arr.t+dy); });
+orb.addEventListener("pointerup", ()=>{ if(!arr) return; const m=arr.moveu; arr=null; orb.classList.remove("drag");
+  if(m) ima(); else { $("panel").classList.toggle("open"); if($("panel").classList.contains("open")) $("txt").focus(); } });
+orb.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); $("panel").classList.toggle("open"); } });
+addEventListener("resize", ima);
+
+/* copia de seguranca */
+$("b-export").onclick = ()=>{
+  const blob = new Blob([JSON.stringify({tipo:"GaIA Casca v1",quando:new Date().toISOString(),ledger:LEDGER},null,1)],{type:"application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "gaia_casa_"+new Date().toISOString().slice(0,19).replace(/[:T]/g,"-")+".json"; a.click();
+};
+$("f-import").onchange = async e=>{
+  const f = e.target.files[0]; if(!f) return;
+  try{
+    const d = JSON.parse(await f.text());
+    if(!d || !Array.isArray(d.ledger)) throw new Error("arquivo não é uma cópia da GaIA");
+    if(d.ledger.length < LEDGER.length) throw new Error("a cópia é menor que a Casa atual; não troco (nada se apaga)");
+    for(let i=0;i<LEDGER.length;i++) if(LEDGER[i].hash!==d.ledger[i].hash) throw new Error("a cópia não continua esta Casa; não misturo");
+    const salvo = ler(CHAVE); gravar(CHAVE, JSON.stringify(d.ledger)); await carregar();
+    if(!LEDGER_OK){ gravar(CHAVE, salvo); await carregar(); throw new Error("a cópia tem a corrente quebrada; voltei como estava"); }
+    alert("Cópia trazida: "+LEDGER.length+" marcos, corrente conferida.");
+  }catch(err){ alert("Não trouxe: "+err.message); }
+  e.target.value=""; desenhar();
+};
+
+/* ---------------- VIAGEM CIFRADA (v2) ---------------- */
+const b64 = u8 => { let s=""; for(let i=0;i<u8.length;i+=0x8000) s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000)); return btoa(s); };
+const unb64 = t => Uint8Array.from(atob(t), c=>c.charCodeAt(0));
+const hex = u8 => [...u8].map(x=>x.toString(16).padStart(2,"0")).join("");
+async function shaBytes(u8){ return hex(new Uint8Array(await crypto.subtle.digest("SHA-256", u8))); }
+async function gzip(u8){
+  if(!("CompressionStream" in window)) return [u8,false];
+  const r = new Response(new Blob([u8]).stream().pipeThrough(new CompressionStream("gzip"))); return [new Uint8Array(await r.arrayBuffer()),true];
+}
+async function gunzip(u8){ const r = new Response(new Blob([u8]).stream().pipeThrough(new DecompressionStream("gzip"))); return new Uint8Array(await r.arrayBuffer()); }
+async function chaveDe(senha, sal){
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(senha), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt:sal, iterations:300000, hash:"SHA-256"}, base, {name:"AES-GCM", length:256}, false, ["encrypt","decrypt"]);
+}
+function xor(a,b){ const o=new Uint8Array(a.length); for(let i=0;i<a.length;i++) o[i]=a[i]^b[i]; return o; }
+async function empacotar(senha){
+  if(!senha || senha.length<8) throw new Error("senha curta (mínimo 8)");
+  if(!LEDGER_OK) throw new Error("a corrente da Casa não confere; não viaja assim");
+  const t0 = performance.now();
+  const claro = new TextEncoder().encode(JSON.stringify({tipo:"GaIA Casca", quando:new Date().toISOString(), ledger:LEDGER}));
+  const [comp, gz] = await gzip(claro);
+  const sal = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const cif = new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM", iv}, await chaveDe(senha, sal), comp));
+  const m = Math.ceil(cif.length/2), A = cif.slice(0,m), B = new Uint8Array(m); B.set(cif.slice(m));
+  const id = (await shaBytes(cif)).slice(0,12), sha = await shaBytes(cif);
+  const comum = {tipo:"GaIA pedaco v2", id, de:3, tamanho:cif.length, sha_pacote:sha, sal:b64(sal), iv:b64(iv), gzip:gz,
+                 marcos:LEDGER.length, ultimo:LEDGER.length?LEDGER[LEDGER.length-1].hash:"GENESIS", quando:new Date().toISOString()};
+  const pedacos = [A,B,xor(A,B)].map((d,i)=>({...comum, peca:i+1, dados:b64(d)}));
+  const medida = {casa:claro.length, comprimida:comp.length, cifrada:cif.length, por_pedaco:pedacos.map(p=>JSON.stringify(p).length), ms:Math.round(performance.now()-t0)};
+  return {pedacos, medida, id};
+}
+async function reconstruir(listaTextos, senha){
+  const t0 = performance.now();
+  const ps = listaTextos.map(t=>JSON.parse(t)).filter(p=>p && p.tipo==="GaIA pedaco v2");
+  if(ps.length<2) throw new Error("preciso de pelo menos 2 pedaços");
+  const id = ps[0].id; if(ps.some(p=>p.id!==id)) throw new Error("os pedaços são de viagens diferentes");
+  const por = {}; ps.forEach(p=>por[p.peca]=unb64(p.dados));
+  const tentativas = [[1,2],[1,3],[2,3]].filter(([a,b])=>por[a]&&por[b]);
+  let cif=null;
+  for(const [a,b] of tentativas){
+    const usarA = a===1||b===1 ? por[1] : xor(por[2],por[3]);
+    const usarB = a===2||b===2 ? por[2] : xor(por[1],por[3]);
+    const junto = new Uint8Array(usarA.length+usarB.length); junto.set(usarA); junto.set(usarB, usarA.length);
+    const c = junto.slice(0, ps[0].tamanho);
+    if(await shaBytes(c) === ps[0].sha_pacote){ cif = c; break; }
+  }
+  if(!cif) throw new Error("os pedaços não batem com o selo (algum foi mexido)");
+  let comp;
+  try{ comp = new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(ps[0].iv)}, await chaveDe(senha, unb64(ps[0].sal)), cif)); }
+  catch(e){ throw new Error("senha errada ou pacote adulterado"); }
+  const claro = ps[0].gzip ? await gunzip(comp) : comp;
+  const d = JSON.parse(new TextDecoder().decode(claro));
+  return {dados:d, ms:Math.round(performance.now()-t0), usados:ps.map(p=>p.peca).sort().join("+")};
+}
+async function aceitarLedger(novo){
+  if(!Array.isArray(novo)) throw new Error("pacote sem Casa");
+  if(novo.length < LEDGER.length) throw new Error("a Casa que voltou é menor que a daqui; não troco (nada se apaga)");
+  for(let i=0;i<LEDGER.length;i++) if(LEDGER[i].hash!==novo[i].hash) throw new Error("a Casa que voltou não continua esta; não misturo");
+  const salvo = ler(CHAVE); gravar(CHAVE, JSON.stringify(novo)); await carregar();
+  if(!LEDGER_OK){ gravar(CHAVE, salvo); await carregar(); throw new Error("a corrente que voltou está quebrada; voltei como estava"); }
+}
+$("b-ida").onclick = async ()=>{
+  const out = $("viagem");
+  try{
+    out.textContent = "Cifrando…";
+    if(!$("senha").value || $("senha").value.length<8) throw new Error("senha curta (mínimo 8)");
+    await anotar("viagem-ida","09","Viagem para a nuvem com "+LEDGER.length+" marcos (este marco vai junto).","viagem");
+    const {pedacos, medida, id} = await empacotar($("senha").value);
+    const files = pedacos.map(p=>new File([JSON.stringify(p)], "GaIA_"+id+"_peca"+p.peca+"de3.json", {type:"application/json"}));
+    out.textContent = "Viagem "+id+": Casa "+medida.casa+" B → comprimida "+medida.comprimida+" B → cifrada "+medida.cifrada+" B → 3 pedaços de ~"+medida.por_pedaco[0]+" B ("+medida.ms+" ms).\nSalve os 3 em Arquivos › Google Drive › GaIA_INOX_TESTE. Qualquer 2 reconstroem.";
+    if(navigator.canShare && navigator.canShare({files})){ await navigator.share({files, title:"GaIA viagem "+id}); }
+    else files.forEach(f=>{ const a=document.createElement("a"); a.href=URL.createObjectURL(f); a.download=f.name; a.click(); });
+  }catch(e){ if(e && e.name==="AbortError") out.textContent += "\n(Você fechou sem salvar. Nada mudou.)"; else out.textContent = "Não viajou: "+e.message; }
+  desenhar();
+};
+$("f-volta").onchange = async e=>{
+  const out = $("viagem");
+  try{
+    const textos = await Promise.all([...e.target.files].map(f=>f.text()));
+    const {dados, ms, usados} = await reconstruir(textos, $("senha").value);
+    await aceitarLedger(dados.ledger);
+    out.textContent = "Voltou inteira pelos pedaços "+usados+" ("+ms+" ms): "+dados.ledger.length+" marcos, corrente conferida.";
+    await anotar("viagem-volta","09","Viagem de volta pelos pedaços "+usados+": "+dados.ledger.length+" marcos conferidos.","viagem").catch(()=>{});
+  }catch(err){ out.textContent = "Não trouxe: "+err.message+". Nada mudou."; }
+  e.target.value=""; desenhar();
+};
+
+/* ---------------- PORTA EM MODO TESTE (v3) ---------------- */
+const PORTA_DESDE = "gaia.casca.porta.teste.desde";
+(function(){
+  let desde = ler(PORTA_DESDE); if(!desde){ desde = new Date().toISOString(); gravar(PORTA_DESDE, desde); }
+  const dias = Math.floor((Date.now() - new Date(desde).getTime())/86400000);
+  $("lembrete-txt").textContent = "Desde "+new Date(desde).toLocaleDateString("pt-BR")+" ("+dias+" dia"+(dias===1?"":"s")+"). Qualquer senha abre. Blindar quando tudo funcionar: senha forte + chave de reserva em papel. Só dado de teste na viagem.";
+})();
+function entrar(){ $("porta-senha").value = ""; $("porta").style.display = "none"; }   // a senha da porta nao e guardada nem usada
+$("b-entrar").onclick = entrar;
+$("porta-senha").addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); entrar(); } });
+
+/* teste rapido exposto (para conferir) */
+window.__gaia = {responder, carregar, empacotar, reconstruir, aceitarLedger, get ledger(){return LEDGER;}, get ok(){return LEDGER_OK;}};
+carregar().then(desenhar).catch(e=>{ LEDGER_OK=false; LEDGER_ERRO=e.message; desenhar(); });
+</script>
+</body>
+</html>
