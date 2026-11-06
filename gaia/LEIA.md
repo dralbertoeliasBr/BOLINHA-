@@ -24,3 +24,12 @@ Acordo ético v1 (selo 70706526): nada se apaga; correção em versão nova.
   (senha forte + chave de reserva em papel). Decisão do Sounavy, 06/11/2026.
 - SHA-256 de v3/index.html: 09e0459934d395a24b3a8e7804854f6de6cb24788f9a7fce981b32fe2aca4909
 - Testado em navegador imitando iPhone: 32/32 (16 casa + 10 viagem + 6 porta).
+
+## v4 — CAMADA transparente: www.sounavy.com/gaia/v4/  (06/11/2026, 16:25)
+- Desenho do Sounavy: "o site é transparente, é um OS; a pessoa nem vê os boxes; vê só a bolinha e a linha de chat embaixo".
+- gaia/v4/casca.js = a camada; entra em qualquer página com <script src="/gaia/v4/casca.js" defer></script>
+  (nenhuma página existente foi alterada; gaia/v4/index.html é só a demonstração).
+- Bolinha com centro transparente; toque abre/fecha a conversa; toque numa fala copia; conversa sobrevive a recarregar;
+  dado privado aparece mascarado (•••) na conversa; mesma Casa das v1–v3; Shadow DOM não estraga a página por baixo.
+- SHA-256 casca.js: feca805a2c13dcde897aad323720c0e1ba074396180d1004df306f2916963914
+- Testado em navegador imitando iPhone: 17/17. Falta o iPhone real.
