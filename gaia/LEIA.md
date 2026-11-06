@@ -33,3 +33,11 @@ Acordo ético v1 (selo 70706526): nada se apaga; correção em versão nova.
   dado privado aparece mascarado (•••) na conversa; mesma Casa das v1–v3; Shadow DOM não estraga a página por baixo.
 - SHA-256 casca.js: feca805a2c13dcde897aad323720c0e1ba074396180d1004df306f2916963914
 - Testado em navegador imitando iPhone: 17/17. Falta o iPhone real.
+
+## v5 — CAMADA + o que era bom no agente do Replit: www.sounavy.com/gaia/v5/  (06/11/2026, 16:40)
+- Trazido da versão do agente do Replit (app "Bolinha GaIA Inclusão Digital", pasta gaia-casca, que fica intacta lá):
+  pergunta antes de baixar a cópia e avisa que a Black vai sem cifra; repetido conferido sem acento/maiúscula;
+  cartão de 13–19 dígitos e celular com +55 como privados; área segura do iPhone; foco visível; menos movimento.
+- Não trazido: caixas na tela (contra o desenho), "cartão" sozinho como privado (exagero), Casa separada.
+- SHA-256 casca.js: b827f36773a6051ab33e4b0bb847222124eb9b8b3c958df8567207b902acbc61
+- Testado em navegador imitando iPhone: 24/24. Falta o iPhone real.
