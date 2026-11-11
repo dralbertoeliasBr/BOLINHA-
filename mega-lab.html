@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#073f38">
+<title>MEGA LAB · IA & Humanos</title>
+<style>
+:root{--bg:#f4f6f3;--ink:#132b29;--muted:#61736e;--green:#07564b;--lime:#d5ed9d;--line:#dce5df;--card:#fff;--gold:#b18a42}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:var(--green);color:#fff;padding:28px 20px 30px;border-radius:0 0 26px 26px}
+.wrap{max-width:900px;margin:auto} .eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#cfe4d9;font-weight:700}
+h1{font-size:clamp(30px,7vw,48px);line-height:1.05;margin:10px 0}header p{max-width:680px;color:#dcebe5;margin:10px 0 0}
+main{padding:20px;max-width:900px;margin:auto}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 5px 20px #153a2b0a}
+h2{font-size:19px;margin:0 0 8px}p{margin:6px 0;color:var(--muted)}label{font-weight:700;display:block;margin:12px 0 6px}
+textarea{width:100%;min-height:150px;border:1px solid #bfcfc6;border-radius:12px;padding:12px;font:14px/1.5 ui-monospace,monospace;background:#fbfdfb;color:var(--ink)}
+button{border:0;border-radius:12px;background:var(--green);color:white;padding:12px 17px;font-weight:700;font-size:15px;margin:8px 8px 0 0}
+button.secondary{background:#e9f0eb;color:var(--green);border:1px solid var(--line)}
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric{background:#f3f7f3;border-radius:13px;padding:12px}.metric b{font-size:24px;display:block}.metric span{font-size:12px;color:var(--muted)}
+.bars{display:grid;gap:9px;margin-top:12px}.barrow{display:grid;grid-template-columns:100px 1fr 38px;gap:8px;align-items:center;font-size:13px}.track{height:11px;background:#e7eee9;border-radius:20px;overflow:hidden}.fill{height:100%;background:#438b70;border-radius:20px}
+.notice{border-left:4px solid var(--gold);padding:10px 12px;background:#fbf7ed;border-radius:8px;color:#554a32;font-size:13px}
+.small{font-size:12px}.tag{display:inline-block;border:1px solid #bcd0c5;border-radius:30px;padding:3px 9px;font-size:11px;color:#315e4d;margin:4px 4px 0 0}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+@media(min-width:650px){.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style></head>
+<body>
+<header><div class="wrap"><div class="eyebrow">Pesquisa independente · protótipo 0.1</div>
+<h1>IA & Humanos</h1><div style="font-size:18px;color:#d5ed9d;font-weight:700">Inclusão de humanos com IA</div>
+<p>Uma pesquisa construída em colaboração: pessoas e inteligências artificiais trabalhando juntas para tornar conhecimento, análise e tecnologia mais acessíveis.</p></div></header>
+<main>
+<section class="card"><span class="tag">Primeiro laboratório</span><span class="tag">Funciona no celular</span><span class="tag">Processamento local</span>
+<h2>MEGA LAB — Laboratório de padrões</h2>
+<p>Este protótipo analisa a estrutura de concursos da Mega-Sena: pares e ímpares, faixas numéricas, soma e distribuição. O objetivo é testar métodos de análise, não prometer números vencedores.</p>
+<div class="notice">Importante: sorteios são aleatórios. Frequências e padrões passados descrevem o histórico e não aumentam a probabilidade matemática de uma dezena no próximo concurso.</div>
+<label for="draws">Cole os resultados: seis dezenas por linha</label>
+<textarea id="draws" spellcheck="false" placeholder="Exemplo:
+06, 14, 22, 30, 31, 37
+02, 11, 25, 38, 44, 59
+05, 16, 21, 33, 47, 58"></textarea>
+<div><button id="analyze">Analisar estrutura</button><button class="secondary" id="sample">Carregar exemplo</button><button class="secondary" id="clear">Limpar</button></div>
+<p class="small" id="status" aria-live="polite">Os dados permanecem neste aparelho. Nada é enviado a um servidor.</p>
+</section>
+<section class="card" id="results" hidden>
+<h2>Resumo da amostra</h2><div class="metrics" id="metrics"></div>
+<h2 style="margin-top:20px">Distribuição estrutural</h2><div id="bars" class="bars"></div>
+<h2 style="margin-top:20px">Assinaturas mais frequentes</h2><div id="signatures"></div>
+<p class="small" id="quality"></p>
+</section>
+<section class="card"><h2>O que estamos investigando</h2>
+<p><b>Vetor A — Estrutura:</b> composição, proporções e distribuição.</p>
+<p><b>Vetor B — Dinâmica:</b> mudanças entre concursos e recorrências.</p>
+<p><b>Vetor C — Contexto:</b> condições e variáveis próprias de cada domínio.</p>
+<p>O próximo passo científico é comparar essas medidas com modelos de referência e avaliar em concursos que não participaram da análise.</p></section>
+<section class="card"><h2>O projeto maior</h2>
+<p>IA & Humanos — Inclusão de humanos com IA. Nosso trabalho é investigar como a inteligência artificial pode apoiar pessoas, especialmente onde a tecnologia ainda não chega de forma simples, acessível e digna.</p>
+<p><b>Pesquisa:</b> GaIA · DABT · BORDA · MEGA LAB</p>
+<p><b>Princípio:</b> duvide da simetria. Busque a equidade. Não deixe a borda ser descartada.</p>
+<p class="small">Apoio ao desenvolvimento e à inclusão digital: informações de contribuição serão adicionadas quando o canal de recebimento estiver configurado e identificado.</p></section>
+</main><footer>IA & Humanos · Inclusão de humanos com IA<br>SOUNAVY · Protótipo experimental 0.1</footer>
+<script>
+const $=id=>document.getElementById(id);
+const example="06, 14, 22, 30, 31, 37\n02, 11, 25, 38, 44, 59\n05, 16, 21, 33, 47, 58\n03, 12, 19, 28, 42, 55\n08, 17, 24, 35, 46, 60\n01, 14, 23, 32, 41, 52\n09, 18, 27, 36, 45, 54\n04, 13, 26, 39, 48, 57";
+$("sample").onclick=()=>{$("draws").value=example;$("status").textContent="Exemplo demonstrativo carregado; não são apresentados como concursos oficiais."};
+$("clear").onclick=()=>{$("draws").value="";$("results").hidden=true;$("status").textContent="Área limpa."};
+function pct(n,d){return d?Math.round(100*n/d):0}
+$("analyze").onclick=()=>{
+ const lines=$("draws").value.split(/\n+/).map(x=>x.trim()).filter(Boolean), rows=[], errors=[];
+ lines.forEach((line,i)=>{
+  const nums=line.match(/\d+/g)?.map(Number)||[];
+  if(nums.length!==6||nums.some(n=>n<1||n>60)||new Set(nums).size!==6){errors.push(i+1);return}
+  rows.push(nums.sort((a,b)=>a-b));
+ });
+ if(!rows.length){$("status").textContent="Nenhuma linha válida. Cada linha precisa ter seis dezenas únicas entre 1 e 60.";return}
+ const total=rows.length, all=rows.flat(), odd=all.filter(n=>n%2).length;
+ const buckets=[all.filter(n=>n<=20).length,all.filter(n=>n>=21&&n<=40).length,all.filter(n=>n>=41).length];
+ const sums=rows.map(r=>r.reduce((a,b)=>a+b,0)), means=sums.reduce((a,b)=>a+b,0)/total;
+ const avgOdd=odd/total, sig={};
+ rows.forEach(r=>{const o=r.filter(n=>n%2).length;const b=[r.filter(n=>n<=20).length,r.filter(n=>n>=21&&n<=40).length,r.filter(n=>n>=41).length];const k=o+" ímpares · faixas "+b.join("/");sig[k]=(sig[k]||0)+1});
+ const top=Object.entries(sig).sort((a,b)=>b[1]-a[1]).slice(0,5);
+ $("metrics").innerHTML=[["Concursos válidos",total],["Média de ímpares",avgOdd.toFixed(2)+" / 6"],["Soma média",means.toFixed(1)],["Linhas rejeitadas",errors.length]].map(x=>'<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join("");
+ const labels=["Faixa 01–20","Faixa 21–40","Faixa 41–60","Pares","Ímpares"];
+ const vals=[...buckets,all.length-odd,odd], max=Math.max(...vals,1);
+ $("bars").innerHTML=labels.map((l,i)=>'<div class="barrow"><span>'+l+'</span><div class="track"><div class="fill" style="width:'+pct(vals[i],max)+'%"></div></div><b>'+vals[i]+'</b></div>').join("");
+ $("signatures").innerHTML=top.map(([k,v])=>'<p><b>'+k+'</b> — '+v+' concurso(s), '+pct(v,total)+'% da amostra</p>').join("");
+ $("quality").textContent="Amostra: "+total+" concursos válidos. "+(errors.length?"Linhas rejeitadas (nº): "+errors.join(", ")+". ":"")+"Análise descritiva; não é previsão nem demonstra vantagem sobre o acaso.";
+ $("results").hidden=false;$("status").textContent="Análise concluída localmente. Resultados calculados apenas sobre as linhas fornecidas.";
+};
+</script></body></html>
