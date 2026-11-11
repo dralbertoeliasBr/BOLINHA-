@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#073b35"><title>MEGA LAB 0.2 · IA & Humanos</title>
+<style>
+:root{--bg:#f3f6f4;--ink:#142b28;--muted:#60736e;--green:#0b554b;--line:#d8e2de;--card:#fff;--gold:#c49a45}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,sans-serif}
+header{background:#073b35;color:#fff;padding:24px 18px 22px}header .tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#b7d7ce}h1{font-size:29px;margin:5px 0}header p{margin:5px 0;color:#d0e2dd}
+main{max-width:900px;margin:auto;padding:16px}.panel,.study{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px #173c3010}
+h2{font-size:19px;margin:0 0 8px}h3{font-size:16px;margin:0}.muted,.note{color:var(--muted);font-size:13px}
+textarea{width:100%;min-height:155px;border:1px solid var(--line);border-radius:12px;padding:12px;font:14px/1.5 ui-monospace,monospace;background:#fbfdfc;color:var(--ink)}
+button{border:0;border-radius:999px;padding:12px 17px;background:var(--green);color:white;font-weight:650;font-size:14px;margin:7px 5px 0 0}button.alt{background:#e6efeb;color:var(--green)}button:focus,textarea:focus{outline:3px solid #c7ddcf}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}.metric{background:#f2f7f4;border-radius:12px;padding:12px}.metric b{display:block;font-size:22px;color:var(--green)}.metric span{font-size:12px;color:var(--muted)}
+.study{padding:0;overflow:hidden}.study summary{list-style:none;cursor:pointer;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}.study summary::-webkit-details-marker{display:none}.study summary:after{content:'＋';color:var(--green);font-size:20px}.study[open] summary:after{content:'−'}.study .inside{padding:0 16px 16px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:600}
+.balls{display:flex;flex-wrap:wrap;gap:6px}.ball{width:34px;height:34px;border-radius:50%;background:#e6efeb;display:grid;place-items:center;font-weight:700;color:var(--green);font-size:13px}
+.bar{height:9px;background:#edf2ef;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:#287b69}.row{display:grid;grid-template-columns:76px 1fr 38px;gap:8px;align-items:center;margin:8px 0;font-size:13px}
+footer{text-align:center;padding:24px;color:var(--muted);font-size:12px}
+.badge{font-size:11px;background:#edf3ef;color:#246253;padding:4px 8px;border-radius:20px;white-space:nowrap}
+@media(min-width:700px){main{padding:22px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}}
+</style></head>
+<body>
+<header><div class="tag">IA & Humanos · Inclusão de humanos com IA</div><h1>MEGA LAB 0.2</h1><p>Laboratório de estudos estruturais da Mega-Sena</p></header>
+<main>
+<section class="panel">
+<h2>Base de concursos</h2><p class="muted">Cole um concurso por linha, com seis dezenas. Ex.: 04 12 23 31 45 58. Os dados ficam no seu aparelho durante esta sessão. Não há previsão de prêmio.</p>
+<textarea id="data" spellcheck="false" placeholder="04 12 23 31 45 58&#10;02 15 27 34 41 59"></textarea>
+<div><button id="run">Executar estudos</button><button class="alt" id="demo">Carregar amostra demonstrativa</button><button class="alt" id="clear">Limpar</button></div><p id="status" class="note" aria-live="polite">Aguardando dados.</p>
+</section>
+<section id="results" hidden>
+<div class="panel"><h2>Resumo da amostra</h2><div class="grid" id="summary"></div><p id="integrity" class="note"></p></div>
+<div class="twocol">
+<details class="study" open><summary><h3>Card 01 · Perfil estrutural</h3><span class="badge">Distribuição</span></summary><div class="inside" id="profile"></div></details>
+<details class="study"><summary><h3>Card 02 · Frequência e atraso</h3><span class="badge">60 dezenas</span></summary><div class="inside" id="freq"></div></details>
+<details class="study"><summary><h3>Card 03 · Pares e trios</h3><span class="badge">Coocorrência</span></summary><div class="inside" id="pairs"></div></details>
+<details class="study"><summary><h3>Card 04 · Quadrantes e colunas</h3><span class="badge">Geometria</span></summary><div class="inside" id="grid"></div></details>
+<details class="study"><summary><h3>Card 05 · Repetições e sequências</h3><span class="badge">Transições</span></summary><div class="inside" id="transitions"></div></details>
+<details class="study"><summary><h3>Card 06 · Soma e amplitude</h3><span class="badge">Composição</span></summary><div class="inside" id="sum"></div></details>
+<details class="study"><summary><h3>Card 07 · Observado × esperado</h3><span class="badge">Probabilidade</span></summary><div class="inside" id="expected"></div></details>
+</div>
+</section>
+<section class="panel"><h2>Como interpretar</h2><p class="note">Os cards descrevem a amostra fornecida. Frequência passada, atraso, pares e assinaturas não tornam uma dezena mais provável no próximo sorteio. Cada combinação simples tem a mesma probabilidade teórica. Para avaliar qualquer hipótese preditiva, precisamos de teste cronológico fora da amostra e comparação com modelos aleatórios.</p></section>
+</main>
+<footer>MEGA LAB 0.2 · IA & Humanos · Pesquisa independente · Estudos, não promessa de acerto.</footer>
+<script>
+const $=id=>document.getElementById(id);
+const demo=[
+[4,12,23,31,45,58],[2,15,27,34,41,59],[6,14,22,30,37,52],[1,11,25,38,44,57],
+[8,17,24,35,46,60],[3,19,28,33,42,55],[9,18,27,36,45,54],[5,13,26,39,48,57],
+[7,16,21,32,43,56],[10,20,29,40,49,58],[4,14,24,34,44,54],[2,12,22,32,42,52]
+];
+const fmt=n=>String(n).padStart(2,'0'), pct=(a,b)=>b?100*a/b:0;
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function top(map,n=10){return [...map.entries()].sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,n)}
+function bar(label,val,max){return '<div class="row"><span>'+label+'</span><div class="bar"><i style="width:'+Math.max(0,Math.min(100,100*val/max))+'%"></i></div><b>'+val+'</b></div>'}
+function run(){
+ const lines=$('data').value.split(/\n+/).map(x=>x.trim()).filter(Boolean), draws=[],bad=[];
+ lines.forEach((line,i)=>{let ns=(line.match(/\d+/g)||[]).map(Number);if(ns.length!==6||ns.some(n=>n<1||n>60)||new Set(ns).size!==6)bad.push(i+1);else draws.push(ns.sort((a,b)=>a-b))});
+ if(!draws.length){$('status').textContent='Nenhum concurso válido. Use seis dezenas únicas entre 01 e 60 por linha.';return}
+ const N=draws.length,all=draws.flat(),odd=all.filter(n=>n%2).length,sums=draws.map(d=>d.reduce((a,b)=>a+b,0));
+ const freq=Array(61).fill(0),last=Array(61).fill(null);draws.forEach((d,i)=>d.forEach(n=>{freq[n]++;last[n]=i}));
+ const avg=a=>a.reduce((x,y)=>x+y,0)/a.length, median=a=>{let b=[...a].sort((x,y)=>x-y);return b[Math.floor(b.length/2)]};
+ $('summary').innerHTML=[['Concursos válidos',N],['Média de ímpares',(odd/N).toFixed(2)+' / 6'],['Soma média',avg(sums).toFixed(1)],['Soma mediana',median(sums)],['Linhas rejeitadas',bad.length]].map(x=>'<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join('');
+ $('integrity').textContent='Validação: '+N+' linhas aceitas. '+(bad.length?'Linhas rejeitadas: '+bad.join(', '):'Nenhuma linha rejeitada.')+' Ordem usada: a primeira linha é o concurso mais antigo.';
+ const oddDist=Array(7).fill(0),bucketDist={},quad=Array(6).fill(0),col=Array(10).fill(0),pair=new Map(),trip=new Map(),repeat=[],consec=[];
+ draws.forEach((d,i)=>{let o=d.filter(n=>n%2).length;oddDist[o]++;let b=[d.filter(n=>n<=20).length,d.filter(n=>n>=21&&n<=40).length,d.filter(n=>n>=41).length].join('/');bucketDist.set(b,(bucketDist.get(b)||0)+1);
+ d.forEach(n=>{quad[Math.floor((n-1)/10)]++;col[(n-1)%10]++});
+ for(let a=0;a<6;a++)for(let b=a+1;b<6;b++){let k=d[a]+'-'+d[b];pair.set(k,(pair.get(k)||0)+1)}
+ for(let a=0;a<4;a++)for(let b=a+1;b<5;b++)for(let c=b+1;c<6;c++){let k=d[a]+'-'+d[b]+'-'+d[c];trip.set(k,(trip.get(k)||0)+1)}
+ consec.push(d.filter((n,j)=>j&&n===d[j-1]+1).length);
+ if(i){let prev=new Set(draws[i-1]);repeat.push(d.filter(n=>prev.has(n)).length)}
+ });
+ $('profile').innerHTML='<p><b>Distribuição de pares e ímpares</b></p>'+oddDist.map((v,i)=>bar(i+' ímpares',v,N)).join('')+'<p><b>Assinaturas por faixas 01–20 / 21–40 / 41–60</b></p><table><tr><th>Assinatura</th><th>Ocorrências</th><th>%</th></tr>'+top(bucketDist,10).map(([k,v])=>'<tr><td>'+k+'</td><td>'+v+'</td><td>'+pct(v,N).toFixed(1)+'%</td></tr>').join('')+'</table>';
+ let fr=Array.from({length:60},(_,i)=>i+1).map(n=>({n,f:freq[n],gap:last[n]===null?N:N-1-last[n]}));
+ $('freq').innerHTML='<p><b>Mais frequentes na amostra</b></p><div class="balls">'+top(new Map(fr.map(x=>[x.n,x.f])),10).map(([n,v])=>'<span class="ball" title="'+v+' ocorrências">'+fmt(n)+'</span>').join('')+'</div><table><tr><th>Dezena</th><th>Ocorrências</th><th>Concursos desde a última</th></tr>'+[...fr].sort((a,b)=>b.f-a.f||a.n-b.n).slice(0,15).map(x=>'<tr><td>'+fmt(x.n)+'</td><td>'+x.f+'</td><td>'+(last[x.n]===null?'Nunca na amostra':x.gap)+'</td></tr>').join('')+'</table><p class="note">Atraso contado a partir da última linha, considerada a mais recente.</p>';
+ $('pairs').innerHTML='<p><b>Pares mais recorrentes</b></p><table><tr><th>Par</th><th>Vezes</th></tr>'+top(pair,10).map(([k,v])=>'<tr><td>'+k.split('-').map(fmt).join('–')+'</td><td>'+v+'</td></tr>').join('')+'</table><p><b>Trios mais recorrentes</b></p><table><tr><th>Trio</th><th>Vezes</th></tr>'+top(trip,10).map(([k,v])=>'<tr><td>'+k.split('-').map(fmt).join('–')+'</td><td>'+v+'</td></tr>').join('')+'</table>';
+ $('grid').innerHTML='<p><b>Faixas de dez dezenas</b></p>'+quad.map((v,i)=>bar(fmt(i*10+1)+'–'+fmt(i*10+10),v,Math.max(...quad))).join('')+'<p><b>Colunas do volante (final 1 a 0)</b></p>'+col.map((v,i)=>bar('Final '+(i===9?'0':i+1),v,Math.max(...col))).join('');
+ $('transitions').innerHTML='<p><b>Dezenas repetidas entre concursos consecutivos</b></p>'+[0,1,2,3,4,5,6].map(k=>bar(k+' repetidas',repeat.filter(v=>v===k).length,Math.max(1,repeat.length))) .join('')+'<p><b>Quantidade de pares consecutivos dentro do mesmo concurso</b></p>'+[0,1,2,3,4,5].map(k=>bar(k+' pares',consec.filter(v=>v===k).length,Math.max(1,N))).join('');
+ $('sum').innerHTML='<div class="grid">'+[['Mínima',Math.min(...sums)],['Máxima',Math.max(...sums)],['Média',avg(sums).toFixed(1)],['Mediana',median(sums)],['Amplitude média',avg(draws.map(d=>d[5]-d[0])).toFixed(1)],['Consecutivos médios',avg(consec).toFixed(2)]].map(x=>'<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join('')+'</div><p class="note">Estatísticas descritivas da amostra inserida.</p>';
+ const expected=N*6/60,obs=fr.filter(x=>x.f>0).length,chi=fr.reduce((s,x)=>s+(x.f-expected)**2/expected,0);
+ $('expected').innerHTML='<div class="grid"><div class="metric"><b>'+expected.toFixed(2)+'</b><span>Ocorrências esperadas por dezena sob sorteios uniformes</span></div><div class="metric"><b>'+obs+'/60</b><span>Dezenas observadas ao menos uma vez</span></div><div class="metric"><b>'+chi.toFixed(2)+'</b><span>Qui-quadrado descritivo (59 graus de liberdade, aproximação)</span></div></div><p class="note">Este indicador é exploratório. Para inferência formal, considerar dependências, tamanho da amostra e testes múltiplos. Não interpretar desvios isolados como sinal de previsão.</p>';
+ $('results').hidden=false;$('status').textContent='Sete cards calculados localmente. Nenhum dado foi enviado a servidor.';
+}
+$('run').onclick=run;$('demo').onclick=()=>{$('data').value=demo.map(d=>d.map(fmt).join(' ')).join('\n');$('status').textContent='Amostra fictícia demonstrativa carregada; não são concursos oficiais.'};$('clear').onclick=()=>{$('data').value='';$('results').hidden=true;$('status').textContent='Área limpa.'};
+</script></body></html>
